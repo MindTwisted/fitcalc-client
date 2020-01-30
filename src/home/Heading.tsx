@@ -1,6 +1,7 @@
 import React from "react";
 import { Container, Header, Button, Icon } from "semantic-ui-react";
 import { Link } from "react-router-dom";
+import routes from "../routes";
 
 type HeadingProps = {
     mobile: boolean
@@ -33,7 +34,7 @@ const Heading: React.FC<HeadingProps> = ({ mobile }: HeadingProps) => {
       <Button primary
         size='huge'
         as={Link}
-        to="/app"
+        to={routes.app}
       >
           Get Started
         <Icon name='arrow right' />

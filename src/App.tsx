@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import loadable from "@loadable/component";
+import routes from './routes';
 import Home from "./home/Home";
 import Loading from "./common/Loading";
 
@@ -14,11 +15,11 @@ const App: React.FC = () => {
       <Router>
         <Switch>
           <Route exact
-            path="/"
+            path={routes.home}
           >
             <Home />
           </Route>
-          <Route path="/app">
+          <Route path={routes.app}>
             <Application />
           </Route>
         </Switch>

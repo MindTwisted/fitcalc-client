@@ -1,6 +1,7 @@
 import React from "react";
 import { Segment, Grid, Header, Button, Image, Container } from "semantic-ui-react";
 import { Link } from "react-router-dom";
+import routes from "../routes";
 
 const Layout: React.FC = () => {
   return (
@@ -46,7 +47,7 @@ const Layout: React.FC = () => {
             <Grid.Column textAlign='center'>
               <Button size='huge'
                 as={Link}
-                to='/app'
+                to={routes.app}
               >
                 Check It Out
               </Button>
@@ -100,7 +101,7 @@ const Layout: React.FC = () => {
             Instead of putting off the problem for tomorrow just start now.
           </p>
           <Button as={Link}
-            to='/app'
+            to={routes.app}
             size='large'
           >
             Give A Try

@@ -1,6 +1,7 @@
 import React from "react";
 import { Button, Container, Menu } from "semantic-ui-react";
 import { Link } from "react-router-dom";
+import routes from "../routes";
 import logo from '../logo.svg';
 
 type NavigationBarProps = {
@@ -25,7 +26,7 @@ const NavigationBar: React.FC<NavigationBarProps> = ({ fixed }: NavigationBarPro
 
         <Menu.Item position='right'>
           <Menu.Item>
-            <Link to="/app">Application</Link>
+            <Link to={routes.app}>Application</Link>
           </Menu.Item>
           <Button as='a'
             inverted={!fixed}
