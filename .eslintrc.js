@@ -25,6 +25,10 @@ module.exports = {
     "@typescript-eslint"
   ],
   "rules": {
-    "indent": ["error", 2]
+    "indent": [2, 2],
+    "object-curly-spacing": [2, "always"],
+    "react/jsx-max-props-per-line": [2, {"maximum": 1}],
+    "react/jsx-closing-bracket-location": [2, {"location": "line-aligned"}],
+    "react/jsx-tag-spacing": [2, {"beforeSelfClosing": "always"}]
   }
 };
