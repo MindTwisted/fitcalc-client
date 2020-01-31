@@ -1,10 +1,15 @@
 import React, { useEffect, useState } from "react";
+import { connect, ConnectedProps } from "react-redux";
 import { Responsive, Visibility, Segment } from "semantic-ui-react";
 import NavigationBar from "./NavigationBar";
 import Heading from "./Heading";
 import Layout from "./Layout";
+import { RootState } from "../store";
+import { setLang } from "../store/system/actions";
 
-const Home: React.FC = () => {
+type HomeProps = ConnectedProps<typeof connector>;
+
+const Home: React.FC<HomeProps> = ({ system, dispatch }: HomeProps) => {
   const [fixed, setFixed] = useState(false);
   const [mobile, setMobile] = useState(false);
 
@@ -33,7 +38,10 @@ const Home: React.FC = () => {
           style={{ minHeight: mobile ? 400 : 700, padding: '1em 0em' }}
           vertical
         >
-          <NavigationBar fixed={fixed} />
+          <NavigationBar fixed={fixed}
+            lang={system.lang}
+            handleLangChange={(lang: string) => dispatch(setLang(lang))}
+          />
           <Heading mobile={mobile} />
         </Segment>
       </Visibility>
@@ -43,4 +51,9 @@ const Home: React.FC = () => {
   );
 };
 
-export default Home;
+const mapStateToProps = (state: RootState) => ({
+  system: state.system
+});
+const connector = connect(mapStateToProps);
+
+export default connector(Home);

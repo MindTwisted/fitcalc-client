@@ -1,14 +1,27 @@
 import React from "react";
-import { Button, Container, Menu } from "semantic-ui-react";
+import { Button, Container, Menu, Dropdown } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import routes from "../routes";
 import logo from '../logo.svg';
 
 type NavigationBarProps = {
-    fixed: boolean
+  fixed: boolean,
+  lang: string,
+  handleLangChange: Function
 }
 
-const NavigationBar: React.FC<NavigationBarProps> = ({ fixed }: NavigationBarProps) => {
+const langOptions = [
+  {
+    text: 'English',
+    value: 'en'
+  },
+  {
+    text: 'Russian',
+    value: 'ru'
+  }
+];
+
+const NavigationBar: React.FC<NavigationBarProps> = ({ fixed, lang, handleLangChange }: NavigationBarProps) => {
   return (
     <Menu
       fixed={fixed ? 'top' : undefined}
@@ -23,6 +36,11 @@ const NavigationBar: React.FC<NavigationBarProps> = ({ fixed }: NavigationBarPro
             alt='Logo'
           />
         </Menu.Item>
+        <Dropdown item
+          options={langOptions}
+          defaultValue={lang}
+          onChange={(e, { value }) => handleLangChange(value)}
+        />
 
         <Menu.Item position='right'>
           <Menu.Item>
