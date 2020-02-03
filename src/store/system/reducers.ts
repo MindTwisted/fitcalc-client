@@ -1,7 +1,7 @@
 import { SET_LANG, SystemActionTypes, SystemState } from "./types";
 
 const initialState: SystemState = {
-  lang: 'en'
+  lang: localStorage.getItem('lang') || 'en'
 };
 
 export function systemReducer(state: SystemState = initialState, action: SystemActionTypes): SystemState {

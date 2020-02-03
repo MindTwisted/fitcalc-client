@@ -9,5 +9,3 @@ export interface RootState {
 export const rootReducer = combineReducers<RootState>({
   system: systemReducer
 });
-
-// TODO: when change lang -> save lang to localStorage and read it from there if exists

@@ -10,6 +10,8 @@ export function setLang(lang: string): SystemActionTypes {
 
 export function boundSetLang(lang: string): Function {
   return function (dispatch: Dispatch<SystemActionTypes>): void {
+    localStorage.setItem('lang', lang);
+
     dispatch(setLang(lang));
   }
 }
