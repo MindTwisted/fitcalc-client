@@ -1,14 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createStore } from "redux";
+import { applyMiddleware, createStore } from "redux";
 import { Provider } from 'react-redux'
-import { devToolsEnhancer } from 'redux-devtools-extension';
+import thunk from "redux-thunk";
+import { composeWithDevTools } from 'redux-devtools-extension';
 import 'semantic-ui-css/semantic.min.css';
 import * as serviceWorker from './serviceWorker';
 import { rootReducer } from "./store";
 import App from './App';
 
-const store = createStore(rootReducer, devToolsEnhancer({}));
+const composeEnhancers = composeWithDevTools({});
+const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunk)));
 
 ReactDOM.render(
   <Provider store={store}>
