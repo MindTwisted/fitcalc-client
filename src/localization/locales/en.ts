@@ -19,6 +19,10 @@ export default {
   'Stop Thinking, Start Doing': 'Stop Thinking, Start Doing',
   'Instead of putting off the problem for tomorrow just start now.': 'Instead of putting off the problem for tomorrow just start now.',
   'Give A Try': 'Give A Try',
-  'We give you a tool so you can change your life.': 'We give you a tool so you can change your life.'
+  'We give you a tool so you can change your life.': 'We give you a tool so you can change your life.',
+  'Submit': 'Submit',
+  'Name': 'Name',
+  'Email': 'Email',
+  'Password': 'Password'
 };
 

@@ -19,6 +19,10 @@ export default {
   'Stop Thinking, Start Doing': 'Хватит Думать, Начинай Действовать',
   'Instead of putting off the problem for tomorrow just start now.': 'Вместо того, чтобы откладывать проблему на завтра, начните прямо сейчас.',
   'Give A Try': 'Попробовать',
-  'We give you a tool so you can change your life.': 'Мы даем вам инструмент, чтобы вы могли изменить свою жизнь.'
+  'We give you a tool so you can change your life.': 'Мы даем вам инструмент, чтобы вы могли изменить свою жизнь.',
+  'Submit': 'Подтвердить',
+  'Name': 'Имя',
+  'Email': 'Адрес электронной почты',
+  'Password': 'Пароль'
 };
 
