@@ -2,6 +2,7 @@ import React from "react";
 import { Button, Container, Menu, Dropdown } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import routes from "../routes";
+import i18n from '../localization/i18n';
 import logo from '../logo.svg';
 
 type NavigationBarProps = {
@@ -10,18 +11,18 @@ type NavigationBarProps = {
   handleLangChange: Function
 }
 
-const langOptions = [
-  {
-    text: 'English',
-    value: 'en'
-  },
-  {
-    text: 'Russian',
-    value: 'ru'
-  }
-];
-
 const NavigationBar: React.FC<NavigationBarProps> = ({ fixed, lang, handleLangChange }: NavigationBarProps) => {
+  const langOptions = [
+    {
+      text: i18n.t('English', { lng: lang }),
+      value: 'en'
+    },
+    {
+      text: i18n.t('Russian', { lng: lang }),
+      value: 'ru'
+    }
+  ];
+
   return (
     <Menu
       fixed={fixed ? 'top' : undefined}
@@ -44,19 +45,21 @@ const NavigationBar: React.FC<NavigationBarProps> = ({ fixed, lang, handleLangCh
 
         <Menu.Item position='right'>
           <Menu.Item>
-            <Link to={routes.app}>Application</Link>
+            <Link to={routes.app}>
+              {i18n.t('Application', { lng: lang })}
+            </Link>
           </Menu.Item>
           <Button as='a'
             inverted={!fixed}
           >
-            Log in
+            {i18n.t('Log In', { lng: lang })}
           </Button>
           <Button as='a'
             inverted={!fixed}
             primary={fixed}
             style={{ marginLeft: '0.5em' }}
           >
-            Sign Up
+            {i18n.t('Sign Up', { lng: lang })}
           </Button>
         </Menu.Item>
       </Container>

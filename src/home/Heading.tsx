@@ -2,17 +2,19 @@ import React from "react";
 import { Container, Header, Button, Icon } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import routes from "../routes";
+import i18n from '../localization/i18n';
 
 type HeadingProps = {
-    mobile: boolean
+    mobile: boolean,
+    lang: string
 };
 
-const Heading: React.FC<HeadingProps> = ({ mobile }: HeadingProps) => {
+const Heading: React.FC<HeadingProps> = ({ mobile, lang }: HeadingProps) => {
   return (
     <Container text>
       <Header
         as='h1'
-        content='Fitness Calculator'
+        content={i18n.t('Fitness Calculator', { lng: lang })}
         inverted
         style={{
           fontSize: mobile ? '2em' : '4em',
@@ -23,7 +25,7 @@ const Heading: React.FC<HeadingProps> = ({ mobile }: HeadingProps) => {
       />
       <Header
         as='h2'
-        content='Take control over your weight.'
+        content={i18n.t('Take control over your weight.', { lng: lang })}
         inverted
         style={{
           fontSize: mobile ? '1.5em' : '1.7em',
@@ -36,7 +38,7 @@ const Heading: React.FC<HeadingProps> = ({ mobile }: HeadingProps) => {
         as={Link}
         to={routes.app}
       >
-          Get Started
+        {i18n.t('Get Started', { lng: lang })}
         <Icon name='arrow right' />
       </Button>
     </Container>

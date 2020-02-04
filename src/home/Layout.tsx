@@ -2,8 +2,13 @@ import React from "react";
 import { Segment, Grid, Header, Button, Image, Container } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import routes from "../routes";
+import i18n from '../localization/i18n';
 
-const Layout: React.FC = () => {
+type LayoutProps = {
+  lang: string
+}
+
+const Layout: React.FC<LayoutProps> = ({ lang }: LayoutProps) => {
   return (
     <React.Fragment>
       <Segment style={{ padding: '8em 0em' }}
@@ -18,18 +23,18 @@ const Layout: React.FC = () => {
               <Header as='h3'
                 style={{ fontSize: '2em' }}
               >
-                Most Complete Product Database
+                {i18n.t('Most Complete Product Database', { lng: lang })}
               </Header>
               <p style={{ fontSize: '1.33em' }}>
-                We provide access to a complete database of products checked by our moderators.
+                {i18n.t('We provide access to a complete database of products checked by our moderators.', { lng: lang })}
               </p>
               <Header as='h3'
                 style={{ fontSize: '2em' }}
               >
-                Most Full Statistic
+                {i18n.t('Most Full Statistic', { lng: lang })}
               </Header>
               <p style={{ fontSize: '1.33em' }}>
-                We provide you with all the information you need to analyze and adjust your diet.
+                {i18n.t('We provide you with all the information you need to analyze and adjust your diet.', { lng: lang })}
               </p>
             </Grid.Column>
             <Grid.Column floated='right'
@@ -49,7 +54,7 @@ const Layout: React.FC = () => {
                 as={Link}
                 to={routes.app}
               >
-                Check It Out
+                {i18n.t('Check It Out', { lng: lang })}
               </Button>
             </Grid.Column>
           </Grid.Row>
@@ -69,19 +74,21 @@ const Layout: React.FC = () => {
                 style={{ fontSize: '2em' }}
               >
                 {/* eslint-disable-next-line react/no-unescaped-entities */}
-                "Great application"
+                "{i18n.t('Great application', { lng: lang })}"
               </Header>
-              <p style={{ fontSize: '1.33em' }}>That is what our users say</p>
+              <p style={{ fontSize: '1.33em' }}>
+                {i18n.t('That is what our users say', { lng: lang })}
+              </p>
             </Grid.Column>
             <Grid.Column style={{ paddingBottom: '5em', paddingTop: '5em' }}>
               <Header as='h3'
                 style={{ fontSize: '2em' }}
               >
                 {/* eslint-disable-next-line react/no-unescaped-entities */}
-                "It has helped me to become fit."
+                "{i18n.t('It has helped me to become fit.', { lng: lang })}"
               </Header>
               <p style={{ fontSize: '1.33em' }}>
-                <b>John</b> Fitness newcomer
+                {i18n.t('Eugene, fitness newcomer', { lng: lang })}
               </p>
             </Grid.Column>
           </Grid.Row>
@@ -95,16 +102,16 @@ const Layout: React.FC = () => {
           <Header as='h3'
             style={{ fontSize: '2em' }}
           >
-            Stop Thinking, Start Doing
+            {i18n.t('Stop Thinking, Start Doing', { lng: lang })}
           </Header>
           <p style={{ fontSize: '1.33em' }}>
-            Instead of putting off the problem for tomorrow just start now.
+            {i18n.t('Instead of putting off the problem for tomorrow just start now.', { lng: lang })}
           </p>
           <Button as={Link}
             to={routes.app}
             size='large'
           >
-            Give A Try
+            {i18n.t('Give A Try', { lng: lang })}
           </Button>
         </Container>
       </Segment>
@@ -117,10 +124,10 @@ const Layout: React.FC = () => {
           <Header as='h4'
             inverted
           >
-            Fitness Calculator
+            {i18n.t('Fitness Calculator', { lng: lang })}
           </Header>
           <p>
-            We give you a tool so you can change your life.
+            {i18n.t('We give you a tool so you can change your life.', { lng: lang })}
           </p>
         </Container>
       </Segment>

@@ -43,11 +43,13 @@ const Home: React.FC<HomeProps> = ({ system, setLang }: HomeProps) => {
             lang={system.lang}
             handleLangChange={(lang: string) => setLang(lang)}
           />
-          <Heading mobile={mobile} />
+          <Heading mobile={mobile}
+            lang={system.lang}
+          />
         </Segment>
       </Visibility>
 
-      <Layout />
+      <Layout lang={system.lang} />
     </Responsive>
   );
 };
