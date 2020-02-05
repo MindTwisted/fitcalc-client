@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from "react";
-import { connect, ConnectedProps } from "react-redux";
-import { Responsive, Visibility, Segment } from "semantic-ui-react";
-import NavigationBar from "./NavigationBar";
-import Heading from "./Heading";
-import Layout from "./Layout";
-import { RootState } from "../store";
-import { boundSetLang } from "../store/system/actions";
-import { bindActionCreators, Dispatch } from "redux";
+import React, { useEffect, useState } from 'react';
+import { connect, ConnectedProps } from 'react-redux';
+import { Responsive, Visibility, Segment } from 'semantic-ui-react';
+import NavigationBar from './NavigationBar';
+import Heading from './Heading';
+import Layout from './Layout';
+import { RootState } from '../store';
+import { boundSetLang } from '../store/system/actions';
+import { bindActionCreators, Dispatch } from 'redux';
 
 type HomeProps = ConnectedProps<typeof connector>;
 

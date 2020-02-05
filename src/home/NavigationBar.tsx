@@ -1,10 +1,10 @@
-import React, { useState } from "react";
-import { Button, Container, Menu, Dropdown } from "semantic-ui-react";
-import { Link } from "react-router-dom";
-import routes from "../routes";
+import React, { useState } from 'react';
+import { Button, Container, Menu, Dropdown } from 'semantic-ui-react';
+import { Link } from 'react-router-dom';
+import routes from '../routes';
 import i18n from '../localization/i18n';
 import logo from '../logo.svg';
-import RegisterModal from "./RegisterModal";
+import RegisterModal from './RegisterModal';
 
 type NavigationBarProps = {
   fixed: boolean,
@@ -73,7 +73,7 @@ const NavigationBar: React.FC<NavigationBarProps> = ({ fixed, lang, handleLangCh
 
       <RegisterModal lang={lang}
         open={registerModalOpen}
-        onClose={() => setRegisterModalOpen(false)}
+        closeModal={() => setRegisterModalOpen(false)}
       />
     </React.Fragment>
   );

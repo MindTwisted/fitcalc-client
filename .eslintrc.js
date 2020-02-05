@@ -35,6 +35,7 @@ module.exports = {
       "vars": "all",
       "args": "after-used",
       "ignoreRestSiblings": false
-    }]
+    }],
+    'quotes': [2, 'single']
   }
 };

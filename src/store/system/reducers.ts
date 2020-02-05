@@ -1,4 +1,4 @@
-import { SET_LANG, SystemActionTypes, SystemState } from "./types";
+import { SET_LANG, SystemActionTypes, SystemState } from './types';
 
 const initialState: SystemState = {
   lang: localStorage.getItem('lang') || 'en'

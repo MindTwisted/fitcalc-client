@@ -1,5 +1,5 @@
-import { SET_LANG, SystemActionTypes } from "./types";
-import { Dispatch } from "redux";
+import { SET_LANG, SystemActionTypes } from './types';
+import { Dispatch } from 'redux';
 
 export function setLang(lang: string): SystemActionTypes {
   return {
