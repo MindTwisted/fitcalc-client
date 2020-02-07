@@ -3,6 +3,7 @@ import { toast } from 'react-semantic-toasts';
 import { apiRoot } from './config';
 import { store } from '../store';
 import { boundSetAccessToken, boundSetRefreshToken, boundSetUser } from '../store/auth/actions';
+import { refresh } from './auth';
 
 const axiosInstance: any =  axios.create({
   baseURL: apiRoot,
@@ -10,14 +11,51 @@ const axiosInstance: any =  axios.create({
 });
 
 axiosInstance.interceptors.request.use(
-  function (config: AxiosRequestConfig) {
+  async function (config: AxiosRequestConfig) {
+    if (config.headers.noAuth) {
+      delete config.headers.noAuth;
+        
+      return config;
+    }
+      
     const accessToken = store.getState().auth.accessToken;
-    
-    if (accessToken) {
-      config.headers.Authorization = `Bearer ${accessToken}`;
+
+    if (!accessToken) {
+      return config;
+    }
+
+    const isAccessTokenValid = Number((new Date(accessToken.expires_at))) > Date.now();
+
+    if (isAccessTokenValid) {
+      config.headers.Authorization = `Bearer ${accessToken.token}`;
+
+      return config;
     }
     
-    return config;
+    const refreshToken = store.getState().auth.refreshToken;
+    
+    if (!refreshToken) {
+      return config;
+    }
+    
+    const isRefreshTokenValid = Number((new Date(refreshToken.expires_at))) > Date.now();
+    
+    if (!isRefreshTokenValid) {
+      return config;
+    }
+
+    try {
+      const refreshResponse = await refresh(refreshToken);
+      const accessToken = refreshResponse.data.data.access_token;
+
+      boundSetAccessToken(accessToken)(store.dispatch);
+
+      config.headers.Authorization = `Bearer ${accessToken.token}`;
+
+      return config;
+    } catch (error) {
+      return config;
+    }
   }, 
   function (error: AxiosError) {
     return Promise.reject(error);
@@ -44,7 +82,7 @@ axiosInstance.interceptors.response.use(
       });
     }
 
-    if (error.response?.status === 403) {
+    if (error.response?.status === 401) {
       boundSetAccessToken(null)(store.dispatch);
       boundSetRefreshToken(null)(store.dispatch);
       boundSetUser(null)(store.dispatch);

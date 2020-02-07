@@ -1,6 +1,6 @@
 import axios from './axios';
 import { getApiPrefix } from './config';
-import { RefreshToken, User } from '../store/auth/types';
+import { AccessToken, RefreshToken, User } from '../store/auth/types';
 
 const getAuthPrefix = () => `${getApiPrefix()}/auth`;
 
@@ -25,7 +25,7 @@ export const login = ({
   data: {
     message: string,
     data: {
-      access_token: string,
+      access_token: AccessToken,
       refresh_token: RefreshToken
     }
   }
@@ -41,4 +41,14 @@ export const auth = (): Promise<{
   }
 }> => {
   return axios.get(`${getAuthPrefix()}/`);
+};
+
+export const refresh = (refreshToken: RefreshToken): Promise<{
+  data: {
+    data: {
+      access_token: AccessToken
+    }
+  }
+}> => {
+  return axios.post(`${getAuthPrefix()}/refresh`, { refresh_token: refreshToken.token }, { headers: { noAuth: true } });
 };

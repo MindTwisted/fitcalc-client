@@ -1,3 +1,8 @@
+export interface AccessToken {
+    expires_at: string
+    token: string
+}
+
 export interface RefreshToken {
     expires_at: string
     id: number | null
@@ -12,7 +17,7 @@ export interface User {
 }
 
 export interface AuthState {
-    accessToken: string | null
+    accessToken: AccessToken | null
     refreshToken: RefreshToken | null
     user: User | null
 }
@@ -23,7 +28,7 @@ export const SET_USER = 'SET_USER';
 
 interface SetAccessTokenAction {
     type: typeof SET_ACCESS_TOKEN,
-    accessToken: string | null
+    accessToken: AccessToken | null
 }
 
 interface SetRefreshTokenAction {

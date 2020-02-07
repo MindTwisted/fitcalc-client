@@ -1,4 +1,27 @@
-import { AuthActionTypes, AuthState, RefreshToken, SET_ACCESS_TOKEN, SET_REFRESH_TOKEN, SET_USER, User } from './types';
+import {
+  AccessToken,
+  AuthActionTypes,
+  AuthState,
+  RefreshToken,
+  SET_ACCESS_TOKEN,
+  SET_REFRESH_TOKEN,
+  SET_USER,
+  User
+} from './types';
+
+const getInitialAccessToken = (): AccessToken | null => {
+  const accessToken = localStorage.getItem('accessToken');
+
+  if (!accessToken) {
+    return null;
+  }
+
+  try {
+    return JSON.parse(accessToken);
+  } catch (error) {
+    return null;
+  }
+};
 
 const getInitialRefreshToken = (): RefreshToken | null => {
   const refreshToken = localStorage.getItem('refreshToken');
@@ -30,7 +53,7 @@ const getInitialUser = (): User | null => {
 };
 
 const initialState: AuthState = {
-  accessToken: localStorage.getItem('accessToken') || null,
+  accessToken: getInitialAccessToken(),
   refreshToken: getInitialRefreshToken(),
   user: getInitialUser()
 };

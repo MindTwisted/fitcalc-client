@@ -1,7 +1,7 @@
-import { AuthActionTypes, RefreshToken, SET_ACCESS_TOKEN, SET_REFRESH_TOKEN, SET_USER, User } from './types';
+import { AccessToken, AuthActionTypes, RefreshToken, SET_ACCESS_TOKEN, SET_REFRESH_TOKEN, SET_USER, User } from './types';
 import { Dispatch } from 'redux';
 
-export function setAccessToken(accessToken: string | null): AuthActionTypes {
+export function setAccessToken(accessToken: AccessToken | null): AuthActionTypes {
   return {
     type: SET_ACCESS_TOKEN,
     accessToken
@@ -22,10 +22,10 @@ export function setUser(user: User | null): AuthActionTypes {
   }
 }
 
-export function boundSetAccessToken(accessToken: string | null): Function {
+export function boundSetAccessToken(accessToken: AccessToken | null): Function {
   return function (dispatch: Dispatch<AuthActionTypes>): void {
     if (accessToken) {
-      localStorage.setItem('accessToken', accessToken);
+      localStorage.setItem('accessToken', JSON.stringify(accessToken));
     } else {
       localStorage.removeItem('accessToken');
     }
