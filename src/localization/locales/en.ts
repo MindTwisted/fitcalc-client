@@ -4,6 +4,7 @@ export default {
   'Application': 'Application',
   'Log In': 'Log In',
   'Sign Up': 'Sign Up',
+  'Logout': 'Logout',
   'Fitness Calculator': 'Fitness Calculator',
   'Take control over your weight.': 'Take control over your weight.',
   'Get Started': 'Get Started',

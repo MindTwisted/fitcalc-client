@@ -4,6 +4,7 @@ export default {
   'Application': 'Приложение',
   'Log In': 'Логин',
   'Sign Up': 'Регистрация',
+  'Logout': 'Логаут',
   'Fitness Calculator': 'Фитнес Калькулятор',
   'Take control over your weight.': 'Возьмите под контроль свой вес.',
   'Get Started': 'Начнём',

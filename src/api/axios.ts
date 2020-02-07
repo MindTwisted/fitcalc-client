@@ -1,11 +1,27 @@
-import axios, { AxiosError, AxiosResponse } from 'axios';
+import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 import { toast } from 'react-semantic-toasts';
 import { apiRoot } from './config';
+import { store } from '../store';
+import { boundSetAccessToken, boundSetRefreshToken, boundSetUser } from '../store/auth/actions';
 
 const axiosInstance: any =  axios.create({
   baseURL: apiRoot,
   responseType: 'json'
 });
+
+axiosInstance.interceptors.request.use(
+  function (config: AxiosRequestConfig) {
+    const accessToken = store.getState().auth.accessToken;
+    
+    if (accessToken) {
+      config.headers.Authorization = `Bearer ${accessToken}`;
+    }
+    
+    return config;
+  }, 
+  function (error: AxiosError) {
+    return Promise.reject(error);
+  });
 
 axiosInstance.interceptors.response.use(
   function (response: AxiosResponse) {
@@ -26,6 +42,12 @@ axiosInstance.interceptors.response.use(
         title: error.response.data.message,
         time: 3000
       });
+    }
+
+    if (error.response?.status === 403) {
+      boundSetAccessToken(null)(store.dispatch);
+      boundSetRefreshToken(null)(store.dispatch);
+      boundSetUser(null)(store.dispatch);
     }
 
     return Promise.reject(error);

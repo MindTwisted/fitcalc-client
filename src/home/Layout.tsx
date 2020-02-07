@@ -5,10 +5,18 @@ import routes from '../routes';
 import i18n from '../localization/i18n';
 
 type LayoutProps = {
-  lang: string
+  lang: string,
+  isLoggedIn: boolean,
+  isAppUser: boolean,
+  setRegisterModalOpen(state: boolean): void
 }
 
-const Layout: React.FC<LayoutProps> = ({ lang }: LayoutProps) => {
+const Layout: React.FC<LayoutProps> = ({ 
+  lang ,
+  isLoggedIn,
+  isAppUser,
+  setRegisterModalOpen
+}: LayoutProps) => {
   return (
     <React.Fragment>
       <Segment style={{ padding: '8em 0em' }}
@@ -50,12 +58,20 @@ const Layout: React.FC<LayoutProps> = ({ lang }: LayoutProps) => {
           </Grid.Row>
           <Grid.Row>
             <Grid.Column textAlign='center'>
-              <Button size='huge'
-                as={Link}
-                to={routes.app}
-              >
-                {i18n.t('Check It Out', { lng: lang })}
-              </Button>
+              {(isLoggedIn && isAppUser) ? (
+                <Button size='huge'
+                  as={Link}
+                  to={routes.app}
+                >
+                  {i18n.t('Check It Out', { lng: lang })}
+                </Button>
+              ) : (
+                <Button size='huge'
+                  onClick={() => setRegisterModalOpen(true)}
+                >
+                  {i18n.t('Check It Out', { lng: lang })}
+                </Button>
+              )}
             </Grid.Column>
           </Grid.Row>
         </Grid>
@@ -107,12 +123,22 @@ const Layout: React.FC<LayoutProps> = ({ lang }: LayoutProps) => {
           <p style={{ fontSize: '1.33em' }}>
             {i18n.t('Instead of putting off the problem for tomorrow just start now.', { lng: lang })}
           </p>
-          <Button as={Link}
-            to={routes.app}
-            size='large'
-          >
-            {i18n.t('Give A Try', { lng: lang })}
-          </Button>
+          
+          {(isLoggedIn && isAppUser) ? (
+            <Button as={Link}
+              to={routes.app}
+              size='large'
+            >
+              {i18n.t('Give A Try', { lng: lang })}
+            </Button>
+          ) : (
+            <Button size='large'
+              onClick={() => setRegisterModalOpen(true)}
+            >
+              {i18n.t('Give A Try', { lng: lang })}
+            </Button>
+          )}
+          
         </Container>
       </Segment>
 
