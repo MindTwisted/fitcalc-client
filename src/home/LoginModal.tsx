@@ -1,8 +1,9 @@
 import React, { ChangeEvent, useState } from 'react';
-import { Button, Form, InputOnChangeData, Modal, TransitionablePortal } from 'semantic-ui-react';
+import { Button, Form, InputOnChangeData, Modal } from 'semantic-ui-react';
 import i18n from '../localization/i18n';
 import { auth, login } from '../api/auth';
 import { boundSetAccessToken, boundSetRefreshToken, boundSetUser } from '../store/auth/actions';
+import ResetPasswordModal from './ResetPasswordModal';
 
 type LoginModalProps = {
   open: boolean,
@@ -13,10 +14,18 @@ type LoginModalProps = {
   setUser: typeof boundSetUser
 }
 
-const LoginModal: React.FC<LoginModalProps> = ({ open, lang, closeModal, setAccessToken, setRefreshToken, setUser }: LoginModalProps) => {
+const LoginModal: React.FC<LoginModalProps> = ({ 
+  open, 
+  lang, 
+  closeModal, 
+  setAccessToken, 
+  setRefreshToken, 
+  setUser 
+}: LoginModalProps) => {
   const [loading, setLoading] = useState(false);
   const initialFormData = { email: '', password: '' };
   const [formData, setFormData] = useState(initialFormData);
+  const [resetPasswordModalOpen, setResetPasswordModalOpen] = useState(false);
 
   const handleClose = () => {
     setFormData(initialFormData);
@@ -52,47 +61,58 @@ const LoginModal: React.FC<LoginModalProps> = ({ open, lang, closeModal, setAcce
       setLoading(false);
     }
   };
-  
+
   return (
-    <TransitionablePortal open={open}
-      transition={{ animation: 'drop', duration: 500 }}
+    <Modal closeIcon={!loading} 
+      open={open}
+      onClose={handleClose}
       closeOnEscape={!loading}
+      closeOnDimmerClick={!loading}
     >
-      <Modal open={open}
-        onClose={handleClose}
-        closeOnEscape={!loading}
-        closeOnDimmerClick={!loading}
-      >
-        <Modal.Header>{i18n.t('Log In', { lng: lang })}</Modal.Header>
-        <Modal.Content>
-          <Modal.Description>
-            <Form onSubmit={handleSubmit}
-              loading={loading}
-            >
-              <Form.Input fluid
-                autoFocus
-                name='email'
-                label={i18n.t('Email', { lng: lang })}
-                placeholder={i18n.t('Email', { lng: lang })}
-                value={formData.email}
-                onChange={handleChange}
-              />
-              <Form.Input fluid
-                name='password'
-                label={i18n.t('Password', { lng: lang })}
-                placeholder={i18n.t('Password', { lng: lang })}
-                type='password'
-                value={formData.password}
-                onChange={handleChange}
-              />
-              <Button type='submit'>
+      <Modal.Header>{i18n.t('Log In', { lng: lang })}</Modal.Header>
+      <Modal.Content>
+        <Modal.Description>
+          <Form onSubmit={handleSubmit}
+            loading={loading}
+          >
+            <Form.Input fluid
+              autoFocus
+              name='email'
+              label={i18n.t('Email', { lng: lang })}
+              placeholder={i18n.t('Email', { lng: lang })}
+              value={formData.email}
+              onChange={handleChange}
+            />
+            <Form.Input fluid
+              name='password'
+              label={i18n.t('Password', { lng: lang })}
+              placeholder={i18n.t('Password', { lng: lang })}
+              type='password'
+              value={formData.password}
+              onChange={handleChange}
+            />
+            <Form.Field>
+              <Button primary
+                type='submit'
+              >
                 {i18n.t('Submit', { lng: lang })}
               </Button>
-            </Form>
-          </Modal.Description>
-        </Modal.Content>
-      </Modal>
-    </TransitionablePortal>
+              <Button basic
+                type='button'
+                onClick={() => setResetPasswordModalOpen(true)}
+              >
+                {i18n.t('Forgot password?', { lng: lang })}
+              </Button>
+            </Form.Field>
+          </Form>
+        </Modal.Description>
+      </Modal.Content>
+
+      <ResetPasswordModal open={resetPasswordModalOpen}
+        lang={lang}
+        closeModal={() => setResetPasswordModalOpen(false)}
+      />
+    </Modal>
   )
 };
 

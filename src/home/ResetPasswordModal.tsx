@@ -1,0 +1,205 @@
+import React, { useState } from 'react';
+import { Modal, Step, Button, Icon, Form, Loader, Dimmer } from 'semantic-ui-react';
+import { InputOnChangeData } from 'semantic-ui-react/dist/commonjs/elements/Input/Input';
+import i18n from '../localization/i18n';
+import { initiatePasswordReset, confirmPasswordReset } from '../api/users';
+
+type ResetPasswordModalProps = {
+  open: boolean,
+  lang: string,
+  closeModal(): void
+}
+
+const ResetPasswordModal: React.FC<ResetPasswordModalProps> = ({ 
+  open, 
+  lang, 
+  closeModal 
+}: ResetPasswordModalProps) => {
+  const [loading, setLoading] = useState(false);
+  const [step, setStep] = useState(1);
+  const [email, setEmail] = useState('');
+  const [code, setCode] = useState('');
+  const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const [passwordError, setPasswordError] = useState('');
+
+  const handlePrevStep = () => {
+    if (step > 1) {
+      setStep(step - 1);
+    }
+  };
+
+  const handleNextStep = () => {
+    if (step === 2 && !code) {
+      return;
+    }
+
+    if (step < 3) {
+      setStep(step + 1);
+    }
+  };
+
+  const handleInitiatePasswordReset = async () => {
+    setLoading(true);
+
+    try {
+      await initiatePasswordReset(email);
+
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+    }
+  };
+
+  const handleSubmitPasswordReset = async () => {
+    setLoading(true);
+
+    try {
+      await confirmPasswordReset({ token: code, password: password });
+
+      setLoading(false);
+      setPasswordError('');
+
+      handleClose();
+    } catch (error) {
+      const violations = error.response.data.data?.violations || {};
+
+      setLoading(false);
+      setPasswordError(violations.plainPassword);
+    }
+  };
+
+  const handleClose = () => {
+    setStep(1);
+    setEmail('');
+    setCode('');
+    setPassword('');
+
+    closeModal();
+  };
+
+  return (
+    <Modal closeIcon={!loading}
+      open={open}
+      onClose={handleClose}
+      closeOnEscape={!loading}
+      closeOnDimmerClick={!loading}
+    >
+      <Modal.Header>
+        {i18n.t('Password recovery', { lng: lang })}
+      </Modal.Header>
+      <Modal.Content>
+        
+        <Step.Group ordered
+          widths={3}
+        >
+          <Step completed={step > 1}
+            active={step === 1}
+          >
+            <Step.Content>
+              <Step.Title>{i18n.t('Enter email', { lng: lang })}</Step.Title>
+              <Step.Description>{i18n.t('You will get a password recovery token', { lng: lang })}</Step.Description>
+            </Step.Content>
+          </Step>
+
+          <Step completed={step > 2}
+            active={step === 2}
+          >
+            <Step.Content>
+              <Step.Title>{i18n.t('Enter password recovery token', { lng: lang })}</Step.Title>
+              <Step.Description>{i18n.t('The one that was sent to you by email', { lng: lang })}</Step.Description>
+            </Step.Content>
+          </Step>
+
+          <Step active={step === 3}>
+            <Step.Content>
+              <Step.Title>{i18n.t('Change password', { lng: lang })}</Step.Title>
+            </Step.Content>
+          </Step>
+        </Step.Group>
+        
+        {(step === 1) && (
+          <Form onSubmit={handleInitiatePasswordReset}>
+            <Form.Input fluid
+              autoFocus
+              name='email'
+              label={i18n.t('Email', { lng: lang })}
+              placeholder={i18n.t('Email', { lng: lang })}
+              value={email}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>, data: InputOnChangeData) => setEmail(data.value)}
+            />
+            <Button primary
+              type='submit'
+            >
+              {i18n.t('Submit', { lng: lang })}
+            </Button>
+          </Form>
+        )}
+
+        {(step === 2) && (
+          <Form>
+            <Form.Input fluid
+              autoFocus
+              name='passwordRecoveryToken'
+              label={i18n.t('Password recovery token', { lng: lang })}
+              placeholder={i18n.t('Password recovery token', { lng: lang })}
+              value={code}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>, data: InputOnChangeData) => setCode(data.value)}
+            />
+          </Form>
+        )}
+
+        {(step === 3) && (
+          <Form onSubmit={handleSubmitPasswordReset}>
+            <Form.Input fluid
+              autoFocus
+              name='newPassword'
+              label={i18n.t('New password', { lng: lang })}
+              placeholder={i18n.t('New password', { lng: lang })}
+              value={password}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>, data: InputOnChangeData) => setPassword(data.value)}
+              type={showPassword ? 'text' : 'password'}
+              error={passwordError ? { content: passwordError } : null}
+              icon={(
+                <Icon link
+                  name={showPassword ? 'eye slash' : 'eye'}
+                  onClick={() => setShowPassword(!showPassword)}
+                />
+              )}
+            />
+            <Button primary
+              type='submit'
+            >
+              {i18n.t('Submit', { lng: lang })}
+            </Button>
+          </Form>
+        )}
+
+        <Dimmer active={loading}>
+          <Loader />
+        </Dimmer>
+
+      </Modal.Content>
+      <Modal.Actions>
+        <Button.Group>
+          <Button onClick={handlePrevStep}
+            disabled={step === 1}
+          >
+            <Icon size='large'
+              name='chevron left'
+            />
+          </Button>
+          <Button onClick={handleNextStep}
+            disabled={step === 3 || (step === 2 && !code)}
+          >
+            <Icon size='large'
+              name='chevron right'
+            />
+          </Button>
+        </Button.Group>
+      </Modal.Actions>
+    </Modal>
+  );
+};
+
+export default ResetPasswordModal;

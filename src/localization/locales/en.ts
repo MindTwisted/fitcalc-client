@@ -24,6 +24,15 @@ export default {
   'Submit': 'Submit',
   'Name': 'Name',
   'Email': 'Email',
-  'Password': 'Password'
+  'Password': 'Password',
+  'Forgot password?': 'Forgot password?',
+  'Password recovery': 'Password recovery',
+  'Enter email': 'Enter email',
+  'You will get a password recovery token': 'You will get a password recovery token',
+  'Enter password recovery token': 'Enter password recovery token',
+  'The one that was sent to you by email': 'The one that was sent to you by email',
+  'Change password': 'Change password',
+  'Password recovery token': 'Password recovery token',
+  'New password': 'New password'
 };
 

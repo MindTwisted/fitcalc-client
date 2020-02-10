@@ -24,6 +24,15 @@ export default {
   'Submit': 'Подтвердить',
   'Name': 'Имя',
   'Email': 'Адрес электронной почты',
-  'Password': 'Пароль'
+  'Password': 'Пароль',
+  'Forgot password?': 'Забыли пароль?',
+  'Password recovery': 'Восстановление пароля',
+  'Enter email': 'Введите адрес электронной почты',
+  'You will get a password recovery token': 'Вы получите токен восстановления пароля',
+  'Enter password recovery token': 'Введите токен восстановления пароля',
+  'The one that was sent to you by email': 'Тот, который был отправлен вам по электронной почте',
+  'Change password': 'Поменяйте пароль',
+  'Password recovery token': 'Токен восстановления пароля',
+  'New password': 'Новый пароль'
 };
 
