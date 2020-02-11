@@ -3,18 +3,18 @@ import { getApiPrefix } from './config';
 
 const getUsersPrefix = () => `${getApiPrefix()}/users`;
 
-export const initiatePasswordReset = (email = ''): Promise<{
+export const initiatePasswordRecovery = (email = ''): Promise<{
   data: {
     message: string
   }
 }> => {
-  return axios.post(`${getUsersPrefix()}/initiate_password_reset`, { email });
+  return axios.post(`${getUsersPrefix()}/initiate_password_recovery`, { email });
 };
 
-export const confirmPasswordReset = ({ token = '', password = '' } = {}): Promise<{
+export const confirmPasswordRecovery = ({ token = '', password = '' } = {}): Promise<{
   data: {
     message: string
   }
 }> => {
-  return axios.post(`${getUsersPrefix()}/confirm_password_reset`, { token, password });
+  return axios.post(`${getUsersPrefix()}/confirm_password_recovery`, { token, password });
 };

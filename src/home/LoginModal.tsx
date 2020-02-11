@@ -3,7 +3,7 @@ import { Button, Form, InputOnChangeData, Modal } from 'semantic-ui-react';
 import i18n from '../localization/i18n';
 import { auth, login } from '../api/auth';
 import { boundSetAccessToken, boundSetRefreshToken, boundSetUser } from '../store/auth/actions';
-import ResetPasswordModal from './ResetPasswordModal';
+import PasswordRecoveryModal from './PasswordRecoveryModal';
 
 type LoginModalProps = {
   open: boolean,
@@ -25,7 +25,7 @@ const LoginModal: React.FC<LoginModalProps> = ({
   const [loading, setLoading] = useState(false);
   const initialFormData = { email: '', password: '' };
   const [formData, setFormData] = useState(initialFormData);
-  const [resetPasswordModalOpen, setResetPasswordModalOpen] = useState(false);
+  const [passwordRecoveryModalOpen, setPasswordRecoveryModalOpen] = useState(false);
 
   const handleClose = () => {
     setFormData(initialFormData);
@@ -99,7 +99,7 @@ const LoginModal: React.FC<LoginModalProps> = ({
               </Button>
               <Button basic
                 type='button'
-                onClick={() => setResetPasswordModalOpen(true)}
+                onClick={() => setPasswordRecoveryModalOpen(true)}
               >
                 {i18n.t('Forgot password?', { lng: lang })}
               </Button>
@@ -108,9 +108,9 @@ const LoginModal: React.FC<LoginModalProps> = ({
         </Modal.Description>
       </Modal.Content>
 
-      <ResetPasswordModal open={resetPasswordModalOpen}
+      <PasswordRecoveryModal open={passwordRecoveryModalOpen}
         lang={lang}
-        closeModal={() => setResetPasswordModalOpen(false)}
+        closeModal={() => setPasswordRecoveryModalOpen(false)}
       />
     </Modal>
   )

@@ -2,19 +2,19 @@ import React, { useState } from 'react';
 import { Modal, Step, Button, Icon, Form, Loader, Dimmer } from 'semantic-ui-react';
 import { InputOnChangeData } from 'semantic-ui-react/dist/commonjs/elements/Input/Input';
 import i18n from '../localization/i18n';
-import { initiatePasswordReset, confirmPasswordReset } from '../api/users';
+import { initiatePasswordRecovery, confirmPasswordRecovery } from '../api/users';
 
-type ResetPasswordModalProps = {
+type PasswordRecoveryModalProps = {
   open: boolean,
   lang: string,
   closeModal(): void
 }
 
-const ResetPasswordModal: React.FC<ResetPasswordModalProps> = ({ 
+const PasswordRecoveryModal: React.FC<PasswordRecoveryModalProps> = ({
   open, 
   lang, 
   closeModal 
-}: ResetPasswordModalProps) => {
+}: PasswordRecoveryModalProps) => {
   const [loading, setLoading] = useState(false);
   const [step, setStep] = useState(1);
   const [email, setEmail] = useState('');
@@ -39,11 +39,11 @@ const ResetPasswordModal: React.FC<ResetPasswordModalProps> = ({
     }
   };
 
-  const handleInitiatePasswordReset = async () => {
+  const handleInitiatePasswordRecovery = async () => {
     setLoading(true);
 
     try {
-      await initiatePasswordReset(email);
+      await initiatePasswordRecovery(email);
 
       setLoading(false);
     } catch (error) {
@@ -51,11 +51,11 @@ const ResetPasswordModal: React.FC<ResetPasswordModalProps> = ({
     }
   };
 
-  const handleSubmitPasswordReset = async () => {
+  const handleConfirmPasswordRecovery = async () => {
     setLoading(true);
 
     try {
-      await confirmPasswordReset({ token: code, password: password });
+      await confirmPasswordRecovery({ token: code, password: password });
 
       setLoading(false);
       setPasswordError('');
@@ -119,7 +119,7 @@ const ResetPasswordModal: React.FC<ResetPasswordModalProps> = ({
         </Step.Group>
         
         {(step === 1) && (
-          <Form onSubmit={handleInitiatePasswordReset}>
+          <Form onSubmit={handleInitiatePasswordRecovery}>
             <Form.Input fluid
               autoFocus
               name='email'
@@ -150,7 +150,7 @@ const ResetPasswordModal: React.FC<ResetPasswordModalProps> = ({
         )}
 
         {(step === 3) && (
-          <Form onSubmit={handleSubmitPasswordReset}>
+          <Form onSubmit={handleConfirmPasswordRecovery}>
             <Form.Input fluid
               autoFocus
               name='newPassword'
@@ -202,4 +202,4 @@ const ResetPasswordModal: React.FC<ResetPasswordModalProps> = ({
   );
 };
 
-export default ResetPasswordModal;
+export default PasswordRecoveryModal;
