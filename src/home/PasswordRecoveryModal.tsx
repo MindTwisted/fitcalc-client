@@ -18,6 +18,7 @@ const PasswordRecoveryModal: React.FC<PasswordRecoveryModalProps> = ({
   const [loading, setLoading] = useState(false);
   const [step, setStep] = useState(1);
   const [email, setEmail] = useState('');
+  const [emailError, setEmailError] = useState('');
   const [code, setCode] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -46,8 +47,14 @@ const PasswordRecoveryModal: React.FC<PasswordRecoveryModalProps> = ({
       await initiatePasswordRecovery(email);
 
       setLoading(false);
+      setEmailError('');
+
+      handleNextStep();
     } catch (error) {
+      const violations = error.response.data.data?.violations || {};
+
       setLoading(false);
+      setEmailError(violations['children[email].data']);
     }
   };
 
@@ -74,6 +81,9 @@ const PasswordRecoveryModal: React.FC<PasswordRecoveryModalProps> = ({
     setEmail('');
     setCode('');
     setPassword('');
+    setEmailError('');
+    setPasswordError('');
+    setShowPassword(false);
 
     closeModal();
   };
@@ -127,6 +137,7 @@ const PasswordRecoveryModal: React.FC<PasswordRecoveryModalProps> = ({
               placeholder={i18n.t('Email', { lng: lang })}
               value={email}
               onChange={(event: React.ChangeEvent<HTMLInputElement>, data: InputOnChangeData) => setEmail(data.value)}
+              error={emailError ? { content: emailError } : null}
             />
             <Button primary
               type='submit'
