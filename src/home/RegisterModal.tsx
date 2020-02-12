@@ -2,6 +2,7 @@ import React, { ChangeEvent, useState } from 'react';
 import { Button, Form, InputOnChangeData, Modal } from 'semantic-ui-react';
 import i18n from '../localization/i18n';
 import { register } from '../api/auth';
+import { getViolationsFromAxiosError } from '../api/utils';
 
 type RegisterModalProps = {
   open: boolean,
@@ -39,7 +40,7 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ open, lang, closeModal }:
       setLoading(false);
       handleClose();
     } catch(error) {
-      const violations = error.response.data.data?.violations || {};
+      const violations = getViolationsFromAxiosError(error);
 
       setLoading(false);
       setFormError({

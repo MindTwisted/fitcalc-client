@@ -3,6 +3,7 @@ import { Modal, Step, Button, Icon, Form, Loader, Dimmer } from 'semantic-ui-rea
 import { InputOnChangeData } from 'semantic-ui-react/dist/commonjs/elements/Input/Input';
 import i18n from '../localization/i18n';
 import { initiatePasswordRecovery, confirmPasswordRecovery } from '../api/users';
+import { getViolationsFromAxiosError } from '../api/utils';
 
 type PasswordRecoveryModalProps = {
   open: boolean,
@@ -51,7 +52,7 @@ const PasswordRecoveryModal: React.FC<PasswordRecoveryModalProps> = ({
 
       handleNextStep();
     } catch (error) {
-      const violations = error.response.data.data?.violations || {};
+      const violations = getViolationsFromAxiosError(error);
 
       setLoading(false);
       setEmailError(violations['children[email].data']);
@@ -69,7 +70,7 @@ const PasswordRecoveryModal: React.FC<PasswordRecoveryModalProps> = ({
 
       handleClose();
     } catch (error) {
-      const violations = error.response.data.data?.violations || {};
+      const violations = getViolationsFromAxiosError(error);
 
       setLoading(false);
       setPasswordError(violations.plainPassword);
