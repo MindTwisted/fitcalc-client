@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useState } from 'react';
-import { Button, Form, InputOnChangeData, Modal } from 'semantic-ui-react';
+import { Button, Form, Icon, InputOnChangeData, Modal } from 'semantic-ui-react';
 import i18n from '../localization/i18n';
 import { register } from '../api/auth';
 import { getViolationsFromAxiosError } from '../api/utils';
@@ -16,10 +16,12 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ open, lang, closeModal }:
   const initialFormError = { name: null, email: null, password: null };
   const [formData, setFormData] = useState(initialFormData);
   const [formError, setFormError] = useState(initialFormError);
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleClose = () => {
     setFormData(initialFormData);
     setFormError(initialFormError);
+    setShowPassword(false);
 
     closeModal();
   };
@@ -85,10 +87,16 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ open, lang, closeModal }:
               name='password'
               label={i18n.t('Password', { lng: lang })}
               placeholder={i18n.t('Password', { lng: lang })}
-              type='password'
               value={formData.password}
               onChange={handleChange}
+              type={showPassword ? 'text' : 'password'}
               error={formError.password ? { content: formError.password } : null}
+              icon={(
+                <Icon link
+                  name={showPassword ? 'eye slash' : 'eye'}
+                  onClick={() => setShowPassword(!showPassword)}
+                />
+              )}
             />
             <Button primary
               type='submit'

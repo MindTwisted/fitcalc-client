@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useState } from 'react';
-import { Button, Form, InputOnChangeData, Modal } from 'semantic-ui-react';
+import { Button, Form, Icon, InputOnChangeData, Modal } from 'semantic-ui-react';
 import i18n from '../localization/i18n';
 import { auth, login } from '../api/auth';
 import { boundSetAccessToken, boundSetRefreshToken, boundSetUser } from '../store/auth/actions';
@@ -25,10 +25,12 @@ const LoginModal: React.FC<LoginModalProps> = ({
   const [loading, setLoading] = useState(false);
   const initialFormData = { email: '', password: '' };
   const [formData, setFormData] = useState(initialFormData);
+  const [showPassword, setShowPassword] = useState(false);
   const [passwordRecoveryModalOpen, setPasswordRecoveryModalOpen] = useState(false);
 
   const handleClose = () => {
     setFormData(initialFormData);
+    setShowPassword(false);
 
     closeModal();
   };
@@ -87,9 +89,15 @@ const LoginModal: React.FC<LoginModalProps> = ({
               name='password'
               label={i18n.t('Password', { lng: lang })}
               placeholder={i18n.t('Password', { lng: lang })}
-              type='password'
               value={formData.password}
               onChange={handleChange}
+              type={showPassword ? 'text' : 'password'}
+              icon={(
+                <Icon link
+                  name={showPassword ? 'eye slash' : 'eye'}
+                  onClick={() => setShowPassword(!showPassword)}
+                />
+              )}
             />
             <Form.Field>
               <Button primary
