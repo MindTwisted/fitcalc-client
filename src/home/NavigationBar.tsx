@@ -4,11 +4,14 @@ import { Link } from 'react-router-dom';
 import routes from '../routes';
 import i18n from '../localization/i18n';
 import logo from '../logo.svg';
+import { AuthState } from '../store/auth/types';
 import { boundSetAccessToken, boundSetRefreshToken, boundSetUser } from '../store/auth/actions';
-import { boundSetLang } from '../store/system/actions';
+import { boundSetLang, boundSetLoading } from '../store/system/actions';
+import { deleteRefreshTokenById } from '../api/refresh_tokens';
 
 type NavigationBarProps = {
   fixed: boolean,
+  auth: AuthState,
   lang: string,
   isLoggedIn: boolean,
   isAppUser: boolean,
@@ -16,19 +19,22 @@ type NavigationBarProps = {
   setAccessToken: typeof boundSetAccessToken,
   setRefreshToken: typeof boundSetRefreshToken,
   setUser: typeof boundSetUser,
+  setLoading: typeof boundSetLoading,
   setLoginModalOpen(state: boolean): void,
   setRegisterModalOpen(state: boolean): void
 }
 
 const NavigationBar: React.FC<NavigationBarProps> = ({ 
   fixed, 
-  lang, 
+  auth,
+  lang,
   isLoggedIn, 
   isAppUser,
   setLang, 
   setAccessToken, 
   setRefreshToken, 
   setUser,
+  setLoading,
   setLoginModalOpen,
   setRegisterModalOpen
 }: NavigationBarProps) => {
@@ -43,10 +49,21 @@ const NavigationBar: React.FC<NavigationBarProps> = ({
     }
   ];
 
-  const handleLogout = () => {
-    setAccessToken(null);
-    setRefreshToken(null);
-    setUser(null);
+  const handleLogout = async () => {
+    setLoading(true);
+
+    try {
+      if (auth.refreshToken?.id) {
+        await deleteRefreshTokenById(auth.refreshToken.id);
+      }
+
+      setAccessToken(null);
+      setRefreshToken(null);
+      setUser(null);
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+    }
   };
 
   return (

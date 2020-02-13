@@ -1,12 +1,19 @@
 export interface SystemState {
-    lang: string
+    lang: string,
+    loading: boolean
 }
 
 export const SET_LANG = 'SET_LANG';
+export const SET_LOADING = 'SET_LOADING';
 
 interface SetLangAction {
     type: typeof SET_LANG,
     lang: string
 }
 
-export type SystemActionTypes = SetLangAction;
+interface SetLoadingAction {
+    type: typeof SET_LOADING,
+    loading: boolean
+}
+
+export type SystemActionTypes = SetLangAction | SetLoadingAction;

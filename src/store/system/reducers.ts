@@ -1,7 +1,8 @@
-import { SET_LANG, SystemActionTypes, SystemState } from './types';
+import { SET_LANG, SET_LOADING, SystemActionTypes, SystemState } from './types';
 
 const initialState: SystemState = {
-  lang: localStorage.getItem('lang') || 'en'
+  lang: localStorage.getItem('lang') || 'en',
+  loading: false
 };
 
 export function systemReducer(state: SystemState = initialState, action: SystemActionTypes): SystemState {
@@ -10,6 +11,11 @@ export function systemReducer(state: SystemState = initialState, action: SystemA
       return {
         ...state,
         lang: action.lang
+      };
+    case SET_LOADING:
+      return {
+        ...state,
+        loading: action.loading
       };
     default:
       return state;

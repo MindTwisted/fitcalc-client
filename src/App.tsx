@@ -11,12 +11,12 @@ import { isAppUserSelector, isLoggedInSelector } from './store/auth/selectors';
 import { connect, ConnectedProps } from 'react-redux';
 
 const Application = loadable(() => import('./app/Application'), {
-  fallback: <Loading />
+  fallback: <Loading active={true} />
 });
 
 type AppProps = ConnectedProps<typeof connector>;
 
-const App: React.FC<AppProps> = ({ isLoggedIn, isAppUser }: AppProps) => {
+const App: React.FC<AppProps> = ({ system, isLoggedIn, isAppUser }: AppProps) => {
   return (
     <div className="App">
       <Router>
@@ -34,11 +34,13 @@ const App: React.FC<AppProps> = ({ isLoggedIn, isAppUser }: AppProps) => {
       </Router>
 
       <Notification />
+      <Loading active={system.loading} />
     </div>
   );
 };
 
 const mapStateToProps = (state: RootState) => ({
+  system: state.system,
   isLoggedIn: isLoggedInSelector(state),
   isAppUser: isAppUserSelector(state)
 });

@@ -1,11 +1,11 @@
-import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
+import axios, { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 import { toast } from 'react-semantic-toasts';
 import { apiRoot } from './config';
 import { store } from '../store';
 import { boundSetAccessToken, boundSetRefreshToken, boundSetUser } from '../store/auth/actions';
 import { refresh } from './auth';
 
-const axiosInstance: any =  axios.create({
+const axiosInstance: AxiosInstance =  axios.create({
   baseURL: apiRoot,
   responseType: 'json'
 });

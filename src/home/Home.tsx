@@ -5,7 +5,7 @@ import NavigationBar from './NavigationBar';
 import Heading from './Heading';
 import Layout from './Layout';
 import { RootState } from '../store';
-import { boundSetLang } from '../store/system/actions';
+import { boundSetLang, boundSetLoading } from '../store/system/actions';
 import { bindActionCreators, Dispatch } from 'redux';
 import { boundSetAccessToken, boundSetRefreshToken, boundSetUser } from '../store/auth/actions';
 import { isAppUserSelector, isLoggedInSelector } from '../store/auth/selectors';
@@ -16,12 +16,14 @@ type HomeProps = ConnectedProps<typeof connector>;
 
 const Home: React.FC<HomeProps> = ({ 
   system, 
+  auth,
   isLoggedIn, 
   isAppUser, 
   setLang, 
   setAccessToken, 
   setRefreshToken, 
-  setUser 
+  setUser,
+  setLoading
 }: HomeProps) => {
   const [fixed, setFixed] = useState(false);
   const [mobile, setMobile] = useState(false);
@@ -55,6 +57,7 @@ const Home: React.FC<HomeProps> = ({
             vertical
           >
             <NavigationBar fixed={fixed}
+              auth={auth}
               lang={system.lang}
               isLoggedIn={isLoggedIn}
               isAppUser={isAppUser}
@@ -62,6 +65,7 @@ const Home: React.FC<HomeProps> = ({
               setAccessToken={setAccessToken}
               setRefreshToken={setRefreshToken}
               setUser={setUser}
+              setLoading={setLoading}
               setLoginModalOpen={setLoginModalOpen}
               setRegisterModalOpen={setRegisterModalOpen}
             />
@@ -98,6 +102,7 @@ const Home: React.FC<HomeProps> = ({
 
 const mapStateToProps = (state: RootState) => ({
   system: state.system,
+  auth: state.auth,
   isLoggedIn: isLoggedInSelector(state),
   isAppUser: isAppUserSelector(state)
 });
@@ -106,7 +111,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
     setLang: boundSetLang,
     setAccessToken: boundSetAccessToken,
     setRefreshToken: boundSetRefreshToken,
-    setUser: boundSetUser
+    setUser: boundSetUser,
+    setLoading: boundSetLoading
   }, dispatch)
 };
 const connector = connect(mapStateToProps, mapDispatchToProps);
