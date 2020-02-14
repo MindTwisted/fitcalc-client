@@ -4,37 +4,27 @@ import { Link } from 'react-router-dom';
 import routes from '../routes';
 import i18n from '../localization/i18n';
 import logo from '../logo.svg';
-import { AuthState } from '../store/auth/types';
-import { boundSetAccessToken, boundSetRefreshToken, boundSetUser } from '../store/auth/actions';
-import { boundSetLang, boundSetLoading } from '../store/system/actions';
-import { deleteRefreshTokenById } from '../api/refresh_tokens';
+import { boundLogout } from '../store/auth/actions';
+import { boundSetLang } from '../store/system/actions';
 
 type NavigationBarProps = {
   fixed: boolean,
-  auth: AuthState,
   lang: string,
   isLoggedIn: boolean,
   isAppUser: boolean,
   setLang: typeof boundSetLang,
-  setAccessToken: typeof boundSetAccessToken,
-  setRefreshToken: typeof boundSetRefreshToken,
-  setUser: typeof boundSetUser,
-  setLoading: typeof boundSetLoading,
+  logout: typeof boundLogout,
   setLoginModalOpen(state: boolean): void,
   setRegisterModalOpen(state: boolean): void
 }
 
 const NavigationBar: React.FC<NavigationBarProps> = ({ 
-  fixed, 
-  auth,
+  fixed,
   lang,
   isLoggedIn, 
   isAppUser,
-  setLang, 
-  setAccessToken, 
-  setRefreshToken, 
-  setUser,
-  setLoading,
+  setLang,
+  logout,
   setLoginModalOpen,
   setRegisterModalOpen
 }: NavigationBarProps) => {
@@ -48,23 +38,6 @@ const NavigationBar: React.FC<NavigationBarProps> = ({
       value: 'ru'
     }
   ];
-
-  const handleLogout = async () => {
-    setLoading(true);
-
-    try {
-      if (auth.refreshToken?.id) {
-        await deleteRefreshTokenById(auth.refreshToken.id);
-      }
-
-      setAccessToken(null);
-      setRefreshToken(null);
-      setUser(null);
-      setLoading(false);
-    } catch (error) {
-      setLoading(false);
-    }
-  };
 
   return (
     <Menu
@@ -99,7 +72,7 @@ const NavigationBar: React.FC<NavigationBarProps> = ({
           {isLoggedIn ? (
             <Button as='a'
               inverted={!fixed}
-              onClick={handleLogout}
+              onClick={logout}
             >
               {i18n.t('Logout', { lng: lang })}
             </Button>

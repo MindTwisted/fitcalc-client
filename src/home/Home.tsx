@@ -5,9 +5,9 @@ import NavigationBar from './NavigationBar';
 import Heading from './Heading';
 import Layout from './Layout';
 import { RootState } from '../store';
-import { boundSetLang, boundSetLoading } from '../store/system/actions';
+import { boundSetLang } from '../store/system/actions';
 import { bindActionCreators, Dispatch } from 'redux';
-import { boundSetAccessToken, boundSetRefreshToken, boundSetUser } from '../store/auth/actions';
+import { boundLogout, boundSetAccessToken, boundSetRefreshToken, boundSetUser } from '../store/auth/actions';
 import { isAppUserSelector, isLoggedInSelector } from '../store/auth/selectors';
 import LoginModal from './LoginModal';
 import RegisterModal from './RegisterModal';
@@ -17,15 +17,14 @@ type HomeProps = ConnectedProps<typeof connector> & {
 };
 
 const Home: React.FC<HomeProps> = ({ 
-  system, 
-  auth,
+  system,
   isLoggedIn, 
   isAppUser, 
   setLang, 
   setAccessToken, 
   setRefreshToken, 
   setUser,
-  setLoading,
+  logout,
   mobile
 }: HomeProps) => {
   const [fixed, setFixed] = useState(false);
@@ -47,15 +46,11 @@ const Home: React.FC<HomeProps> = ({
             vertical
           >
             <NavigationBar fixed={fixed}
-              auth={auth}
               lang={system.lang}
               isLoggedIn={isLoggedIn}
               isAppUser={isAppUser}
               setLang={setLang}
-              setAccessToken={setAccessToken}
-              setRefreshToken={setRefreshToken}
-              setUser={setUser}
-              setLoading={setLoading}
+              logout={logout}
               setLoginModalOpen={setLoginModalOpen}
               setRegisterModalOpen={setRegisterModalOpen}
             />
@@ -92,7 +87,6 @@ const Home: React.FC<HomeProps> = ({
 
 const mapStateToProps = (state: RootState) => ({
   system: state.system,
-  auth: state.auth,
   isLoggedIn: isLoggedInSelector(state),
   isAppUser: isAppUserSelector(state)
 });
@@ -102,7 +96,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
     setAccessToken: boundSetAccessToken,
     setRefreshToken: boundSetRefreshToken,
     setUser: boundSetUser,
-    setLoading: boundSetLoading
+    logout: boundLogout
   }, dispatch)
 };
 const connector = connect(mapStateToProps, mapDispatchToProps);

@@ -1,5 +1,18 @@
-import { AccessToken, AuthActionTypes, RefreshToken, SET_ACCESS_TOKEN, SET_REFRESH_TOKEN, SET_USER, User } from './types';
+import {
+  AccessToken,
+  AuthActionTypes,
+  AuthState,
+  RefreshToken,
+  SET_ACCESS_TOKEN,
+  SET_REFRESH_TOKEN,
+  SET_USER,
+  User
+} from './types';
 import { Dispatch } from 'redux';
+import { RootState } from '../index';
+import { boundSetLoading } from '../system/actions';
+import { deleteRefreshTokenById } from '../../api/refresh_tokens';
+import { SystemActionTypes } from '../system/types';
 
 export function setAccessToken(accessToken: AccessToken | null): AuthActionTypes {
   return {
@@ -55,5 +68,26 @@ export function boundSetUser(user: User | null): Function {
     }
 
     dispatch(setUser(user));
+  }
+}
+
+export function boundLogout(): Function {
+  return async function (dispatch: Dispatch<AuthActionTypes | SystemActionTypes>, getState: () => RootState): Promise<void> {
+    const { auth }: {auth: AuthState} = getState();
+
+    boundSetLoading(true)(dispatch);
+
+    try {
+      if (auth.refreshToken?.id) {
+        await deleteRefreshTokenById(auth.refreshToken.id);
+      }
+
+      boundSetAccessToken(null)(dispatch);
+      boundSetRefreshToken(null)(dispatch);
+      boundSetUser(null)(dispatch);
+      boundSetLoading(false)(dispatch);
+    } catch (error) {
+      boundSetLoading(false)(dispatch);
+    }
   }
 }

@@ -3,8 +3,7 @@ import { bindActionCreators, Dispatch } from 'redux';
 import { connect, ConnectedProps } from 'react-redux';
 import { Header, Image, Segment, Sidebar } from 'semantic-ui-react';
 import { RootState } from '../store';
-import { boundSetLang, boundSetLoading } from '../store/system/actions';
-import { boundSetAccessToken, boundSetRefreshToken, boundSetUser } from '../store/auth/actions';
+import { boundLogout } from '../store/auth/actions';
 import SidebarNavigation from './SidebarNavigation';
 
 type ApplicationProps = ConnectedProps<typeof connector> & {
@@ -13,23 +12,15 @@ type ApplicationProps = ConnectedProps<typeof connector> & {
 
 const Application: React.FC<ApplicationProps> = ({ 
   system, 
-  auth, 
-  setLang, 
-  setAccessToken, 
-  setRefreshToken, 
-  setUser, 
-  setLoading,
+  auth,
+  logout,
   mobile
 }: ApplicationProps) => {
   return (
     <Sidebar.Pushable style={{ minHeight: '100vh' }}>
       <SidebarNavigation lang={system.lang}
         auth={auth}
-        setLoading={setLoading}
-        setAccessToken={setAccessToken}
-        setRefreshToken={setRefreshToken}
-        setUser={setUser}
-        setLang={setLang}
+        logout={logout}
         mobile={mobile}
       />
 
@@ -49,11 +40,7 @@ const mapStateToProps = (state: RootState) => ({
 });
 const mapDispatchToProps = (dispatch: Dispatch) => {
   return bindActionCreators({
-    setLang: boundSetLang,
-    setAccessToken: boundSetAccessToken,
-    setRefreshToken: boundSetRefreshToken,
-    setUser: boundSetUser,
-    setLoading: boundSetLoading
+    logout: boundLogout
   }, dispatch)
 };
 const connector = connect(mapStateToProps, mapDispatchToProps);
