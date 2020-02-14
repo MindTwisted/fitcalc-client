@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import loadable from '@loadable/component';
 import routes from './routes';
@@ -17,19 +17,35 @@ const Application = loadable(() => import('./app/Application'), {
 type AppProps = ConnectedProps<typeof connector>;
 
 const App: React.FC<AppProps> = ({ system, isLoggedIn, isAppUser }: AppProps) => {
+  const [mobile, setMobile] = useState(window.innerWidth < 768);
+  
+  const handleResize = () => {
+    setMobile(window.innerWidth < 768);
+  };
+
+  useEffect(() => {
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+    
   return (
     <div className="App">
       <Router>
         <Switch>
           <Route exact
             path={routes.home}
-            component={Home}
-          />
+          >
+            <Home mobile={mobile} />
+          </Route>
           <ProtectedRoute isAllowed={isLoggedIn && isAppUser}
             redirect={routes.home}
             path={routes.app}
-            component={Application}
-          />
+          >
+            <Application mobile={mobile} />
+          </ProtectedRoute>
         </Switch>
       </Router>
 

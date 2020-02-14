@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import { Responsive, Visibility, Segment } from 'semantic-ui-react';
 import NavigationBar from './NavigationBar';
@@ -12,7 +12,9 @@ import { isAppUserSelector, isLoggedInSelector } from '../store/auth/selectors';
 import LoginModal from './LoginModal';
 import RegisterModal from './RegisterModal';
 
-type HomeProps = ConnectedProps<typeof connector>;
+type HomeProps = ConnectedProps<typeof connector> & {
+  mobile: boolean
+};
 
 const Home: React.FC<HomeProps> = ({ 
   system, 
@@ -23,24 +25,12 @@ const Home: React.FC<HomeProps> = ({
   setAccessToken, 
   setRefreshToken, 
   setUser,
-  setLoading
+  setLoading,
+  mobile
 }: HomeProps) => {
   const [fixed, setFixed] = useState(false);
-  const [mobile, setMobile] = useState(false);
   const [registerModalOpen, setRegisterModalOpen] = useState(false);
   const [loginModalOpen, setLoginModalOpen] = useState(false);
-
-  const handleResize = () => {
-    setMobile(window.innerWidth < 768);
-  };
-  
-  useEffect(() => {
-    window.addEventListener('resize', handleResize);
-
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
 
   return (
     <React.Fragment>

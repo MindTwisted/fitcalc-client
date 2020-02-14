@@ -13,7 +13,8 @@ type SidebarNavigationProps = {
   setAccessToken: typeof boundSetAccessToken,
   setRefreshToken: typeof boundSetRefreshToken,
   setUser: typeof boundSetUser,
-  setLang: typeof boundSetLang
+  setLang: typeof boundSetLang,
+  mobile: boolean
 }
 
 const SidebarNavigation: React.FC<SidebarNavigationProps> = ({ 
@@ -23,7 +24,8 @@ const SidebarNavigation: React.FC<SidebarNavigationProps> = ({
   setAccessToken,
   setRefreshToken,
   setUser,
-  setLang
+  setLang,
+  mobile
 }: SidebarNavigationProps) => {
   const handleLogout = async () => {
     setLoading(true);
@@ -46,16 +48,16 @@ const SidebarNavigation: React.FC<SidebarNavigationProps> = ({
     <Sidebar
       as={Menu}
       animation='push'
-      icon='labeled'
+      icon={mobile ? true : 'labeled'}
       inverted
       vertical
       visible
-      width='thin'
+      width={mobile ? 'very thin' : 'thin'}
     >
 
       <Menu.Item as='a'>
         <Icon name='user' />
-        {auth.user?.name}
+        {!mobile && auth.user?.name}
       </Menu.Item>
 
       <Divider inverted
@@ -66,15 +68,15 @@ const SidebarNavigation: React.FC<SidebarNavigationProps> = ({
         active
       >
         <Icon name='pie graph' />
-          Stats
+        {!mobile && 'Stats'}
       </Menu.Item>
       <Menu.Item as='a'>
         <Icon name='shopping basket' />
-          Products
+        {!mobile && 'Products'}
       </Menu.Item>
       <Menu.Item as='a'>
         <Icon name='food' />
-          Eating
+        {!mobile && 'Eating'}
       </Menu.Item>
 
       <Divider inverted
@@ -85,7 +87,7 @@ const SidebarNavigation: React.FC<SidebarNavigationProps> = ({
         onClick={handleLogout}
       >
         <Icon name='shutdown' />
-        {i18n.t('Logout', { lng: lang })}
+        {!mobile && i18n.t('Logout', { lng: lang })}
       </Menu.Item>
     </Sidebar>
   );

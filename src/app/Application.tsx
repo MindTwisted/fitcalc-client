@@ -7,7 +7,9 @@ import { boundSetLang, boundSetLoading } from '../store/system/actions';
 import { boundSetAccessToken, boundSetRefreshToken, boundSetUser } from '../store/auth/actions';
 import SidebarNavigation from './SidebarNavigation';
 
-type ApplicationProps = ConnectedProps<typeof connector>;
+type ApplicationProps = ConnectedProps<typeof connector> & {
+  mobile: boolean
+};
 
 const Application: React.FC<ApplicationProps> = ({ 
   system, 
@@ -16,7 +18,8 @@ const Application: React.FC<ApplicationProps> = ({
   setAccessToken, 
   setRefreshToken, 
   setUser, 
-  setLoading 
+  setLoading,
+  mobile
 }: ApplicationProps) => {
   return (
     <Sidebar.Pushable style={{ minHeight: '100vh' }}>
@@ -27,6 +30,7 @@ const Application: React.FC<ApplicationProps> = ({
         setRefreshToken={setRefreshToken}
         setUser={setUser}
         setLang={setLang}
+        mobile={mobile}
       />
 
       <Sidebar.Pusher>
