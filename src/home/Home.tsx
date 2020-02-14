@@ -7,7 +7,7 @@ import Layout from './Layout';
 import { RootState } from '../store';
 import { boundSetLang } from '../store/system/actions';
 import { bindActionCreators, Dispatch } from 'redux';
-import { boundLogout, boundSetAccessToken, boundSetRefreshToken, boundSetUser } from '../store/auth/actions';
+import { boundLogin, boundLogout } from '../store/auth/actions';
 import { isAppUserSelector, isLoggedInSelector } from '../store/auth/selectors';
 import LoginModal from './LoginModal';
 import RegisterModal from './RegisterModal';
@@ -20,10 +20,8 @@ const Home: React.FC<HomeProps> = ({
   system,
   isLoggedIn, 
   isAppUser, 
-  setLang, 
-  setAccessToken, 
-  setRefreshToken, 
-  setUser,
+  setLang,
+  login,
   logout,
   mobile
 }: HomeProps) => {
@@ -73,9 +71,7 @@ const Home: React.FC<HomeProps> = ({
       <LoginModal lang={system.lang}
         open={loginModalOpen}
         closeModal={() => setLoginModalOpen(false)}
-        setAccessToken={setAccessToken}
-        setRefreshToken={setRefreshToken}
-        setUser={setUser}
+        login={login}
       />
       <RegisterModal lang={system.lang}
         open={registerModalOpen}
@@ -93,9 +89,7 @@ const mapStateToProps = (state: RootState) => ({
 const mapDispatchToProps = (dispatch: Dispatch) => {
   return bindActionCreators({
     setLang: boundSetLang,
-    setAccessToken: boundSetAccessToken,
-    setRefreshToken: boundSetRefreshToken,
-    setUser: boundSetUser,
+    login: boundLogin,
     logout: boundLogout
   }, dispatch)
 };

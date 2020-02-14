@@ -1,26 +1,21 @@
 import React, { ChangeEvent, useState } from 'react';
 import { Button, Form, Icon, InputOnChangeData, Modal } from 'semantic-ui-react';
 import i18n from '../localization/i18n';
-import { auth, login } from '../api/auth';
-import { boundSetAccessToken, boundSetRefreshToken, boundSetUser } from '../store/auth/actions';
+import { boundLogin } from '../store/auth/actions';
 import PasswordRecoveryModal from './PasswordRecoveryModal';
 
 type LoginModalProps = {
   open: boolean,
   lang: string,
   closeModal(): void,
-  setAccessToken: typeof boundSetAccessToken,
-  setRefreshToken: typeof boundSetRefreshToken,
-  setUser: typeof boundSetUser
+  login: typeof boundLogin
 }
 
 const LoginModal: React.FC<LoginModalProps> = ({ 
   open, 
   lang, 
-  closeModal, 
-  setAccessToken, 
-  setRefreshToken, 
-  setUser 
+  closeModal,
+  login
 }: LoginModalProps) => {
   const [loading, setLoading] = useState(false);
   const initialFormData = { email: '', password: '' };
@@ -46,18 +41,10 @@ const LoginModal: React.FC<LoginModalProps> = ({
     setLoading(true);
 
     try {
-      const loginResponse = await login(formData);
-      const loginData = loginResponse.data.data;
-
-      setAccessToken(loginData.access_token);
-      setRefreshToken(loginData.refresh_token);
-      
-      const authResponse = await auth();
-      const authData = authResponse.data.data;
-
-      setUser(authData.user);
+      await login(formData);
       
       setLoading(false);
+
       handleClose();
     } catch(error) {
       setLoading(false);

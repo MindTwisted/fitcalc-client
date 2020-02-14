@@ -13,6 +13,7 @@ import { RootState } from '../index';
 import { boundSetLoading } from '../system/actions';
 import { deleteRefreshTokenById } from '../../api/refresh_tokens';
 import { SystemActionTypes } from '../system/types';
+import { auth, login } from '../../api/auth';
 
 export function setAccessToken(accessToken: AccessToken | null): AuthActionTypes {
   return {
@@ -68,6 +69,27 @@ export function boundSetUser(user: User | null): Function {
     }
 
     dispatch(setUser(user));
+  }
+}
+
+export function boundLogin({ email = '', password = '' } = {}): Function {
+  return async function (dispatch: Dispatch<AuthActionTypes>): Promise<void> {
+    try {
+      const loginResponse = await login({ email, password });
+      const loginData = loginResponse.data.data;
+
+      boundSetAccessToken(loginData.access_token)(dispatch);
+      boundSetRefreshToken(loginData.refresh_token)(dispatch);
+
+      const authResponse = await auth();
+      const authData = authResponse.data.data;
+
+      boundSetUser(authData.user)(dispatch);
+
+      return Promise.resolve();
+    } catch (error) {
+      return Promise.reject(error);
+    }
   }
 }
 
