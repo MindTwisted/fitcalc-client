@@ -33,7 +33,7 @@ export function setUser(user: User | null): AuthActionTypes {
   return {
     type: SET_USER,
     user
-  }
+  };
 }
 
 export function boundSetAccessToken(accessToken: AccessToken | null): Function {
@@ -45,7 +45,7 @@ export function boundSetAccessToken(accessToken: AccessToken | null): Function {
     }
 
     dispatch(setAccessToken(accessToken));
-  }
+  };
 }
 
 export function boundSetRefreshToken(refreshToken: RefreshToken | null): Function {
@@ -57,7 +57,7 @@ export function boundSetRefreshToken(refreshToken: RefreshToken | null): Functio
     }
 
     dispatch(setRefreshToken(refreshToken));
-  }
+  };
 }
 
 export function boundSetUser(user: User | null): Function {
@@ -69,7 +69,7 @@ export function boundSetUser(user: User | null): Function {
     }
 
     dispatch(setUser(user));
-  }
+  };
 }
 
 export function boundLogin({ email = '', password = '' } = {}): Function {
@@ -90,7 +90,7 @@ export function boundLogin({ email = '', password = '' } = {}): Function {
     } catch (error) {
       return Promise.reject(error);
     }
-  }
+  };
 }
 
 export function boundLogout(): Function {
@@ -111,5 +111,5 @@ export function boundLogout(): Function {
     } catch (error) {
       boundSetLoading(false)(dispatch);
     }
-  }
+  };
 }

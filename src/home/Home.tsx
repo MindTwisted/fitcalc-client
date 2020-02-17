@@ -91,7 +91,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
     setLang: boundSetLang,
     login: boundLogin,
     logout: boundLogout
-  }, dispatch)
+  }, dispatch);
 };
 const connector = connect(mapStateToProps, mapDispatchToProps);
 

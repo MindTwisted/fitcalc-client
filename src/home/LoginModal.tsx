@@ -108,7 +108,7 @@ const LoginModal: React.FC<LoginModalProps> = ({
         closeModal={() => setPasswordRecoveryModalOpen(false)}
       />
     </Modal>
-  )
+  );
 };
 
 export default LoginModal;

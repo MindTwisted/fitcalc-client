@@ -60,7 +60,7 @@ const mapStateToProps = (state: RootState) => ({
 const mapDispatchToProps = (dispatch: Dispatch) => {
   return bindActionCreators({
     logout: boundLogout
-  }, dispatch)
+  }, dispatch);
 };
 const connector = connect(mapStateToProps, mapDispatchToProps);
 

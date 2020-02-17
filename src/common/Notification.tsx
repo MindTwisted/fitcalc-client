@@ -10,7 +10,7 @@ const Notification: React.FC = () => {
         animation='slide left'
       />
     </div>
-  )
+  );
 };
 
 export default Notification;

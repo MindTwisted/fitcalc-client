@@ -107,7 +107,7 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ open, lang, closeModal }:
         </Modal.Description>
       </Modal.Content>
     </Modal>
-  )
+  );
 };
 
 export default RegisterModal;
