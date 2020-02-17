@@ -8,7 +8,7 @@ type RegisterModalProps = {
   open: boolean,
   lang: string,
   closeModal(): void
-}
+};
 
 const RegisterModal: React.FC<RegisterModalProps> = ({ open, lang, closeModal }: RegisterModalProps) => {
   const [loading, setLoading] = useState(false);

@@ -10,7 +10,8 @@ type NavigationBarProps = {
     mobile: boolean,
     auth: AuthState,
     logout: typeof boundLogout,
-    lang: string
+    lang: string,
+    setSettingsModalOpen: (open: boolean) => void
 };
 
 const NavigationBar: React.FC<NavigationBarProps> = ({ 
@@ -19,7 +20,8 @@ const NavigationBar: React.FC<NavigationBarProps> = ({
   mobile,
   auth,
   logout,
-  lang
+  lang,
+  setSettingsModalOpen
 }: NavigationBarProps) => {
   return (
     <Sticky>
@@ -44,6 +46,7 @@ const NavigationBar: React.FC<NavigationBarProps> = ({
             <Dropdown.Menu>
               <Dropdown.Item icon={<Icon name='setting' />}
                 text={i18n.t('Settings', { lng: lang })}
+                onClick={() => setSettingsModalOpen(true)}
               />
               <Divider />
               <Dropdown.Item onClick={logout}

@@ -37,6 +37,9 @@ export default {
   'Settings': 'Settings',
   'Statistics': 'Statistics',
   'Products': 'Products',
-  'Eating': 'Eating'
+  'Eating': 'Eating',
+  'General': 'General',
+  'Profile': 'Profile',
+  'Sessions': 'Sessions'
 };
 

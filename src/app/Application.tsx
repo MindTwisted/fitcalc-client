@@ -6,6 +6,7 @@ import { RootState } from '../store';
 import { boundLogout } from '../store/auth/actions';
 import SidebarNavigation from './SidebarNavigation';
 import NavigationBar from './NavigationBar';
+import SettingsModal from './SettingsModal';
 
 type ApplicationProps = ConnectedProps<typeof connector> & {
   mobile: boolean
@@ -18,38 +19,47 @@ const Application: React.FC<ApplicationProps> = ({
   mobile
 }: ApplicationProps) => {
   const [sidebarVisible, setSidebarVisible] = useState(!mobile);
+  const [settingsModalOpen, setSettingsModalOpen] = useState(false);
 
   useEffect(() => {
     setSidebarVisible(!mobile);
   }, [mobile]);
   
   return (
-    <Sidebar.Pushable style={{ transform: 'none' }}>
-      <SidebarNavigation lang={system.lang}
-        mobile={mobile}
-        visible={sidebarVisible}
-        setVisible={setSidebarVisible}
-      />
-
-      <Sidebar.Pusher dimmed={mobile && sidebarVisible}
-        style={{ minHeight: '100vh' }}
-      >
-        <NavigationBar sidebarVisible={sidebarVisible}
-          setSidebarVisible={setSidebarVisible}
+    <React.Fragment>
+      <Sidebar.Pushable style={{ transform: 'none' }}>
+        <SidebarNavigation lang={system.lang}
           mobile={mobile}
-          auth={auth}
-          logout={logout}
-          lang={system.lang}
+          visible={sidebarVisible}
+          setVisible={setSidebarVisible}
         />
-        
-        <Segment basic
-          style={mobile ? null : { paddingLeft: 'calc(150px + 1em)' }}
+
+        <Sidebar.Pusher dimmed={mobile && sidebarVisible}
+          style={{ minHeight: '100vh' }}
         >
-          <Header as='h3'>Application Content</Header>
-          <Image src='https://react.semantic-ui.com/images/wireframe/paragraph.png' />
-        </Segment>
-      </Sidebar.Pusher>
-    </Sidebar.Pushable>
+          <NavigationBar sidebarVisible={sidebarVisible}
+            setSidebarVisible={setSidebarVisible}
+            mobile={mobile}
+            auth={auth}
+            logout={logout}
+            lang={system.lang}
+            setSettingsModalOpen={setSettingsModalOpen}
+          />
+
+          <Segment basic
+            style={mobile ? null : { paddingLeft: 'calc(150px + 1em)' }}
+          >
+            <Header as='h3'>Application Content</Header>
+            <Image src='https://react.semantic-ui.com/images/wireframe/paragraph.png' />
+          </Segment>
+        </Sidebar.Pusher>
+      </Sidebar.Pushable>
+      
+      <SettingsModal lang={system.lang}
+        open={settingsModalOpen}
+        closeModal={() => setSettingsModalOpen(false)}
+      />
+    </React.Fragment>
   );
 };
 
