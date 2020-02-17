@@ -33,6 +33,10 @@ export default {
   'The one that was sent to you by email': 'The one that was sent to you by email',
   'Change password': 'Change password',
   'Password recovery token': 'Password recovery token',
-  'New password': 'New password'
+  'New password': 'New password',
+  'Settings': 'Settings',
+  'Statistics': 'Statistics',
+  'Products': 'Products',
+  'Eating': 'Eating'
 };
 

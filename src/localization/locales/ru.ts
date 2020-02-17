@@ -33,6 +33,10 @@ export default {
   'The one that was sent to you by email': 'Тот, который был отправлен вам по электронной почте',
   'Change password': 'Поменяйте пароль',
   'Password recovery token': 'Токен восстановления пароля',
-  'New password': 'Новый пароль'
+  'New password': 'Новый пароль',
+  'Settings': 'Настройки',
+  'Statistics': 'Статистика',
+  'Products': 'Продукты',
+  'Eating': 'Питание'
 };
 
