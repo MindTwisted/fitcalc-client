@@ -4,6 +4,7 @@ import { connect, ConnectedProps } from 'react-redux';
 import { Header, Image, Segment, Sidebar } from 'semantic-ui-react';
 import { RootState } from '../store';
 import { boundLogout } from '../store/auth/actions';
+import { boundSetLang } from '../store/system/actions';
 import SidebarNavigation from './SidebarNavigation';
 import NavigationBar from './NavigationBar';
 import SettingsModal from './SettingsModal';
@@ -16,6 +17,7 @@ const Application: React.FC<ApplicationProps> = ({
   system, 
   auth,
   logout,
+  setLang,
   mobile
 }: ApplicationProps) => {
   const [sidebarVisible, setSidebarVisible] = useState(!mobile);
@@ -58,6 +60,7 @@ const Application: React.FC<ApplicationProps> = ({
       <SettingsModal lang={system.lang}
         open={settingsModalOpen}
         closeModal={() => setSettingsModalOpen(false)}
+        setLang={setLang}
       />
     </React.Fragment>
   );
@@ -69,7 +72,8 @@ const mapStateToProps = (state: RootState) => ({
 });
 const mapDispatchToProps = (dispatch: Dispatch) => {
   return bindActionCreators({
-    logout: boundLogout
+    logout: boundLogout,
+    setLang: boundSetLang
   }, dispatch);
 };
 const connector = connect(mapStateToProps, mapDispatchToProps);

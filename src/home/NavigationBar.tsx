@@ -28,17 +28,6 @@ const NavigationBar: React.FC<NavigationBarProps> = ({
   setLoginModalOpen,
   setRegisterModalOpen
 }: NavigationBarProps) => {
-  const langOptions = [
-    {
-      text: i18n.t('English', { lng: lang }),
-      value: 'en'
-    },
-    {
-      text: i18n.t('Russian', { lng: lang }),
-      value: 'ru'
-    }
-  ];
-
   return (
     <Menu
       fixed={fixed ? 'top' : undefined}
@@ -54,7 +43,16 @@ const NavigationBar: React.FC<NavigationBarProps> = ({
           />
         </Menu.Item>
         <Dropdown item
-          options={langOptions}
+          options={[
+            {
+              text: i18n.t('English', { lng: lang }),
+              value: 'en'
+            },
+            {
+              text: i18n.t('Russian', { lng: lang }),
+              value: 'ru'
+            }
+          ]}
           defaultValue={lang}
           onChange={(e, { value }) => setLang(String(value))}
         />

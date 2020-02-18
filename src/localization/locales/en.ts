@@ -40,6 +40,7 @@ export default {
   'Eating': 'Eating',
   'General': 'General',
   'Profile': 'Profile',
-  'Sessions': 'Sessions'
+  'Sessions': 'Sessions',
+  'Language': 'Language'
 };
 

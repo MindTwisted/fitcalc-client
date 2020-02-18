@@ -40,6 +40,7 @@ export default {
   'Eating': 'Питание',
   'General': 'Общие',
   'Profile': 'Профиль',
-  'Sessions': 'Сессии'
+  'Sessions': 'Сессии',
+  'Language': 'Язык'
 };
 
