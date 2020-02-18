@@ -41,6 +41,9 @@ export default {
   'General': 'Общие',
   'Profile': 'Профиль',
   'Sessions': 'Сессии',
-  'Language': 'Язык'
+  'Language': 'Язык',
+  'Theme': 'Тема',
+  'Light': 'Светлая',
+  'Dark': 'Тёмная'
 };
 

@@ -4,7 +4,7 @@ import { connect, ConnectedProps } from 'react-redux';
 import { Header, Image, Segment, Sidebar } from 'semantic-ui-react';
 import { RootState } from '../store';
 import { boundLogout } from '../store/auth/actions';
-import { boundSetLang } from '../store/system/actions';
+import { boundSetLang, boundSetTheme } from '../store/system/actions';
 import SidebarNavigation from './SidebarNavigation';
 import NavigationBar from './NavigationBar';
 import SettingsModal from './SettingsModal';
@@ -18,6 +18,7 @@ const Application: React.FC<ApplicationProps> = ({
   auth,
   logout,
   setLang,
+  setTheme,
   mobile
 }: ApplicationProps) => {
   const [sidebarVisible, setSidebarVisible] = useState(!mobile);
@@ -30,7 +31,7 @@ const Application: React.FC<ApplicationProps> = ({
   return (
     <React.Fragment>
       <Sidebar.Pushable style={{ transform: 'none' }}>
-        <SidebarNavigation lang={system.lang}
+        <SidebarNavigation system={system}
           mobile={mobile}
           visible={sidebarVisible}
           setVisible={setSidebarVisible}
@@ -44,7 +45,7 @@ const Application: React.FC<ApplicationProps> = ({
             mobile={mobile}
             auth={auth}
             logout={logout}
-            lang={system.lang}
+            system={system}
             setSettingsModalOpen={setSettingsModalOpen}
           />
 
@@ -57,10 +58,11 @@ const Application: React.FC<ApplicationProps> = ({
         </Sidebar.Pusher>
       </Sidebar.Pushable>
       
-      <SettingsModal lang={system.lang}
+      <SettingsModal system={system}
         open={settingsModalOpen}
         closeModal={() => setSettingsModalOpen(false)}
         setLang={setLang}
+        setTheme={setTheme}
       />
     </React.Fragment>
   );
@@ -73,7 +75,8 @@ const mapStateToProps = (state: RootState) => ({
 const mapDispatchToProps = (dispatch: Dispatch) => {
   return bindActionCreators({
     logout: boundLogout,
-    setLang: boundSetLang
+    setLang: boundSetLang,
+    setTheme: boundSetTheme
   }, dispatch);
 };
 const connector = connect(mapStateToProps, mapDispatchToProps);

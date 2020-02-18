@@ -1,8 +1,9 @@
 import React from 'react';
 import { Divider, Dropdown, Icon, Menu, Sticky } from 'semantic-ui-react';
+import i18n from '../localization/i18n';
 import { AuthState } from '../store/auth/types';
 import { boundLogout } from '../store/auth/actions';
-import i18n from '../localization/i18n';
+import { SystemState, Themes } from '../store/system/types';
 
 type NavigationBarProps = {
     sidebarVisible: boolean,
@@ -10,7 +11,7 @@ type NavigationBarProps = {
     mobile: boolean,
     auth: AuthState,
     logout: typeof boundLogout,
-    lang: string,
+    system: SystemState,
     setSettingsModalOpen: (open: boolean) => void
 };
 
@@ -20,13 +21,15 @@ const NavigationBar: React.FC<NavigationBarProps> = ({
   mobile,
   auth,
   logout,
-  lang,
+  system,
   setSettingsModalOpen
 }: NavigationBarProps) => {
+  const { lang, theme } = system;
+    
   return (
     <Sticky>
       <Menu borderless
-        inverted
+        inverted={theme !== Themes.Light}
         size='large'
         style={{ borderRadius: 0 }}
       >

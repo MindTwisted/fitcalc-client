@@ -1,22 +1,26 @@
 import React, { useState } from 'react';
 import { Modal, Tab } from 'semantic-ui-react';
 import i18n from '../localization/i18n';
-import { boundSetLang } from '../store/system/actions';
+import { boundSetLang, boundSetTheme } from '../store/system/actions';
+import { SystemState, Themes } from '../store/system/types';
 import GeneralSettingsForm from './GeneralSettingsForm';
 
 type SettingsModalProps = {
-  lang: string,
+  system: SystemState,
   open: boolean,
   closeModal: () => void, 
-  setLang: typeof boundSetLang
+  setLang: typeof boundSetLang,
+  setTheme: typeof boundSetTheme
 };
 
 const SettingsModal: React.FC<SettingsModalProps> = ({ 
-  lang, 
+  system, 
   open ,
   closeModal,
-  setLang
+  setLang,
+  setTheme
 }: SettingsModalProps) => {
+  const { lang, theme } = system;
   const [loading, setLoading] = useState(false);
 
   const handleClose = () => {
@@ -29,6 +33,7 @@ const SettingsModal: React.FC<SettingsModalProps> = ({
       closeOnEscape={!loading}
       closeOnDimmerClick={!loading}
       onClose={handleClose}
+      dimmer={theme === Themes.Light ? 'blurring' : true}
     >
       <Modal.Content style={{ paddingTop: 0 }}>
         <Tab menu={{ secondary: true, pointing: true, size: 'massive' }}
@@ -40,6 +45,8 @@ const SettingsModal: React.FC<SettingsModalProps> = ({
                 <Tab.Pane as='div'>
                   <GeneralSettingsForm lang={lang}
                     setLang={setLang}
+                    theme={theme}
+                    setTheme={setTheme}
                   />
                 </Tab.Pane>
               )

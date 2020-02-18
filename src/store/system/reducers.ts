@@ -1,8 +1,16 @@
-import { SET_LANG, SET_LOADING, SystemActionTypes, SystemState } from './types';
+import { SET_LANG, SET_LOADING, SET_THEME, SystemActionTypes, SystemState, Themes } from './types';
+
+const getInitialTheme = (): Themes => {
+  const cachedTheme = localStorage.getItem('theme');
+  
+  return (cachedTheme !== null) && Object.values(Themes).includes(cachedTheme as Themes) ?
+    cachedTheme as Themes : Themes.Light;
+};
 
 const initialState: SystemState = {
   lang: localStorage.getItem('lang') || 'en',
-  loading: false
+  loading: false,
+  theme: getInitialTheme(),
 };
 
 export function systemReducer(state: SystemState = initialState, action: SystemActionTypes): SystemState {
@@ -16,6 +24,11 @@ export function systemReducer(state: SystemState = initialState, action: SystemA
       return {
         ...state,
         loading: action.loading
+      };
+    case SET_THEME:
+      return {
+        ...state,
+        theme: action.theme
       };
     default:
       return state;

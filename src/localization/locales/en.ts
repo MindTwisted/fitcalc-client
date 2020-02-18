@@ -41,6 +41,9 @@ export default {
   'General': 'General',
   'Profile': 'Profile',
   'Sessions': 'Sessions',
-  'Language': 'Language'
+  'Language': 'Language',
+  'Theme': 'Theme',
+  'Light': 'Light',
+  'Dark': 'Dark'
 };
 
