@@ -1,7 +1,7 @@
-import { SET_LANG, SET_LOADING, SET_THEME, SystemActionTypes, Themes } from './types';
+import { Languages, SET_LANG, SET_LOADING, SET_THEME, SystemActionTypes, Themes } from './types';
 import { Dispatch } from 'redux';
 
-export function setLang(lang: string): SystemActionTypes {
+export function setLang(lang: Languages): SystemActionTypes {
   return {
     type: SET_LANG,
     lang
@@ -22,7 +22,7 @@ export function setTheme(theme: Themes): SystemActionTypes {
   };
 }
 
-export function boundSetLang(lang: string): Function {
+export function boundSetLang(lang: Languages): Function {
   return function (dispatch: Dispatch<SystemActionTypes>): void {
     localStorage.setItem('lang', lang);
 

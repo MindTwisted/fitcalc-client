@@ -3,14 +3,19 @@ import { Button, Form, Icon, InputOnChangeData, Modal } from 'semantic-ui-react'
 import i18n from '../localization/i18n';
 import { register } from '../api/auth';
 import { getViolationsFromAxiosError } from '../api/utils';
+import { Languages } from '../store/system/types';
 
 type RegisterModalProps = {
   open: boolean,
-  lang: string,
+  lang: Languages,
   closeModal(): void
 };
 
-const RegisterModal: React.FC<RegisterModalProps> = ({ open, lang, closeModal }: RegisterModalProps) => {
+const RegisterModal: React.FC<RegisterModalProps> = ({ 
+  open, 
+  lang,
+  closeModal 
+}: RegisterModalProps) => {
   const [loading, setLoading] = useState(false);
   const initialFormData = { name: '', email: '', password: '' };
   const initialFormError = { name: null, email: null, password: null };

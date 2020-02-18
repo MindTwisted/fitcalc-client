@@ -1,6 +1,7 @@
 import i18next from 'i18next';
 import en from './locales/en';
 import ru from './locales/ru';
+import { Languages } from '../store/system/types';
 
 i18next
   .init({
@@ -9,12 +10,12 @@ i18next
       // React already does escaping
       escapeValue: false,
     },
-    lng: 'en',
+    lng: Languages.English,
     resources: {
-      en: {
+      [Languages.English]: {
         translation: en
       },
-      ru: {
+      [Languages.Russian]: {
         translation: ru
       },
     },

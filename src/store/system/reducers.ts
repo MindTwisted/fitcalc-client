@@ -1,4 +1,11 @@
-import { SET_LANG, SET_LOADING, SET_THEME, SystemActionTypes, SystemState, Themes } from './types';
+import { Languages, SET_LANG, SET_LOADING, SET_THEME, SystemActionTypes, SystemState, Themes } from './types';
+
+const getInitialLanguage = (): Languages => {
+  const cachedLanguage = localStorage.getItem('lang');
+
+  return (cachedLanguage !== null) && Object.values(Languages).includes(cachedLanguage as Languages) ?
+      cachedLanguage as Languages : Languages.English;
+};
 
 const getInitialTheme = (): Themes => {
   const cachedTheme = localStorage.getItem('theme');
@@ -8,7 +15,7 @@ const getInitialTheme = (): Themes => {
 };
 
 const initialState: SystemState = {
-  lang: localStorage.getItem('lang') || 'en',
+  lang: getInitialLanguage(),
   loading: false,
   theme: getInitialTheme(),
 };

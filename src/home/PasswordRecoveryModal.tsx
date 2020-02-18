@@ -4,10 +4,11 @@ import { InputOnChangeData } from 'semantic-ui-react/dist/commonjs/elements/Inpu
 import i18n from '../localization/i18n';
 import { initiatePasswordRecovery, confirmPasswordRecovery } from '../api/users';
 import { getViolationsFromAxiosError } from '../api/utils';
+import { Languages } from '../store/system/types';
 
 type PasswordRecoveryModalProps = {
   open: boolean,
-  lang: string,
+  lang: Languages,
   closeModal(): void
 }
 

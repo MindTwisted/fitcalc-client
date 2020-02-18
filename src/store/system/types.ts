@@ -1,10 +1,15 @@
+export enum Languages {
+    English = 'en',
+    Russian = 'ru'
+}
+
 export enum Themes {
-    Light ='light',
+    Light = 'light',
     Dark = 'dark'
 }
 
 export interface SystemState {
-    lang: string,
+    lang: Languages,
     loading: boolean,
     theme: Themes
 }
@@ -15,7 +20,7 @@ export const SET_THEME = 'SET_THEME';
 
 interface SetLangAction {
     type: typeof SET_LANG,
-    lang: string
+    lang: Languages
 }
 
 interface SetLoadingAction {

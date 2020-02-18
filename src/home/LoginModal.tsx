@@ -3,10 +3,11 @@ import { Button, Form, Icon, InputOnChangeData, Modal } from 'semantic-ui-react'
 import i18n from '../localization/i18n';
 import { boundLogin } from '../store/auth/actions';
 import PasswordRecoveryModal from './PasswordRecoveryModal';
+import { Languages } from '../store/system/types';
 
 type LoginModalProps = {
   open: boolean,
-  lang: string,
+  lang: Languages,
   closeModal(): void,
   login: typeof boundLogin
 }

@@ -3,9 +3,10 @@ import { Segment, Grid, Header, Button, Image, Container } from 'semantic-ui-rea
 import { Link } from 'react-router-dom';
 import routes from '../routes';
 import i18n from '../localization/i18n';
+import { Languages } from '../store/system/types';
 
 type LayoutProps = {
-  lang: string,
+  lang: Languages,
   isLoggedIn: boolean,
   isAppUser: boolean,
   setRegisterModalOpen(state: boolean): void

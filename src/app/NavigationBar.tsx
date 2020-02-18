@@ -6,13 +6,13 @@ import { boundLogout } from '../store/auth/actions';
 import { SystemState, Themes } from '../store/system/types';
 
 type NavigationBarProps = {
-    sidebarVisible: boolean,
-    setSidebarVisible: (visible: boolean) => void,
-    mobile: boolean,
-    auth: AuthState,
-    logout: typeof boundLogout,
-    system: SystemState,
-    setSettingsModalOpen: (open: boolean) => void
+  sidebarVisible: boolean,
+  setSidebarVisible: (visible: boolean) => void,
+  mobile: boolean,
+  auth: AuthState,
+  logout: typeof boundLogout,
+  system: SystemState,
+  setSettingsModalOpen: (open: boolean) => void
 };
 
 const NavigationBar: React.FC<NavigationBarProps> = ({ 

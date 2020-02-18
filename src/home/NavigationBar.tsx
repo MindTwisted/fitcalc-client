@@ -1,15 +1,16 @@
 import React from 'react';
-import { Button, Container, Menu, Dropdown } from 'semantic-ui-react';
+import { Button, Container, Dropdown, Menu } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import routes from '../routes';
 import i18n from '../localization/i18n';
 import logo from '../logo.svg';
 import { boundLogout } from '../store/auth/actions';
 import { boundSetLang } from '../store/system/actions';
+import { Languages } from '../store/system/types';
 
 type NavigationBarProps = {
   fixed: boolean,
-  lang: string,
+  lang: Languages,
   isLoggedIn: boolean,
   isAppUser: boolean,
   setLang: typeof boundSetLang,
@@ -46,15 +47,15 @@ const NavigationBar: React.FC<NavigationBarProps> = ({
           options={[
             {
               text: i18n.t('English', { lng: lang }),
-              value: 'en'
+              value: Languages.English
             },
             {
               text: i18n.t('Russian', { lng: lang }),
-              value: 'ru'
+              value: Languages.Russian
             }
           ]}
           defaultValue={lang}
-          onChange={(e, { value }) => setLang(String(value))}
+          onChange={(e, { value }) => setLang(value as Languages)}
         />
 
         <Menu.Item position='right'>
