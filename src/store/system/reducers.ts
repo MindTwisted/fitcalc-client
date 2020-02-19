@@ -1,10 +1,18 @@
+import i18n from '../../localization/i18n';
 import { Languages, SET_LANG, SET_LOADING, SET_THEME, SystemActionTypes, SystemState, Themes } from './types';
 
 const getInitialLanguage = (): Languages => {
   const cachedLanguage = localStorage.getItem('lang');
 
-  return (cachedLanguage !== null) && Object.values(Languages).includes(cachedLanguage as Languages) ?
-      cachedLanguage as Languages : Languages.English;
+  if (cachedLanguage !== null && Object.values(Languages).includes(cachedLanguage as Languages)) {
+    i18n.changeLanguage(cachedLanguage);
+
+    return cachedLanguage as Languages;
+  }
+
+  i18n.changeLanguage(Languages.English);
+
+  return Languages.English;
 };
 
 const getInitialTheme = (): Themes => {

@@ -53,7 +53,6 @@ const Home: React.FC<HomeProps> = ({
               setRegisterModalOpen={setRegisterModalOpen}
             />
             <Heading mobile={mobile}
-              lang={system.lang}
               isLoggedIn={isLoggedIn}
               isAppUser={isAppUser}
               setRegisterModalOpen={setRegisterModalOpen}
@@ -61,20 +60,17 @@ const Home: React.FC<HomeProps> = ({
           </Segment>
         </Visibility>
 
-        <Layout lang={system.lang}
-          isLoggedIn={isLoggedIn}
+        <Layout isLoggedIn={isLoggedIn}
           isAppUser={isAppUser}
           setRegisterModalOpen={setRegisterModalOpen}
         />
       </Responsive>
 
-      <LoginModal lang={system.lang}
-        open={loginModalOpen}
+      <LoginModal open={loginModalOpen}
         closeModal={() => setLoginModalOpen(false)}
         login={login}
       />
-      <RegisterModal lang={system.lang}
-        open={registerModalOpen}
+      <RegisterModal open={registerModalOpen}
         closeModal={() => setRegisterModalOpen(false)}
       />
     </React.Fragment>

@@ -24,7 +24,7 @@ const NavigationBar: React.FC<NavigationBarProps> = ({
   system,
   setSettingsModalOpen
 }: NavigationBarProps) => {
-  const { lang, theme } = system;
+  const { theme } = system;
     
   return (
     <Sticky>
@@ -48,13 +48,13 @@ const NavigationBar: React.FC<NavigationBarProps> = ({
           >
             <Dropdown.Menu>
               <Dropdown.Item icon={<Icon name='setting' />}
-                text={i18n.t('Settings', { lng: lang })}
+                text={i18n.t('Settings')}
                 onClick={() => setSettingsModalOpen(true)}
               />
               <Divider />
               <Dropdown.Item onClick={logout}
                 icon={<Icon name='sign-out' />}
-                text={i18n.t('Logout', { lng: lang })}
+                text={i18n.t('Logout')}
               />
             </Dropdown.Menu>
           </Dropdown>

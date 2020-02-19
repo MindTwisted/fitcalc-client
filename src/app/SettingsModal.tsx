@@ -39,7 +39,7 @@ const SettingsModal: React.FC<SettingsModalProps> = ({
         <Tab menu={{ secondary: true, pointing: true, size: 'massive' }}
           panes={[
             {
-              menuItem: i18n.t('General', { lng: lang }),
+              menuItem: i18n.t('General'),
               // eslint-disable-next-line react/display-name
               render: () => (
                 <Tab.Pane as='div'>
@@ -52,12 +52,12 @@ const SettingsModal: React.FC<SettingsModalProps> = ({
               )
             },
             {
-              menuItem: i18n.t('Profile', { lng: lang }),
+              menuItem: i18n.t('Profile'),
               // eslint-disable-next-line react/display-name
               render: () => <Tab.Pane as='div'>Profile</Tab.Pane>
             },
             {
-              menuItem: i18n.t('Sessions', { lng: lang }),
+              menuItem: i18n.t('Sessions'),
               // eslint-disable-next-line react/display-name
               render: () => <Tab.Pane as='div'>Sessions</Tab.Pane>
             }

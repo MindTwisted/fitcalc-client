@@ -20,32 +20,32 @@ const GeneralSettingsForm: React.FC<GeneralSettingsFormProps> = ({
   return (
     <Form>
 
-      <Form.Field label={{ children: i18n.t('Language', { lng: lang }) }}
+      <Form.Field label={{ children: i18n.t('Language') }}
         defaultValue={lang}
         control={Select}
         onChange={(e: SyntheticEvent<HTMLElement>, { value }: {value: Languages}) => setLang(value)}
         options={[
           {
-            text: i18n.t('English', { lng: lang }),
+            text: i18n.t('English'),
             value: Languages.English
           },
           {
-            text: i18n.t('Russian', { lng: lang }),
+            text: i18n.t('Russian'),
             value: Languages.Russian
           }
         ]}
       />
-      <Form.Field label={{ children: i18n.t('Theme', { lng: lang }) }}
+      <Form.Field label={{ children: i18n.t('Theme') }}
         defaultValue={theme}
         control={Select}
         onChange={(e: SyntheticEvent<HTMLElement>, { value }: {value: Themes}) => setTheme(value)}
         options={[
           {
-            text: i18n.t('Light', { lng: lang }),
+            text: i18n.t('Light'),
             value: Themes.Light
           },
           {
-            text: i18n.t('Dark', { lng: lang }),
+            text: i18n.t('Dark'),
             value: Themes.Dark
           }
         ]}

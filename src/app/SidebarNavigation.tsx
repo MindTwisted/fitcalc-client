@@ -16,7 +16,7 @@ const SidebarNavigation: React.FC<SidebarNavigationProps> = ({
   visible,
   setVisible
 }: SidebarNavigationProps) => {
-  const { lang, theme } = system;
+  const { theme } = system;
   
   return (
     <Sticky>
@@ -36,15 +36,15 @@ const SidebarNavigation: React.FC<SidebarNavigationProps> = ({
           active
         >
           <Icon name='pie graph' />
-          {i18n.t('Statistics', { lng: lang })}
+          {i18n.t('Statistics')}
         </Menu.Item>
         <Menu.Item as='a'>
           <Icon name='shopping basket' />
-          {i18n.t('Products', { lng: lang })}
+          {i18n.t('Products')}
         </Menu.Item>
         <Menu.Item as='a'>
           <Icon name='food' />
-          {i18n.t('Eating', { lng: lang })}
+          {i18n.t('Eating')}
         </Menu.Item>
 
       </Sidebar>

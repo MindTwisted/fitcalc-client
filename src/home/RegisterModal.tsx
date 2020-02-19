@@ -3,17 +3,14 @@ import { Button, Form, Icon, InputOnChangeData, Modal } from 'semantic-ui-react'
 import i18n from '../localization/i18n';
 import { register } from '../api/auth';
 import { getViolationsFromAxiosError } from '../api/utils';
-import { Languages } from '../store/system/types';
 
 type RegisterModalProps = {
   open: boolean,
-  lang: Languages,
   closeModal(): void
 };
 
 const RegisterModal: React.FC<RegisterModalProps> = ({ 
-  open, 
-  lang,
+  open,
   closeModal 
 }: RegisterModalProps) => {
   const [loading, setLoading] = useState(false);
@@ -65,7 +62,7 @@ const RegisterModal: React.FC<RegisterModalProps> = ({
       closeOnEscape={!loading}
       closeOnDimmerClick={!loading}
     >
-      <Modal.Header>{i18n.t('Sign Up', { lng: lang })}</Modal.Header>
+      <Modal.Header>{i18n.t('Sign Up')}</Modal.Header>
       <Modal.Content>
         <Modal.Description>
           <Form onSubmit={handleSubmit}
@@ -74,24 +71,24 @@ const RegisterModal: React.FC<RegisterModalProps> = ({
             <Form.Input fluid
               autoFocus
               name='name'
-              label={i18n.t('Name', { lng: lang })}
-              placeholder={i18n.t('Name', { lng: lang })}
+              label={i18n.t('Name')}
+              placeholder={i18n.t('Name')}
               value={formData.name}
               onChange={handleChange}
               error={formError.name ? { content: formError.name } : null}
             />
             <Form.Input fluid
               name='email'
-              label={i18n.t('Email', { lng: lang })}
-              placeholder={i18n.t('Email', { lng: lang })}
+              label={i18n.t('Email')}
+              placeholder={i18n.t('Email')}
               value={formData.email}
               onChange={handleChange}
               error={formError.email ? { content: formError.email } : null}
             />
             <Form.Input fluid
               name='password'
-              label={i18n.t('Password', { lng: lang })}
-              placeholder={i18n.t('Password', { lng: lang })}
+              label={i18n.t('Password')}
+              placeholder={i18n.t('Password')}
               value={formData.password}
               onChange={handleChange}
               type={showPassword ? 'text' : 'password'}
@@ -106,7 +103,7 @@ const RegisterModal: React.FC<RegisterModalProps> = ({
             <Button primary
               type='submit'
             >
-              {i18n.t('Submit', { lng: lang })}
+              {i18n.t('Submit')}
             </Button>
           </Form>
         </Modal.Description>

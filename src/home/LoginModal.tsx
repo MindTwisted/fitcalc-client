@@ -3,18 +3,15 @@ import { Button, Form, Icon, InputOnChangeData, Modal } from 'semantic-ui-react'
 import i18n from '../localization/i18n';
 import { boundLogin } from '../store/auth/actions';
 import PasswordRecoveryModal from './PasswordRecoveryModal';
-import { Languages } from '../store/system/types';
 
 type LoginModalProps = {
   open: boolean,
-  lang: Languages,
   closeModal(): void,
   login: typeof boundLogin
 }
 
 const LoginModal: React.FC<LoginModalProps> = ({ 
-  open, 
-  lang, 
+  open,
   closeModal,
   login
 }: LoginModalProps) => {
@@ -59,7 +56,7 @@ const LoginModal: React.FC<LoginModalProps> = ({
       closeOnEscape={!loading}
       closeOnDimmerClick={!loading}
     >
-      <Modal.Header>{i18n.t('Log In', { lng: lang })}</Modal.Header>
+      <Modal.Header>{i18n.t('Log In')}</Modal.Header>
       <Modal.Content>
         <Modal.Description>
           <Form onSubmit={handleSubmit}
@@ -68,15 +65,15 @@ const LoginModal: React.FC<LoginModalProps> = ({
             <Form.Input fluid
               autoFocus
               name='email'
-              label={i18n.t('Email', { lng: lang })}
-              placeholder={i18n.t('Email', { lng: lang })}
+              label={i18n.t('Email')}
+              placeholder={i18n.t('Email')}
               value={formData.email}
               onChange={handleChange}
             />
             <Form.Input fluid
               name='password'
-              label={i18n.t('Password', { lng: lang })}
-              placeholder={i18n.t('Password', { lng: lang })}
+              label={i18n.t('Password')}
+              placeholder={i18n.t('Password')}
               value={formData.password}
               onChange={handleChange}
               type={showPassword ? 'text' : 'password'}
@@ -91,13 +88,13 @@ const LoginModal: React.FC<LoginModalProps> = ({
               <Button primary
                 type='submit'
               >
-                {i18n.t('Submit', { lng: lang })}
+                {i18n.t('Submit')}
               </Button>
               <Button basic
                 type='button'
                 onClick={() => setPasswordRecoveryModalOpen(true)}
               >
-                {i18n.t('Forgot password?', { lng: lang })}
+                {i18n.t('Forgot password?')}
               </Button>
             </Form.Field>
           </Form>
@@ -105,7 +102,6 @@ const LoginModal: React.FC<LoginModalProps> = ({
       </Modal.Content>
 
       <PasswordRecoveryModal open={passwordRecoveryModalOpen}
-        lang={lang}
         closeModal={() => setPasswordRecoveryModalOpen(false)}
       />
     </Modal>

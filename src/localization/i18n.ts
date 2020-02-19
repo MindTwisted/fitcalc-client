@@ -11,6 +11,7 @@ i18next
       escapeValue: false,
     },
     lng: Languages.English,
+    fallbackLng: Languages.English,
     resources: {
       [Languages.English]: {
         translation: en

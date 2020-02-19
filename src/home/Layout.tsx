@@ -3,17 +3,14 @@ import { Segment, Grid, Header, Button, Image, Container } from 'semantic-ui-rea
 import { Link } from 'react-router-dom';
 import routes from '../routes';
 import i18n from '../localization/i18n';
-import { Languages } from '../store/system/types';
 
 type LayoutProps = {
-  lang: Languages,
   isLoggedIn: boolean,
   isAppUser: boolean,
   setRegisterModalOpen(state: boolean): void
 }
 
-const Layout: React.FC<LayoutProps> = ({ 
-  lang ,
+const Layout: React.FC<LayoutProps> = ({
   isLoggedIn,
   isAppUser,
   setRegisterModalOpen
@@ -32,18 +29,18 @@ const Layout: React.FC<LayoutProps> = ({
               <Header as='h3'
                 style={{ fontSize: '2em' }}
               >
-                {i18n.t('Most Complete Product Database', { lng: lang })}
+                {i18n.t('Most Complete Product Database')}
               </Header>
               <p style={{ fontSize: '1.33em' }}>
-                {i18n.t('We provide access to a complete database of products checked by our moderators.', { lng: lang })}
+                {i18n.t('We provide access to a complete database of products checked by our moderators.')}
               </p>
               <Header as='h3'
                 style={{ fontSize: '2em' }}
               >
-                {i18n.t('Most Full Statistic', { lng: lang })}
+                {i18n.t('Most Full Statistic')}
               </Header>
               <p style={{ fontSize: '1.33em' }}>
-                {i18n.t('We provide you with all the information you need to analyze and adjust your diet.', { lng: lang })}
+                {i18n.t('We provide you with all the information you need to analyze and adjust your diet.')}
               </p>
             </Grid.Column>
             <Grid.Column floated='right'
@@ -64,13 +61,13 @@ const Layout: React.FC<LayoutProps> = ({
                   as={Link}
                   to={routes.app}
                 >
-                  {i18n.t('Check It Out', { lng: lang })}
+                  {i18n.t('Check It Out')}
                 </Button>
               ) : (
                 <Button size='huge'
                   onClick={() => setRegisterModalOpen(true)}
                 >
-                  {i18n.t('Check It Out', { lng: lang })}
+                  {i18n.t('Check It Out')}
                 </Button>
               )}
             </Grid.Column>
@@ -91,10 +88,10 @@ const Layout: React.FC<LayoutProps> = ({
                 style={{ fontSize: '2em' }}
               >
                 {/* eslint-disable-next-line react/no-unescaped-entities */}
-                "{i18n.t('Great application', { lng: lang })}"
+                "{i18n.t('Great application')}"
               </Header>
               <p style={{ fontSize: '1.33em' }}>
-                {i18n.t('That is what our users say', { lng: lang })}
+                {i18n.t('That is what our users say')}
               </p>
             </Grid.Column>
             <Grid.Column style={{ paddingBottom: '5em', paddingTop: '5em' }}>
@@ -102,10 +99,10 @@ const Layout: React.FC<LayoutProps> = ({
                 style={{ fontSize: '2em' }}
               >
                 {/* eslint-disable-next-line react/no-unescaped-entities */}
-                "{i18n.t('It has helped me to become fit.', { lng: lang })}"
+                "{i18n.t('It has helped me to become fit.')}"
               </Header>
               <p style={{ fontSize: '1.33em' }}>
-                {i18n.t('Eugene, fitness newcomer', { lng: lang })}
+                {i18n.t('Eugene, fitness newcomer')}
               </p>
             </Grid.Column>
           </Grid.Row>
@@ -119,10 +116,10 @@ const Layout: React.FC<LayoutProps> = ({
           <Header as='h3'
             style={{ fontSize: '2em' }}
           >
-            {i18n.t('Stop Thinking, Start Doing', { lng: lang })}
+            {i18n.t('Stop Thinking, Start Doing')}
           </Header>
           <p style={{ fontSize: '1.33em' }}>
-            {i18n.t('Instead of putting off the problem for tomorrow just start now.', { lng: lang })}
+            {i18n.t('Instead of putting off the problem for tomorrow just start now.')}
           </p>
           
           {(isLoggedIn && isAppUser) ? (
@@ -130,13 +127,13 @@ const Layout: React.FC<LayoutProps> = ({
               to={routes.app}
               size='large'
             >
-              {i18n.t('Give A Try', { lng: lang })}
+              {i18n.t('Give A Try')}
             </Button>
           ) : (
             <Button size='large'
               onClick={() => setRegisterModalOpen(true)}
             >
-              {i18n.t('Give A Try', { lng: lang })}
+              {i18n.t('Give A Try')}
             </Button>
           )}
           
@@ -151,10 +148,10 @@ const Layout: React.FC<LayoutProps> = ({
           <Header as='h4'
             inverted
           >
-            {i18n.t('Fitness Calculator', { lng: lang })}
+            {i18n.t('Fitness Calculator')}
           </Header>
           <p>
-            {i18n.t('We give you a tool so you can change your life.', { lng: lang })}
+            {i18n.t('We give you a tool so you can change your life.')}
           </p>
         </Container>
       </Segment>

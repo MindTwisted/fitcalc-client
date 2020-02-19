@@ -46,11 +46,11 @@ const NavigationBar: React.FC<NavigationBarProps> = ({
         <Dropdown item
           options={[
             {
-              text: i18n.t('English', { lng: lang }),
+              text: i18n.t('English'),
               value: Languages.English
             },
             {
-              text: i18n.t('Russian', { lng: lang }),
+              text: i18n.t('Russian'),
               value: Languages.Russian
             }
           ]}
@@ -63,7 +63,7 @@ const NavigationBar: React.FC<NavigationBarProps> = ({
           {(isLoggedIn && isAppUser) && (
             <Menu.Item>
               <Link to={routes.app}>
-                {i18n.t('Application', { lng: lang })}
+                {i18n.t('Application')}
               </Link>
             </Menu.Item>
           )}
@@ -73,7 +73,7 @@ const NavigationBar: React.FC<NavigationBarProps> = ({
               inverted={!fixed}
               onClick={logout}
             >
-              {i18n.t('Logout', { lng: lang })}
+              {i18n.t('Logout')}
             </Button>
           ) : (
             <React.Fragment>
@@ -81,7 +81,7 @@ const NavigationBar: React.FC<NavigationBarProps> = ({
                 inverted={!fixed}
                 onClick={() => setLoginModalOpen(true)}
               >
-                {i18n.t('Log In', { lng: lang })}
+                {i18n.t('Log In')}
               </Button>
 
               <Button as='a'
@@ -90,7 +90,7 @@ const NavigationBar: React.FC<NavigationBarProps> = ({
                 style={{ marginLeft: '0.5em' }}
                 onClick={() => setRegisterModalOpen(true)}
               >
-                {i18n.t('Sign Up', { lng: lang })}
+                {i18n.t('Sign Up')}
               </Button>
             </React.Fragment>
           )}

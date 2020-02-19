@@ -4,17 +4,14 @@ import { InputOnChangeData } from 'semantic-ui-react/dist/commonjs/elements/Inpu
 import i18n from '../localization/i18n';
 import { initiatePasswordRecovery, confirmPasswordRecovery } from '../api/users';
 import { getViolationsFromAxiosError } from '../api/utils';
-import { Languages } from '../store/system/types';
 
 type PasswordRecoveryModalProps = {
   open: boolean,
-  lang: Languages,
   closeModal(): void
 }
 
 const PasswordRecoveryModal: React.FC<PasswordRecoveryModalProps> = ({
-  open, 
-  lang, 
+  open,
   closeModal 
 }: PasswordRecoveryModalProps) => {
   const [loading, setLoading] = useState(false);
@@ -98,7 +95,7 @@ const PasswordRecoveryModal: React.FC<PasswordRecoveryModalProps> = ({
       closeOnDimmerClick={!loading}
     >
       <Modal.Header>
-        {i18n.t('Password recovery', { lng: lang })}
+        {i18n.t('Password recovery')}
       </Modal.Header>
       <Modal.Content>
         
@@ -109,8 +106,8 @@ const PasswordRecoveryModal: React.FC<PasswordRecoveryModalProps> = ({
             active={step === 1}
           >
             <Step.Content>
-              <Step.Title>{i18n.t('Enter email', { lng: lang })}</Step.Title>
-              <Step.Description>{i18n.t('You will get a password recovery token', { lng: lang })}</Step.Description>
+              <Step.Title>{i18n.t('Enter email')}</Step.Title>
+              <Step.Description>{i18n.t('You will get a password recovery token')}</Step.Description>
             </Step.Content>
           </Step>
 
@@ -118,14 +115,14 @@ const PasswordRecoveryModal: React.FC<PasswordRecoveryModalProps> = ({
             active={step === 2}
           >
             <Step.Content>
-              <Step.Title>{i18n.t('Enter password recovery token', { lng: lang })}</Step.Title>
-              <Step.Description>{i18n.t('The one that was sent to you by email', { lng: lang })}</Step.Description>
+              <Step.Title>{i18n.t('Enter password recovery token')}</Step.Title>
+              <Step.Description>{i18n.t('The one that was sent to you by email')}</Step.Description>
             </Step.Content>
           </Step>
 
           <Step active={step === 3}>
             <Step.Content>
-              <Step.Title>{i18n.t('Change password', { lng: lang })}</Step.Title>
+              <Step.Title>{i18n.t('Change password')}</Step.Title>
             </Step.Content>
           </Step>
         </Step.Group>
@@ -135,8 +132,8 @@ const PasswordRecoveryModal: React.FC<PasswordRecoveryModalProps> = ({
             <Form.Input fluid
               autoFocus
               name='email'
-              label={i18n.t('Email', { lng: lang })}
-              placeholder={i18n.t('Email', { lng: lang })}
+              label={i18n.t('Email')}
+              placeholder={i18n.t('Email')}
               value={email}
               onChange={(event: React.ChangeEvent<HTMLInputElement>, data: InputOnChangeData) => setEmail(data.value)}
               error={emailError ? { content: emailError } : null}
@@ -144,7 +141,7 @@ const PasswordRecoveryModal: React.FC<PasswordRecoveryModalProps> = ({
             <Button primary
               type='submit'
             >
-              {i18n.t('Submit', { lng: lang })}
+              {i18n.t('Submit')}
             </Button>
           </Form>
         )}
@@ -154,8 +151,8 @@ const PasswordRecoveryModal: React.FC<PasswordRecoveryModalProps> = ({
             <Form.Input fluid
               autoFocus
               name='passwordRecoveryToken'
-              label={i18n.t('Password recovery token', { lng: lang })}
-              placeholder={i18n.t('Password recovery token', { lng: lang })}
+              label={i18n.t('Password recovery token')}
+              placeholder={i18n.t('Password recovery token')}
               value={code}
               onChange={(event: React.ChangeEvent<HTMLInputElement>, data: InputOnChangeData) => setCode(data.value)}
             />
@@ -167,8 +164,8 @@ const PasswordRecoveryModal: React.FC<PasswordRecoveryModalProps> = ({
             <Form.Input fluid
               autoFocus
               name='newPassword'
-              label={i18n.t('New password', { lng: lang })}
-              placeholder={i18n.t('New password', { lng: lang })}
+              label={i18n.t('New password')}
+              placeholder={i18n.t('New password')}
               value={password}
               onChange={(event: React.ChangeEvent<HTMLInputElement>, data: InputOnChangeData) => setPassword(data.value)}
               type={showPassword ? 'text' : 'password'}
@@ -183,7 +180,7 @@ const PasswordRecoveryModal: React.FC<PasswordRecoveryModalProps> = ({
             <Button primary
               type='submit'
             >
-              {i18n.t('Submit', { lng: lang })}
+              {i18n.t('Submit')}
             </Button>
           </Form>
         )}

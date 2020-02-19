@@ -3,19 +3,16 @@ import { Container, Header, Button, Icon } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import routes from '../routes';
 import i18n from '../localization/i18n';
-import { Languages } from '../store/system/types';
 
 type HeadingProps = {
     mobile: boolean,
-    lang: Languages,
     isLoggedIn: boolean,
     isAppUser: boolean,
     setRegisterModalOpen(state: boolean): void
 };
 
 const Heading: React.FC<HeadingProps> = ({ 
-  mobile, 
-  lang,
+  mobile,
   isLoggedIn,
   isAppUser,
   setRegisterModalOpen
@@ -24,7 +21,7 @@ const Heading: React.FC<HeadingProps> = ({
     <Container text>
       <Header
         as='h1'
-        content={i18n.t('Fitness Calculator', { lng: lang })}
+        content={i18n.t('Fitness Calculator')}
         inverted
         style={{
           fontSize: mobile ? '2em' : '4em',
@@ -35,7 +32,7 @@ const Heading: React.FC<HeadingProps> = ({
       />
       <Header
         as='h2'
-        content={i18n.t('Take control over your weight.', { lng: lang })}
+        content={i18n.t('Take control over your weight.')}
         inverted
         style={{
           fontSize: mobile ? '1.5em' : '1.7em',
@@ -50,7 +47,7 @@ const Heading: React.FC<HeadingProps> = ({
           as={Link}
           to={routes.app}
         >
-          {i18n.t('Get Started', { lng: lang })}
+          {i18n.t('Get Started')}
           <Icon name='arrow right' />
         </Button>
       ) : (
@@ -58,7 +55,7 @@ const Heading: React.FC<HeadingProps> = ({
           size='huge'
           onClick={() => setRegisterModalOpen(true)}
         >
-          {i18n.t('Get Started', { lng: lang })}
+          {i18n.t('Get Started')}
           <Icon name='arrow right' />
         </Button>
       )}
