@@ -59,6 +59,7 @@ const Application: React.FC<ApplicationProps> = ({
       </Sidebar.Pushable>
       
       <SettingsModal system={system}
+        user={auth.user}
         open={settingsModalOpen}
         closeModal={() => setSettingsModalOpen(false)}
         setLang={setLang}

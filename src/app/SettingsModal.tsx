@@ -3,10 +3,13 @@ import { Modal, Tab } from 'semantic-ui-react';
 import i18n from '../localization/i18n';
 import { boundSetLang, boundSetTheme } from '../store/system/actions';
 import { SystemState, Themes } from '../store/system/types';
+import { User } from '../store/auth/types';
 import GeneralSettingsForm from './GeneralSettingsForm';
+import ProfileForm from './ProfileForm';
 
 type SettingsModalProps = {
   system: SystemState,
+  user: User | null,
   open: boolean,
   closeModal: () => void, 
   setLang: typeof boundSetLang,
@@ -15,6 +18,7 @@ type SettingsModalProps = {
 
 const SettingsModal: React.FC<SettingsModalProps> = ({ 
   system, 
+  user,
   open ,
   closeModal,
   setLang,
@@ -54,7 +58,9 @@ const SettingsModal: React.FC<SettingsModalProps> = ({
             {
               menuItem: i18n.t('Profile'),
               // eslint-disable-next-line react/display-name
-              render: () => <Tab.Pane as='div'>Profile</Tab.Pane>
+              render: () => <Tab.Pane as='div'>
+                <ProfileForm user={user} />
+              </Tab.Pane>
             },
             {
               menuItem: i18n.t('Sessions'),
