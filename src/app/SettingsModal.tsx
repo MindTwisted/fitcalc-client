@@ -2,33 +2,49 @@ import React, { useState } from 'react';
 import { Modal, Tab } from 'semantic-ui-react';
 import i18n from '../localization/i18n';
 import { boundSetLang, boundSetTheme } from '../store/system/actions';
-import { SystemState, Themes } from '../store/system/types';
+import { boundSetUser } from '../store/auth/actions';
+import { Languages, Themes } from '../store/system/types';
 import { User } from '../store/auth/types';
 import GeneralSettingsForm from './GeneralSettingsForm';
 import ProfileForm from './ProfileForm';
+import { TabProps } from 'semantic-ui-react/dist/commonjs/modules/Tab/Tab';
 
 type SettingsModalProps = {
-  system: SystemState,
-  user: User | null,
+  theme: Themes,
+  lang: Languages,
+  user: User,
   open: boolean,
   closeModal: () => void, 
   setLang: typeof boundSetLang,
-  setTheme: typeof boundSetTheme
+  setTheme: typeof boundSetTheme,
+  setUser: typeof boundSetUser
 };
 
 const SettingsModal: React.FC<SettingsModalProps> = ({ 
-  system, 
+  theme,
+  lang,
   user,
   open ,
   closeModal,
   setLang,
-  setTheme
+  setTheme,
+  setUser
 }: SettingsModalProps) => {
-  const { lang, theme } = system;
   const [loading, setLoading] = useState(false);
+  const [activeTab, setActiveTab] = useState(0);
 
   const handleClose = () => {
+    setActiveTab(0);
+
     closeModal();
+  };
+  
+  const handleTabChange = (event: React.MouseEvent<HTMLDivElement>, data: TabProps) => {
+    if (loading) {
+      return;
+    }
+
+    setActiveTab(data.activeIndex as number);
   };
 
   return (
@@ -40,7 +56,9 @@ const SettingsModal: React.FC<SettingsModalProps> = ({
       dimmer={theme === Themes.Light ? 'blurring' : true}
     >
       <Modal.Content style={{ paddingTop: 0 }}>
-        <Tab menu={{ secondary: true, pointing: true, size: 'massive' }}
+        <Tab activeIndex={activeTab}
+          onTabChange={handleTabChange}
+          menu={{ secondary: true, pointing: true, size: 'massive' }}
           panes={[
             {
               menuItem: i18n.t('General'),
@@ -59,7 +77,10 @@ const SettingsModal: React.FC<SettingsModalProps> = ({
               menuItem: i18n.t('Profile'),
               // eslint-disable-next-line react/display-name
               render: () => <Tab.Pane as='div'>
-                <ProfileForm user={user} />
+                <ProfileForm user={user}
+                  setOuterLoading={setLoading}
+                  setUser={setUser}
+                />
               </Tab.Pane>
             },
             {

@@ -1,17 +1,17 @@
 import React from 'react';
 import { Divider, Dropdown, Icon, Menu, Sticky } from 'semantic-ui-react';
 import i18n from '../localization/i18n';
-import { AuthState } from '../store/auth/types';
+import { User } from '../store/auth/types';
 import { boundLogout } from '../store/auth/actions';
-import { SystemState, Themes } from '../store/system/types';
+import { Themes } from '../store/system/types';
 
 type NavigationBarProps = {
   sidebarVisible: boolean,
   setSidebarVisible: (visible: boolean) => void,
   mobile: boolean,
-  auth: AuthState,
+  user: User,
   logout: typeof boundLogout,
-  system: SystemState,
+  theme: Themes,
   setSettingsModalOpen: (open: boolean) => void
 };
 
@@ -19,13 +19,11 @@ const NavigationBar: React.FC<NavigationBarProps> = ({
   sidebarVisible, 
   setSidebarVisible ,
   mobile,
-  auth,
+  user,
   logout,
-  system,
+  theme,
   setSettingsModalOpen
 }: NavigationBarProps) => {
-  const { theme } = system;
-    
   return (
     <Sticky>
       <Menu borderless
@@ -43,7 +41,7 @@ const NavigationBar: React.FC<NavigationBarProps> = ({
 
           <Dropdown item
             as='a'
-            text={mobile ? '' : auth.user?.name}
+            text={mobile ? '' : user.name}
             icon={mobile ? <Icon name='user' /> : null}
           >
             <Dropdown.Menu>

@@ -1,21 +1,47 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Form, Input, Accordion } from 'semantic-ui-react';
 import i18n from '../localization/i18n';
 import { User } from '../store/auth/types';
+import { boundSetUser } from '../store/auth/actions';
+import EditableInput from '../common/EditableInput';
+import { updateCurrentUser } from '../api/users';
 
 type ProfileFormProps = {
-    user: User | null
-}
+  user: User,
+  setOuterLoading: (loading: boolean) => void,
+  setUser: typeof boundSetUser
+};
 
 const ProfileForm: React.FC<ProfileFormProps> = ({ 
-  user 
+  user ,
+  setOuterLoading,
+  setUser
 }: ProfileFormProps) => {
+  const [loading, setLoading] = useState(false);
+
+  const handleChangeName = async (value: string): Promise<void> => {
+    setOuterLoading(true);
+    setLoading(true);
+
+    try {
+      await updateCurrentUser({ name: value });
+
+      setUser({ ...user, name: value });
+      setOuterLoading(false);
+      setLoading(false);
+    } catch (error) {
+      setOuterLoading(false);
+      setLoading(false);
+    }
+  };
+    
   return (
-    <Form>
+    <Form loading={loading}>
 
       <Form.Field label={{ children: i18n.t('Name') }} 
-        control={Input}
+        control={EditableInput}
         defaultValue={user?.name}
+        onSubmitInput={handleChangeName}
       />
 
       <Form.Field label={{ children: i18n.t('Email') }}

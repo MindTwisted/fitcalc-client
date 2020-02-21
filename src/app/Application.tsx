@@ -3,7 +3,7 @@ import { bindActionCreators, Dispatch } from 'redux';
 import { connect, ConnectedProps } from 'react-redux';
 import { Header, Image, Segment, Sidebar } from 'semantic-ui-react';
 import { RootState } from '../store';
-import { boundLogout } from '../store/auth/actions';
+import { boundLogout, boundSetUser } from '../store/auth/actions';
 import { boundSetLang, boundSetTheme } from '../store/system/actions';
 import SidebarNavigation from './SidebarNavigation';
 import NavigationBar from './NavigationBar';
@@ -19,19 +19,24 @@ const Application: React.FC<ApplicationProps> = ({
   logout,
   setLang,
   setTheme,
+  setUser,
   mobile
 }: ApplicationProps) => {
+  if (auth.user === null) {
+    throw new Error('Application component requires logged-in user to work properly.');
+  }
+
   const [sidebarVisible, setSidebarVisible] = useState(!mobile);
   const [settingsModalOpen, setSettingsModalOpen] = useState(false);
 
   useEffect(() => {
     setSidebarVisible(!mobile);
   }, [mobile]);
-  
+
   return (
     <React.Fragment>
       <Sidebar.Pushable style={{ transform: 'none' }}>
-        <SidebarNavigation system={system}
+        <SidebarNavigation theme={system.theme}
           mobile={mobile}
           visible={sidebarVisible}
           setVisible={setSidebarVisible}
@@ -43,9 +48,9 @@ const Application: React.FC<ApplicationProps> = ({
           <NavigationBar sidebarVisible={sidebarVisible}
             setSidebarVisible={setSidebarVisible}
             mobile={mobile}
-            auth={auth}
+            user={auth.user}
             logout={logout}
-            system={system}
+            theme={system.theme}
             setSettingsModalOpen={setSettingsModalOpen}
           />
 
@@ -58,12 +63,14 @@ const Application: React.FC<ApplicationProps> = ({
         </Sidebar.Pusher>
       </Sidebar.Pushable>
       
-      <SettingsModal system={system}
+      <SettingsModal theme={system.theme}
+        lang={system.lang}
         user={auth.user}
         open={settingsModalOpen}
         closeModal={() => setSettingsModalOpen(false)}
         setLang={setLang}
         setTheme={setTheme}
+        setUser={setUser}
       />
     </React.Fragment>
   );
@@ -77,7 +84,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
   return bindActionCreators({
     logout: boundLogout,
     setLang: boundSetLang,
-    setTheme: boundSetTheme
+    setTheme: boundSetTheme,
+    setUser: boundSetUser
   }, dispatch);
 };
 const connector = connect(mapStateToProps, mapDispatchToProps);

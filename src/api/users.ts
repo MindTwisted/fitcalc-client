@@ -1,5 +1,6 @@
 import axios from './axios';
 import { getApiPrefix } from './config';
+import { User } from '../store/auth/types';
 
 const getUsersPrefix = () => `${getApiPrefix()}/users`;
 
@@ -17,4 +18,15 @@ export const confirmPasswordRecovery = ({ token = '', password = '' } = {}): Pro
   }
 }> => {
   return axios.post(`${getUsersPrefix()}/confirm_password_recovery`, { token, password });
+};
+
+export const updateCurrentUser = ({ name = '' } = {}): Promise<{
+  data: {
+    message: string,
+    data: {
+      user: User
+    }
+  }
+}> => {
+  return axios.put(`${getUsersPrefix()}`, { name });
 };

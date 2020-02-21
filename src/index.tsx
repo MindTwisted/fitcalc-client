@@ -5,10 +5,13 @@ import 'semantic-ui-css/semantic.min.css';
 import * as serviceWorker from './serviceWorker';
 import { store } from './store';
 import App from './App';
+import ErrorBoundary from './common/ErrorBoundary';
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <ErrorBoundary>
+      <App />
+    </ErrorBoundary>
   </Provider>,
   document.getElementById('root')
 );

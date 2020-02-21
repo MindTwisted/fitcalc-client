@@ -1,23 +1,21 @@
 import React from 'react';
 import { Icon, Menu, Sidebar, Sticky } from 'semantic-ui-react';
 import i18n from '../localization/i18n';
-import { SystemState, Themes } from '../store/system/types';
+import { Themes } from '../store/system/types';
 
 type SidebarNavigationProps = {
-  system: SystemState,
+  theme: Themes,
   mobile: boolean,
   visible: boolean,
   setVisible: (visible: boolean) => void
 };
 
 const SidebarNavigation: React.FC<SidebarNavigationProps> = ({ 
-  system,
+  theme,
   mobile,
   visible,
   setVisible
 }: SidebarNavigationProps) => {
-  const { theme } = system;
-  
   return (
     <Sticky>
       <Sidebar
