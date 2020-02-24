@@ -78,7 +78,8 @@ const SettingsModal: React.FC<SettingsModalProps> = ({
               // eslint-disable-next-line react/display-name
               render: () => <Tab.Pane as='div'>
                 <ProfileForm user={user}
-                  setOuterLoading={setLoading}
+                  loading={loading}
+                  setLoading={setLoading}
                   setUser={setUser}
                 />
               </Tab.Pane>

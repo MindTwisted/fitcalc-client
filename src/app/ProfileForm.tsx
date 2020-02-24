@@ -5,33 +5,40 @@ import { User } from '../store/auth/types';
 import { boundSetUser } from '../store/auth/actions';
 import EditableInput from '../common/EditableInput';
 import { updateCurrentUser } from '../api/users';
+import { getViolationsFromAxiosError } from '../api/utils';
 
 type ProfileFormProps = {
   user: User,
-  setOuterLoading: (loading: boolean) => void,
+  loading: boolean,
+  setLoading: (loading: boolean) => void,
   setUser: typeof boundSetUser
 };
 
 const ProfileForm: React.FC<ProfileFormProps> = ({ 
   user ,
-  setOuterLoading,
+  loading,
+  setLoading,
   setUser
 }: ProfileFormProps) => {
-  const [loading, setLoading] = useState(false);
-
+  const [nameError, setNameError] = useState('');
+    
   const handleChangeName = async (value: string): Promise<void> => {
-    setOuterLoading(true);
     setLoading(true);
 
     try {
       await updateCurrentUser({ name: value });
 
       setUser({ ...user, name: value });
-      setOuterLoading(false);
+
+      setNameError('');
       setLoading(false);
     } catch (error) {
-      setOuterLoading(false);
+      const violations = getViolationsFromAxiosError(error);
+
+      setNameError(violations.name);
       setLoading(false);
+
+      throw error;
     }
   };
     
@@ -40,13 +47,15 @@ const ProfileForm: React.FC<ProfileFormProps> = ({
 
       <Form.Field label={{ children: i18n.t('Name') }} 
         control={EditableInput}
-        defaultValue={user?.name}
+        defaultValue={user.name}
         onSubmitInput={handleChangeName}
+        onCancelEditing={() => setNameError('')}
+        error={nameError ? { content: nameError } : null}
       />
 
       <Form.Field label={{ children: i18n.t('Email') }}
         control={Input}
-        defaultValue={user?.email}
+        defaultValue={user.email}
       />
 
       <Accordion as={Form.Field}

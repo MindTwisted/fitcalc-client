@@ -2,13 +2,15 @@ import React, { ChangeEvent, KeyboardEvent, useEffect, useRef, useState } from '
 import { Input, Icon, Button } from 'semantic-ui-react';
 
 type EditableInputProps = {
-    defaultValue: string,
-    onSubmitInput: (value: string) => Promise<void> | void
+  defaultValue: string,
+  onSubmitInput: (value: string) => Promise<void> | void,
+  onCancelEditing: () => void
 };
 
 const EditableInput: React.FC<EditableInputProps> = ({ 
   defaultValue,
-  onSubmitInput
+  onSubmitInput,
+  onCancelEditing
 }: EditableInputProps) => {
   const [editable, setEditable] = useState(false);
   const [value, setValue] = useState(defaultValue);
@@ -29,16 +31,14 @@ const EditableInput: React.FC<EditableInputProps> = ({
   const handleCancel = () => {
     setValue(defaultValue);
     setEditable(false);
+    
+    onCancelEditing();
   };
   
   const handleSubmit = async () => {
-    try {
-      await onSubmitInput(value);
+    await onSubmitInput(value);
 
-      setEditable(false);
-    } catch (error) {
-      setEditable(false);
-    }
+    setEditable(false);
   };
 
   const handleKeyDown = async (e: KeyboardEvent) => {
