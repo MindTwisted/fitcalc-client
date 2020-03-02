@@ -5,6 +5,7 @@ import {
   RefreshToken,
   SET_ACCESS_TOKEN,
   SET_REFRESH_TOKEN,
+  SET_TIME_OFFSET,
   SET_USER,
   User
 } from './types';
@@ -33,6 +34,13 @@ export function setUser(user: User | null): AuthActionTypes {
   return {
     type: SET_USER,
     user
+  };
+}
+
+export function setTimeOffset(timeOffset: number): AuthActionTypes {
+  return {
+    type: SET_TIME_OFFSET,
+    timeOffset
   };
 }
 
@@ -72,19 +80,29 @@ export function boundSetUser(user: User | null): Function {
   };
 }
 
+export function boundSetTimeOffset(timeOffset: number): Function {
+  return function (dispatch: Dispatch<AuthActionTypes>): void {
+    localStorage.setItem('timeOffset', String(timeOffset));
+    
+    dispatch(setTimeOffset(timeOffset));
+  };
+}
+
 export function boundLogin({ email = '', password = '' } = {}): Function {
   return async function (dispatch: Dispatch<AuthActionTypes>): Promise<void> {
     try {
       const loginResponse = await login({ email, password });
-      const loginData = loginResponse.data.data;
+      const { access_token, refresh_token, date } = loginResponse.data.data;
+      const timeOffset = Number(new Date(date)) - Number(new Date());
 
-      boundSetAccessToken(loginData.access_token)(dispatch);
-      boundSetRefreshToken(loginData.refresh_token)(dispatch);
+      boundSetAccessToken(access_token)(dispatch);
+      boundSetRefreshToken(refresh_token)(dispatch);
+      boundSetTimeOffset(timeOffset)(dispatch);
 
       const authResponse = await auth();
-      const authData = authResponse.data.data;
+      const { user } = authResponse.data.data;
 
-      boundSetUser(authData.user)(dispatch);
+      boundSetUser(user)(dispatch);
 
       return Promise.resolve();
     } catch (error) {
@@ -99,17 +117,14 @@ export function boundLogout(): Function {
 
     boundSetLoading(true)(dispatch);
 
-    try {
-      if (auth.refreshToken?.id) {
-        await deleteRefreshTokenById(auth.refreshToken.id);
-      }
-
-      boundSetAccessToken(null)(dispatch);
-      boundSetRefreshToken(null)(dispatch);
-      boundSetUser(null)(dispatch);
-      boundSetLoading(false)(dispatch);
-    } catch (error) {
-      boundSetLoading(false)(dispatch);
+    if (auth.refreshToken?.id) {
+      await deleteRefreshTokenById(auth.refreshToken.id);
     }
+
+    boundSetAccessToken(null)(dispatch);
+    boundSetRefreshToken(null)(dispatch);
+    boundSetUser(null)(dispatch);
+    boundSetTimeOffset(0)(dispatch);
+    boundSetLoading(false)(dispatch);
   };
 }

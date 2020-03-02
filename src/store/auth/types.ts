@@ -19,12 +19,14 @@ export interface User {
 export interface AuthState {
     accessToken: AccessToken | null
     refreshToken: RefreshToken | null
-    user: User | null
+    user: User | null,
+    timeOffset: number
 }
 
 export const SET_ACCESS_TOKEN = 'SET_ACCESS_TOKEN';
 export const SET_REFRESH_TOKEN = 'SET_REFRESH_TOKEN';
 export const SET_USER = 'SET_USER';
+export const SET_TIME_OFFSET = 'SET_TIME_OFFSET';
 
 interface SetAccessTokenAction {
     type: typeof SET_ACCESS_TOKEN,
@@ -41,4 +43,9 @@ interface SetUserAction {
     user: User | null
 }
 
-export type AuthActionTypes = SetAccessTokenAction | SetRefreshTokenAction | SetUserAction;
+interface SetTimeOffsetAction {
+    type: typeof SET_TIME_OFFSET,
+    timeOffset: number
+}
+
+export type AuthActionTypes = SetAccessTokenAction | SetRefreshTokenAction | SetUserAction | SetTimeOffsetAction ;

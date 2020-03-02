@@ -2,7 +2,7 @@ import axios, { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } f
 import { toast } from 'react-semantic-toasts';
 import { apiRoot } from './config';
 import { store } from '../store';
-import { boundSetAccessToken, boundSetRefreshToken, boundSetUser } from '../store/auth/actions';
+import { boundSetAccessToken, boundSetRefreshToken, boundSetTimeOffset, boundSetUser } from '../store/auth/actions';
 import { refresh } from './auth';
 
 const axiosInstance: AxiosInstance =  axios.create({
@@ -18,13 +18,14 @@ axiosInstance.interceptors.request.use(
       return config;
     }
       
-    const accessToken = store.getState().auth.accessToken;
+    const { accessToken, timeOffset } = store.getState().auth;
+    const currentTimestamp = Number(new Date()) + timeOffset;
 
     if (!accessToken) {
       return config;
     }
 
-    const isAccessTokenValid = Number((new Date(accessToken.expires_at))) > Date.now();
+    const isAccessTokenValid = Number((new Date(accessToken.expires_at))) > currentTimestamp;
 
     if (isAccessTokenValid) {
       config.headers.Authorization = `Bearer ${accessToken.token}`;
@@ -38,7 +39,7 @@ axiosInstance.interceptors.request.use(
       return config;
     }
     
-    const isRefreshTokenValid = Number((new Date(refreshToken.expires_at))) > Date.now();
+    const isRefreshTokenValid = Number((new Date(refreshToken.expires_at))) > currentTimestamp;
     
     if (!isRefreshTokenValid) {
       return config;
@@ -86,6 +87,7 @@ axiosInstance.interceptors.response.use(
       boundSetAccessToken(null)(store.dispatch);
       boundSetRefreshToken(null)(store.dispatch);
       boundSetUser(null)(store.dispatch);
+      boundSetTimeOffset(0)(store.dispatch);
     }
 
     return Promise.reject(error);

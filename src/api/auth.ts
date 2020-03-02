@@ -26,7 +26,8 @@ export const login = ({
     message: string,
     data: {
       access_token: AccessToken,
-      refresh_token: RefreshToken
+      refresh_token: RefreshToken,
+      date: string
     }
   }
 }> => {

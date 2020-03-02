@@ -53,7 +53,7 @@ const SettingsModal: React.FC<SettingsModalProps> = ({
       closeOnEscape={!loading}
       closeOnDimmerClick={!loading}
       onClose={handleClose}
-      dimmer={theme === Themes.Light ? 'blurring' : true}
+      dimmer={theme === Themes.Light ? 'inverted' : true}
     >
       <Modal.Content style={{ paddingTop: 0 }}>
         <Tab activeIndex={activeTab}

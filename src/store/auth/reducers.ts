@@ -52,10 +52,17 @@ const getInitialUser = (): User | null => {
 
 };
 
+const getInitialTimeOffset = (): number => {
+  const timeOffset = Number(localStorage.getItem('timeOffset'));
+
+  return Number.isInteger(timeOffset) ? timeOffset : 0;
+};
+
 const initialState: AuthState = {
   accessToken: getInitialAccessToken(),
   refreshToken: getInitialRefreshToken(),
-  user: getInitialUser()
+  user: getInitialUser(),
+  timeOffset: getInitialTimeOffset()
 };
 
 export function authReducer(state: AuthState = initialState, action: AuthActionTypes): AuthState {
