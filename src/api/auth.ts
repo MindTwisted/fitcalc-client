@@ -53,3 +53,13 @@ export const refresh = (refreshToken: RefreshToken): Promise<{
 }> => {
   return axios.post(`${getAuthPrefix()}/refresh`, { refresh_token: refreshToken.token }, { headers: { noAuth: true } });
 };
+
+export const verifyPassword = (password: string): Promise<{
+  data: {
+    data: {
+      message: string
+    }
+  }
+}> => {
+  return axios.post(`${getAuthPrefix()}/verify_password`, { password });
+};

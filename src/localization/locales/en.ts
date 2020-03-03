@@ -44,6 +44,7 @@ export default {
   'Language': 'Language',
   'Theme': 'Theme',
   'Light': 'Light',
-  'Dark': 'Dark'
+  'Dark': 'Dark',
+  'Current password': 'Current password'
 };
 

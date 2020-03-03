@@ -1,8 +1,9 @@
 import React, { ChangeEvent, useState } from 'react';
-import { Button, Form, Icon, InputOnChangeData, Modal } from 'semantic-ui-react';
+import { Button, Form, InputOnChangeData, Modal } from 'semantic-ui-react';
 import i18n from '../localization/i18n';
 import { register } from '../api/auth';
 import { getViolationsFromAxiosError } from '../api/utils';
+import PasswordInput from '../common/PasswordInput';
 
 type RegisterModalProps = {
   open: boolean,
@@ -18,12 +19,10 @@ const RegisterModal: React.FC<RegisterModalProps> = ({
   const initialFormError = { name: null, email: null, password: null };
   const [formData, setFormData] = useState(initialFormData);
   const [formError, setFormError] = useState(initialFormError);
-  const [showPassword, setShowPassword] = useState(false);
 
   const handleClose = () => {
     setFormData(initialFormData);
     setFormError(initialFormError);
-    setShowPassword(false);
 
     closeModal();
   };
@@ -85,20 +84,14 @@ const RegisterModal: React.FC<RegisterModalProps> = ({
               onChange={handleChange}
               error={formError.email ? { content: formError.email } : null}
             />
-            <Form.Input fluid
+            <Form.Field control={PasswordInput}
+              fluid
               name='password'
               label={i18n.t('Password')}
               placeholder={i18n.t('Password')}
               value={formData.password}
               onChange={handleChange}
-              type={showPassword ? 'text' : 'password'}
               error={formError.password ? { content: formError.password } : null}
-              icon={(
-                <Icon link
-                  name={showPassword ? 'eye slash' : 'eye'}
-                  onClick={() => setShowPassword(!showPassword)}
-                />
-              )}
             />
             <Button primary
               type='submit'

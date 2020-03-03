@@ -44,6 +44,7 @@ export default {
   'Language': 'Язык',
   'Theme': 'Тема',
   'Light': 'Светлая',
-  'Dark': 'Тёмная'
+  'Dark': 'Тёмная',
+  'Current password': 'Текущий пароль'
 };
 
