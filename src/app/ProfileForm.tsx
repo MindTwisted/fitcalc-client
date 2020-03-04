@@ -1,13 +1,14 @@
-import React, { ChangeEvent, useState } from 'react';
-import { Form, Input, Accordion, Button, InputOnChangeData } from 'semantic-ui-react';
+import React, { useState } from 'react';
+import { Form, Accordion } from 'semantic-ui-react';
 import i18n from '../localization/i18n';
 import { User } from '../store/auth/types';
 import { boundSetUser } from '../store/auth/actions';
 import EditableInput from '../common/EditableInput';
-import { updateCurrentUser, updateCurrentUserEmail } from '../api/users';
+import { updateCurrentUser, updateCurrentUserEmail, updateCurrentUserPassword } from '../api/users';
 import { getViolationsFromAxiosError } from '../api/utils';
 import { verifyPassword } from '../api/auth';
 import PasswordInput from '../common/PasswordInput';
+import SubmittableInput from '../common/SubmittableInput';
 
 type ProfileFormProps = {
   user: User,
@@ -24,6 +25,7 @@ const ProfileForm: React.FC<ProfileFormProps> = ({
 }: ProfileFormProps) => {
   const [nameError, setNameError] = useState('');
   const [emailError, setEmailError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
   const initialCurrentPasswordData = { currentPassword: '', verified: false };
   const [currentPasswordData, setCurrentPasswordData] = useState(initialCurrentPasswordData);
     
@@ -67,26 +69,41 @@ const ProfileForm: React.FC<ProfileFormProps> = ({
     }
   };
   
-  const handleChangeCurrentPassword = (e: ChangeEvent<HTMLInputElement>, { value }: InputOnChangeData): void => {
-    setCurrentPasswordData({
-      ...currentPasswordData,
-      currentPassword: value
-    });
-  };
-  
-  const handleVerifyPassword = async (): Promise<void> => {
+  const handleVerifyPassword = async (value: string): Promise<void> => {
     setLoading(true);
-    
+
     try {
-      await verifyPassword(currentPasswordData.currentPassword);
-      
+      await verifyPassword(value);
+
       setCurrentPasswordData({
-        ...currentPasswordData,
+        currentPassword: value,
         verified: true
       });
       setLoading(false);
     } catch (error) {
       setLoading(false);
+
+      throw error;
+    }
+  };
+  
+  const handleChangePassword = async (value: string): Promise<{clearValue: boolean}> => {
+    setLoading(true);
+    
+    try {
+      await updateCurrentUserPassword({ currentPassword: currentPasswordData.currentPassword, newPassword: value });
+
+      setPasswordError('');
+      setLoading(false);
+      
+      return { clearValue: true };
+    } catch (error) {
+      const violations = getViolationsFromAxiosError(error);
+
+      setPasswordError(violations.plainPassword);
+      setLoading(false);
+
+      throw error;
     }
   };
     
@@ -94,24 +111,13 @@ const ProfileForm: React.FC<ProfileFormProps> = ({
     <Form loading={loading}>
       
       {!currentPasswordData.verified && (
-        <React.Fragment>
-          <Form.Field control={PasswordInput}
-            autoFocus
-            label={i18n.t('Current password')}
-            placeholder={i18n.t('Current password')}
-            value={currentPasswordData.currentPassword}
-            onChange={handleChangeCurrentPassword}
-          />
-
-          {currentPasswordData.currentPassword && (
-            <Button primary
-              type='submit'
-              onClick={handleVerifyPassword}
-            >
-              {i18n.t('Submit')}
-            </Button>
-          )}
-        </React.Fragment>
+        <Form.Field label={i18n.t('Current password')}
+          placeholder={i18n.t('Current password')}
+          autoFocus
+          control={SubmittableInput}
+          inputEl={PasswordInput}
+          onSubmitInput={handleVerifyPassword}
+        />
       )}
 
       {(currentPasswordData.currentPassword && currentPasswordData.verified) && (
@@ -139,8 +145,11 @@ const ProfileForm: React.FC<ProfileFormProps> = ({
                 title: i18n.t('Password'),
                 content: {
                   content: (
-                    <Form.Field control={Input}
+                    <Form.Field control={SubmittableInput}
+                      inputEl={PasswordInput}
                       placeholder={i18n.t('Password')}
+                      onSubmitInput={handleChangePassword}
+                      error={passwordError ? { content: passwordError } : null}
                     />
                   )
                 }
