@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { bindActionCreators, Dispatch } from 'redux';
 import { connect, ConnectedProps } from 'react-redux';
 import { Header, Image, Segment, Sidebar } from 'semantic-ui-react';
 import { RootState } from '../store';
 import { boundLogout, boundSetUser } from '../store/auth/actions';
-import { boundSetLang, boundSetTheme } from '../store/system/actions';
+import { boundSetLang, boundSetLoading, boundSetTheme } from '../store/system/actions';
+import { isLoggedInSelector } from '../store/auth/selectors';
+import { auth as fetchAuth } from '../api/auth';
 import SidebarNavigation from './SidebarNavigation';
 import NavigationBar from './NavigationBar';
 import SettingsModal from './SettingsModal';
@@ -16,10 +18,12 @@ type ApplicationProps = ConnectedProps<typeof connector> & {
 const Application: React.FC<ApplicationProps> = ({ 
   system, 
   auth,
+  isLoggedIn,
   logout,
   setLang,
   setTheme,
   setUser,
+  setLoading,
   mobile
 }: ApplicationProps) => {
   if (auth.user === null) {
@@ -29,9 +33,27 @@ const Application: React.FC<ApplicationProps> = ({
   const [sidebarVisible, setSidebarVisible] = useState(!mobile);
   const [settingsModalOpen, setSettingsModalOpen] = useState(false);
 
+  const fetchCurrentUser = useCallback(async () => {
+    setLoading(true);
+
+    try {
+      const authResponse = await fetchAuth();
+      const { user } = authResponse.data.data;
+
+      setUser(user);
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+    }
+  }, [setLoading, setUser]);
+
   useEffect(() => {
+    if (isLoggedIn) {
+      fetchCurrentUser();
+    }
+
     setSidebarVisible(!mobile);
-  }, [mobile]);
+  }, [mobile, isLoggedIn, fetchCurrentUser]);
 
   return (
     <React.Fragment>
@@ -78,14 +100,16 @@ const Application: React.FC<ApplicationProps> = ({
 
 const mapStateToProps = (state: RootState) => ({
   system: state.system,
-  auth: state.auth
+  auth: state.auth,
+  isLoggedIn: isLoggedInSelector(state),
 });
 const mapDispatchToProps = (dispatch: Dispatch) => {
   return bindActionCreators({
     logout: boundLogout,
     setLang: boundSetLang,
     setTheme: boundSetTheme,
-    setUser: boundSetUser
+    setUser: boundSetUser,
+    setLoading: boundSetLoading
   }, dispatch);
 };
 const connector = connect(mapStateToProps, mapDispatchToProps);
