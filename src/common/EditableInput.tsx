@@ -3,7 +3,7 @@ import { Input, Icon, Button } from 'semantic-ui-react';
 
 type EditableInputProps = {
   defaultValue: string,
-  onSubmitInput: (value: string) => Promise<void> | void,
+  onSubmitInput: (value: string) => Promise<void | {changeValue: boolean}> | void | {changeValue: boolean},
   onCancelEditing: () => void
 };
 
@@ -36,7 +36,12 @@ const EditableInput: React.FC<EditableInputProps> = ({
   };
   
   const handleSubmit = async () => {
-    await onSubmitInput(value);
+    const submitData = await onSubmitInput(value);
+
+    // noinspection PointlessBooleanExpressionJS
+    if (submitData && submitData.changeValue === false) {
+      setValue(defaultValue);
+    }
 
     setEditable(false);
   };

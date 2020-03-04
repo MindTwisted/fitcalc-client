@@ -30,3 +30,11 @@ export const updateCurrentUser = ({ name = '' } = {}): Promise<{
 }> => {
   return axios.put(`${getUsersPrefix()}`, { name });
 };
+
+export const updateCurrentUserEmail = ({ currentPassword = '', email = '' } = {}): Promise<{
+  data: {
+    message: string
+  }
+}> => {
+  return axios.put(`${getUsersPrefix()}/email`, { current_password: currentPassword, email });
+};

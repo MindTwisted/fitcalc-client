@@ -4,7 +4,7 @@ import i18n from '../localization/i18n';
 import { User } from '../store/auth/types';
 import { boundSetUser } from '../store/auth/actions';
 import EditableInput from '../common/EditableInput';
-import { updateCurrentUser } from '../api/users';
+import { updateCurrentUser, updateCurrentUserEmail } from '../api/users';
 import { getViolationsFromAxiosError } from '../api/utils';
 import { verifyPassword } from '../api/auth';
 import PasswordInput from '../common/PasswordInput';
@@ -23,6 +23,7 @@ const ProfileForm: React.FC<ProfileFormProps> = ({
   setUser
 }: ProfileFormProps) => {
   const [nameError, setNameError] = useState('');
+  const [emailError, setEmailError] = useState('');
   const initialCurrentPasswordData = { currentPassword: '', verified: false };
   const [currentPasswordData, setCurrentPasswordData] = useState(initialCurrentPasswordData);
     
@@ -40,6 +41,26 @@ const ProfileForm: React.FC<ProfileFormProps> = ({
       const violations = getViolationsFromAxiosError(error);
 
       setNameError(violations.name);
+      setLoading(false);
+
+      throw error;
+    }
+  };
+
+  const handleChangeEmail = async (value: string): Promise<{changeValue: boolean}> => {
+    setLoading(true);
+
+    try {
+      await updateCurrentUserEmail({ currentPassword: currentPasswordData.currentPassword, email: value });
+
+      setEmailError('');
+      setLoading(false);
+      
+      return { changeValue: false };
+    } catch (error) {
+      const violations = getViolationsFromAxiosError(error);
+
+      setEmailError(violations.email);
       setLoading(false);
 
       throw error;
@@ -104,8 +125,11 @@ const ProfileForm: React.FC<ProfileFormProps> = ({
           />
 
           <Form.Field label={{ children: i18n.t('Email') }}
-            control={Input}
+            control={EditableInput}
             defaultValue={user.email}
+            onSubmitInput={handleChangeEmail}
+            onCancelEditing={() => setEmailError('')}
+            error={emailError ? { content: emailError } : null}
           />
 
           <Accordion as={Form.Field}
