@@ -45,6 +45,10 @@ export default {
   'Theme': 'Тема',
   'Light': 'Светлая',
   'Dark': 'Тёмная',
-  'Current password': 'Текущий пароль'
+  'Current password': 'Текущий пароль',
+  'Device': 'Устройство',
+  'Expires At': 'Истекает',
+  'Current session': 'Текущая сессия',
+  'Total': 'Всего'
 };
 

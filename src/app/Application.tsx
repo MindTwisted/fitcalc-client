@@ -5,7 +5,6 @@ import { Header, Image, Segment, Sidebar } from 'semantic-ui-react';
 import { RootState } from '../store';
 import { boundLogout, boundSetUser } from '../store/auth/actions';
 import { boundSetLang, boundSetLoading, boundSetTheme } from '../store/system/actions';
-import { isLoggedInSelector } from '../store/auth/selectors';
 import { auth as fetchAuth } from '../api/auth';
 import SidebarNavigation from './SidebarNavigation';
 import NavigationBar from './NavigationBar';
@@ -18,7 +17,6 @@ type ApplicationProps = ConnectedProps<typeof connector> & {
 const Application: React.FC<ApplicationProps> = ({ 
   system, 
   auth,
-  isLoggedIn,
   logout,
   setLang,
   setTheme,
@@ -26,7 +24,7 @@ const Application: React.FC<ApplicationProps> = ({
   setLoading,
   mobile
 }: ApplicationProps) => {
-  if (auth.user === null) {
+  if (!auth.user || !auth.refreshToken || !auth.accessToken) {
     throw new Error('Application component requires logged-in user to work properly.');
   }
 
@@ -48,12 +46,9 @@ const Application: React.FC<ApplicationProps> = ({
   }, [setLoading, setUser]);
 
   useEffect(() => {
-    if (isLoggedIn) {
-      fetchCurrentUser();
-    }
-
+    fetchCurrentUser();
     setSidebarVisible(!mobile);
-  }, [mobile, isLoggedIn, fetchCurrentUser]);
+  }, [mobile, fetchCurrentUser]);
 
   return (
     <React.Fragment>
@@ -88,6 +83,7 @@ const Application: React.FC<ApplicationProps> = ({
       <SettingsModal theme={system.theme}
         lang={system.lang}
         user={auth.user}
+        refreshToken={auth.refreshToken}
         open={settingsModalOpen}
         closeModal={() => setSettingsModalOpen(false)}
         setLang={setLang}
@@ -100,8 +96,7 @@ const Application: React.FC<ApplicationProps> = ({
 
 const mapStateToProps = (state: RootState) => ({
   system: state.system,
-  auth: state.auth,
-  isLoggedIn: isLoggedInSelector(state),
+  auth: state.auth
 });
 const mapDispatchToProps = (dispatch: Dispatch) => {
   return bindActionCreators({

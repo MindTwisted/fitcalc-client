@@ -4,13 +4,13 @@ export interface AccessToken {
 }
 
 export interface RefreshToken {
+    id: number
     expires_at: string
-    id: number | null
     token: string
 }
 
 export interface User {
-    id: number | null
+    id: number
     name: string
     email: string
     roles: string[]

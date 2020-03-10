@@ -45,6 +45,10 @@ export default {
   'Theme': 'Theme',
   'Light': 'Light',
   'Dark': 'Dark',
-  'Current password': 'Current password'
+  'Current password': 'Current password',
+  'Device': 'Device',
+  'Expires At': 'Expires At',
+  'Current session': 'Current session',
+  'Total': 'Total'
 };
 

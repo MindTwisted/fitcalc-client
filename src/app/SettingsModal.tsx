@@ -1,18 +1,20 @@
 import React, { useState } from 'react';
 import { Modal, Tab } from 'semantic-ui-react';
+import { TabProps } from 'semantic-ui-react/dist/commonjs/modules/Tab/Tab';
 import i18n from '../localization/i18n';
 import { boundSetLang, boundSetTheme } from '../store/system/actions';
 import { boundSetUser } from '../store/auth/actions';
 import { Languages, Themes } from '../store/system/types';
-import { User } from '../store/auth/types';
+import { RefreshToken, User } from '../store/auth/types';
 import GeneralSettingsForm from './GeneralSettingsForm';
 import ProfileForm from './ProfileForm';
-import { TabProps } from 'semantic-ui-react/dist/commonjs/modules/Tab/Tab';
+import SessionsTable from './SessionsTable';
 
 type SettingsModalProps = {
   theme: Themes,
   lang: Languages,
   user: User,
+  refreshToken: RefreshToken,
   open: boolean,
   closeModal: () => void, 
   setLang: typeof boundSetLang,
@@ -24,6 +26,7 @@ const SettingsModal: React.FC<SettingsModalProps> = ({
   theme,
   lang,
   user,
+  refreshToken,
   open ,
   closeModal,
   setLang,
@@ -87,7 +90,12 @@ const SettingsModal: React.FC<SettingsModalProps> = ({
             {
               menuItem: i18n.t('Sessions'),
               // eslint-disable-next-line react/display-name
-              render: () => <Tab.Pane as='div'>Sessions</Tab.Pane>
+              render: () => <Tab.Pane as='div'>
+                <SessionsTable refreshToken={refreshToken}
+                  loading={loading}
+                  setLoading={setLoading}
+                />
+              </Tab.Pane>
             }
           ]}
         />
