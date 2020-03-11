@@ -26,3 +26,11 @@ export const getAllRefreshTokens = (): Promise<{
 }> => {
   return axios.get(`${getRefreshTokensPrefix()}`);
 };
+
+export const deleteAllRefreshTokens = (): Promise<{
+  data: {
+    message: string
+  }
+}> => {
+  return axios.delete(`${getRefreshTokensPrefix()}`);
+};

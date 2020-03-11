@@ -3,7 +3,7 @@ import { Modal, Tab } from 'semantic-ui-react';
 import { TabProps } from 'semantic-ui-react/dist/commonjs/modules/Tab/Tab';
 import i18n from '../localization/i18n';
 import { boundSetLang, boundSetTheme } from '../store/system/actions';
-import { boundSetUser } from '../store/auth/actions';
+import { boundSetUser, boundSoftLogout } from '../store/auth/actions';
 import { Languages, Themes } from '../store/system/types';
 import { RefreshToken, User } from '../store/auth/types';
 import GeneralSettingsForm from './GeneralSettingsForm';
@@ -19,7 +19,8 @@ type SettingsModalProps = {
   closeModal: () => void, 
   setLang: typeof boundSetLang,
   setTheme: typeof boundSetTheme,
-  setUser: typeof boundSetUser
+  setUser: typeof boundSetUser,
+  softLogout: typeof boundSoftLogout
 };
 
 const SettingsModal: React.FC<SettingsModalProps> = ({ 
@@ -31,7 +32,8 @@ const SettingsModal: React.FC<SettingsModalProps> = ({
   closeModal,
   setLang,
   setTheme,
-  setUser
+  setUser,
+  softLogout
 }: SettingsModalProps) => {
   const [loading, setLoading] = useState(false);
   const [activeTab, setActiveTab] = useState(0);
@@ -94,6 +96,7 @@ const SettingsModal: React.FC<SettingsModalProps> = ({
                 <SessionsTable refreshToken={refreshToken}
                   loading={loading}
                   setLoading={setLoading}
+                  softLogout={softLogout}
                 />
               </Tab.Pane>
             }

@@ -111,6 +111,15 @@ export function boundLogin({ email = '', password = '' } = {}): Function {
   };
 }
 
+export function boundSoftLogout(): Function {
+  return async function (dispatch: Dispatch<AuthActionTypes | SystemActionTypes>): Promise<void> {
+    boundSetAccessToken(null)(dispatch);
+    boundSetRefreshToken(null)(dispatch);
+    boundSetUser(null)(dispatch);
+    boundSetTimeOffset(0)(dispatch);
+  };
+}
+
 export function boundLogout(): Function {
   return async function (dispatch: Dispatch<AuthActionTypes | SystemActionTypes>, getState: () => RootState): Promise<void> {
     const { auth }: {auth: AuthState} = getState();
@@ -121,10 +130,7 @@ export function boundLogout(): Function {
       await deleteRefreshTokenById(auth.refreshToken.id);
     }
 
-    boundSetAccessToken(null)(dispatch);
-    boundSetRefreshToken(null)(dispatch);
-    boundSetUser(null)(dispatch);
-    boundSetTimeOffset(0)(dispatch);
+    boundSoftLogout()(dispatch);
     boundSetLoading(false)(dispatch);
   };
 }

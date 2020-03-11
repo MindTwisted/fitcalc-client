@@ -22,6 +22,7 @@ export default {
   'Give A Try': 'Give A Try',
   'We give you a tool so you can change your life.': 'We give you a tool so you can change your life.',
   'Submit': 'Submit',
+  'Cancel': 'Cancel',
   'Name': 'Name',
   'Email': 'Email',
   'Password': 'Password',
@@ -49,6 +50,9 @@ export default {
   'Device': 'Device',
   'Expires At': 'Expires At',
   'Current session': 'Current session',
-  'Total': 'Total'
+  'Total': 'Total',
+  'Delete session?': 'Delete session?',
+  'Delete current session? You will be logged-out.': 'Delete current session? You will be logged-out.',
+  'Delete all sessions? You will be logged-out.': 'Delete all sessions? You will be logged-out.'
 };
 

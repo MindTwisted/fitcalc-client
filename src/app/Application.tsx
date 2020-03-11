@@ -3,7 +3,7 @@ import { bindActionCreators, Dispatch } from 'redux';
 import { connect, ConnectedProps } from 'react-redux';
 import { Header, Image, Segment, Sidebar } from 'semantic-ui-react';
 import { RootState } from '../store';
-import { boundLogout, boundSetUser } from '../store/auth/actions';
+import { boundLogout, boundSetUser, boundSoftLogout } from '../store/auth/actions';
 import { boundSetLang, boundSetLoading, boundSetTheme } from '../store/system/actions';
 import { auth as fetchAuth } from '../api/auth';
 import SidebarNavigation from './SidebarNavigation';
@@ -18,6 +18,7 @@ const Application: React.FC<ApplicationProps> = ({
   system, 
   auth,
   logout,
+  softLogout,
   setLang,
   setTheme,
   setUser,
@@ -89,6 +90,7 @@ const Application: React.FC<ApplicationProps> = ({
         setLang={setLang}
         setTheme={setTheme}
         setUser={setUser}
+        softLogout={softLogout}
       />
     </React.Fragment>
   );
@@ -101,6 +103,7 @@ const mapStateToProps = (state: RootState) => ({
 const mapDispatchToProps = (dispatch: Dispatch) => {
   return bindActionCreators({
     logout: boundLogout,
+    softLogout: boundSoftLogout,
     setLang: boundSetLang,
     setTheme: boundSetTheme,
     setUser: boundSetUser,

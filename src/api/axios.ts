@@ -2,7 +2,7 @@ import axios, { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } f
 import { toast } from 'react-semantic-toasts';
 import { apiRoot } from './config';
 import { store } from '../store';
-import { boundSetAccessToken, boundSetRefreshToken, boundSetTimeOffset, boundSetUser } from '../store/auth/actions';
+import { boundSetAccessToken, boundSoftLogout } from '../store/auth/actions';
 import { refresh } from './auth';
 
 const axiosInstance: AxiosInstance =  axios.create({
@@ -84,10 +84,7 @@ axiosInstance.interceptors.response.use(
     }
 
     if (error.response?.status === 401) {
-      boundSetAccessToken(null)(store.dispatch);
-      boundSetRefreshToken(null)(store.dispatch);
-      boundSetUser(null)(store.dispatch);
-      boundSetTimeOffset(0)(store.dispatch);
+      boundSoftLogout()(store.dispatch);
     }
 
     return Promise.reject(error);

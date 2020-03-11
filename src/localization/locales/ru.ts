@@ -22,6 +22,7 @@ export default {
   'Give A Try': 'Попробовать',
   'We give you a tool so you can change your life.': 'Мы даем вам инструмент, чтобы вы могли изменить свою жизнь.',
   'Submit': 'Подтвердить',
+  'Cancel': 'Отменить',
   'Name': 'Имя',
   'Email': 'Адрес электронной почты',
   'Password': 'Пароль',
@@ -49,6 +50,9 @@ export default {
   'Device': 'Устройство',
   'Expires At': 'Истекает',
   'Current session': 'Текущая сессия',
-  'Total': 'Всего'
+  'Total': 'Всего',
+  'Delete session?': 'Удалить сессию?',
+  'Delete current session? You will be logged-out.': 'Удалить текущую сессию? Вы выйдете из системы.',
+  'Delete all sessions? You will be logged-out.': 'Удалить все сессии? Вы выйдете из системы.'
 };
 
