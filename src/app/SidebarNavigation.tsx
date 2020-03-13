@@ -1,6 +1,8 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 import { Icon, Menu, Sidebar, Sticky } from 'semantic-ui-react';
 import i18n from '../localization/i18n';
+import routes from '../routes';
 import { Themes } from '../store/system/types';
 
 type SidebarNavigationProps = {
@@ -30,17 +32,22 @@ const SidebarNavigation: React.FC<SidebarNavigationProps> = ({
         style={{ paddingTop: '5em' }}
       >
 
-        <Menu.Item as='a'
-          active
+        <Menu.Item as={NavLink}
+          to={routes.app.index}
+          exact
         >
           <Icon name='pie graph' />
           {i18n.t('Statistics')}
         </Menu.Item>
-        <Menu.Item as='a'>
+        <Menu.Item as={NavLink}
+          to={routes.app.products}
+        >
           <Icon name='shopping basket' />
           {i18n.t('Products')}
         </Menu.Item>
-        <Menu.Item as='a'>
+        <Menu.Item as={NavLink}
+          to={routes.app.eating}
+        >
           <Icon name='food' />
           {i18n.t('Eating')}
         </Menu.Item>

@@ -36,13 +36,13 @@ const App: React.FC<AppProps> = ({ system, isLoggedIn, isAppUser }: AppProps) =>
       <Router>
         <Switch>
           <Route exact
-            path={routes.home}
+            path={routes.home.index}
           >
             <Home mobile={mobile} />
           </Route>
           <ProtectedRoute isAllowed={isLoggedIn && isAppUser}
-            redirect={routes.home}
-            path={routes.app}
+            redirect={routes.home.index}
+            path={routes.app.index}
           >
             <Application mobile={mobile} />
           </ProtectedRoute>

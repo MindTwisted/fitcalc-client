@@ -45,7 +45,7 @@ const Heading: React.FC<HeadingProps> = ({
         <Button primary
           size='huge'
           as={Link}
-          to={routes.app}
+          to={routes.app.index}
         >
           {i18n.t('Get Started')}
           <Icon name='arrow right' />

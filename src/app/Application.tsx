@@ -1,7 +1,9 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { bindActionCreators, Dispatch } from 'redux';
 import { connect, ConnectedProps } from 'react-redux';
-import { Header, Image, Segment, Sidebar } from 'semantic-ui-react';
+import { Route } from 'react-router-dom';
+import { Segment, Sidebar } from 'semantic-ui-react';
+import routes from '../routes';
 import { RootState } from '../store';
 import { boundLogout, boundSetUser, boundSoftLogout } from '../store/auth/actions';
 import { boundSetLang, boundSetLoading, boundSetTheme } from '../store/system/actions';
@@ -9,6 +11,9 @@ import { auth as fetchAuth } from '../api/auth';
 import SidebarNavigation from './SidebarNavigation';
 import NavigationBar from './NavigationBar';
 import SettingsModal from './SettingsModal';
+import StatisticsPage from './StatisticsPage';
+import ProductsPage from './ProductsPage';
+import EatingPage from './EatingPage';
 
 type ApplicationProps = ConnectedProps<typeof connector> & {
   mobile: boolean
@@ -75,8 +80,17 @@ const Application: React.FC<ApplicationProps> = ({
           <Segment basic
             style={mobile ? null : { paddingLeft: 'calc(150px + 1em)' }}
           >
-            <Header as='h3'>Application Content</Header>
-            <Image src='https://react.semantic-ui.com/images/wireframe/paragraph.png' />
+            <Route path={routes.app.index}
+              exact
+            >
+              <StatisticsPage />
+            </Route>
+            <Route path={routes.app.products}>
+              <ProductsPage />
+            </Route>
+            <Route path={routes.app.eating}>
+              <EatingPage />
+            </Route>
           </Segment>
         </Sidebar.Pusher>
       </Sidebar.Pushable>

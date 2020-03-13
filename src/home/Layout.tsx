@@ -59,7 +59,7 @@ const Layout: React.FC<LayoutProps> = ({
               {(isLoggedIn && isAppUser) ? (
                 <Button size='huge'
                   as={Link}
-                  to={routes.app}
+                  to={routes.app.index}
                 >
                   {i18n.t('Check It Out')}
                 </Button>
@@ -124,7 +124,7 @@ const Layout: React.FC<LayoutProps> = ({
           
           {(isLoggedIn && isAppUser) ? (
             <Button as={Link}
-              to={routes.app}
+              to={routes.app.index}
               size='large'
             >
               {i18n.t('Give A Try')}

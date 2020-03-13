@@ -62,7 +62,7 @@ const NavigationBar: React.FC<NavigationBarProps> = ({
 
           {(isLoggedIn && isAppUser) && (
             <Menu.Item>
-              <Link to={routes.app}>
+              <Link to={routes.app.index}>
                 {i18n.t('Application')}
               </Link>
             </Menu.Item>
