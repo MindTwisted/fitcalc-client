@@ -55,6 +55,18 @@ const Application: React.FC<ApplicationProps> = ({
     fetchCurrentUser();
     setSidebarVisible(!mobile);
   }, [mobile, fetchCurrentUser]);
+  
+  const getContentStyles = () => {
+    const styles: any = {
+      paddingBottom: '5rem'
+    };
+    
+    if (!mobile) {
+      styles.paddingLeft = 'calc(150px + 1em)';
+    }
+    
+    return styles;
+  };
 
   return (
     <React.Fragment>
@@ -78,7 +90,7 @@ const Application: React.FC<ApplicationProps> = ({
           />
 
           <Segment basic
-            style={mobile ? null : { paddingLeft: 'calc(150px + 1em)' }}
+            style={getContentStyles()}
           >
             <Route path={routes.app.index}
               exact
@@ -86,7 +98,9 @@ const Application: React.FC<ApplicationProps> = ({
               <StatisticsPage />
             </Route>
             <Route path={routes.app.products}>
-              <ProductsPage />
+              <ProductsPage lang={system.lang}
+                setLoading={setLoading}
+              />
             </Route>
             <Route path={routes.app.eating}>
               <EatingPage />

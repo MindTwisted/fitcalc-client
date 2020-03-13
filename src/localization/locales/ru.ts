@@ -53,6 +53,12 @@ export default {
   'Total': 'Всего',
   'Delete session?': 'Удалить сессию?',
   'Delete current session? You will be logged-out.': 'Удалить текущую сессию? Вы выйдете из системы.',
-  'Delete all sessions? You will be logged-out.': 'Удалить все сессии? Вы выйдете из системы.'
+  'Delete all sessions? You will be logged-out.': 'Удалить все сессии? Вы выйдете из системы.',
+  'Proteins': 'Белки',
+  'Fats': 'Жиры',
+  'Carbohydrates': 'Углеводы',
+  'Fiber': 'Клетчатка',
+  'Calories': 'Калории',
+  'In Favourites': 'В Избранном'
 };
 

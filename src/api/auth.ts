@@ -1,8 +1,6 @@
 import axios from './axios';
-import { getApiPrefix } from './config';
+import { getAuthPrefix } from './config';
 import { AccessToken, RefreshToken, User } from '../store/auth/types';
-
-const getAuthPrefix = () => `${getApiPrefix()}/auth`;
 
 export const register = ({ 
   name = '', 

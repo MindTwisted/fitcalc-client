@@ -53,6 +53,12 @@ export default {
   'Total': 'Total',
   'Delete session?': 'Delete session?',
   'Delete current session? You will be logged-out.': 'Delete current session? You will be logged-out.',
-  'Delete all sessions? You will be logged-out.': 'Delete all sessions? You will be logged-out.'
+  'Delete all sessions? You will be logged-out.': 'Delete all sessions? You will be logged-out.',
+  'Proteins': 'Proteins',
+  'Fats': 'Fats',
+  'Carbohydrates': 'Carbohydrates',
+  'Fiber': 'Fiber',
+  'Calories': 'Calories',
+  'In Favourites': 'In Favourites'
 };
 

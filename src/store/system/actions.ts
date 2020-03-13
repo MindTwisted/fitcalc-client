@@ -33,9 +33,23 @@ export function boundSetLang(lang: Languages): Function {
   };
 }
 
+const loadingQueue: number[] = [];
+
 export function boundSetLoading(loading: boolean): Function {
   return function (dispatch: Dispatch<SystemActionTypes>): void {
-    dispatch(setLoading(loading));
+    if (loading) {
+      loadingQueue.push(1);
+  
+      dispatch(setLoading(loading));
+      
+      return;
+    }
+    
+    loadingQueue.shift();
+    
+    if (!loadingQueue.length) {
+      dispatch(setLoading(loading));
+    }
   };
 }
 

@@ -1,7 +1,5 @@
 import axios from './axios';
-import { getApiPrefix } from './config';
-
-const getRefreshTokensPrefix = () => `${getApiPrefix()}/refresh_tokens`;
+import { getRefreshTokensPrefix } from './config';
 
 export interface RefreshTokensResponse {
   id: number
