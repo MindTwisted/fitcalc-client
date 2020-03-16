@@ -1,4 +1,5 @@
 import axios from './axios';
+import { AxiosRequestConfig } from 'axios';
 import { getProductsPrefix } from './config';
 
 export interface ProductsResponse {
@@ -12,12 +13,27 @@ export interface ProductsResponse {
   inFavourites?: boolean
 }
 
-export const getAllProducts = (): Promise<{
+export interface GetAllProductsParams {
+  name?: string
+  offset?: number
+}
+
+export const getAllProducts = ({ name, offset }: GetAllProductsParams = { name: '', offset: 0 }): Promise<{
   data: {
     data: {
       products: ProductsResponse[]
     }
   }
 }> => {
-  return axios.get(`${getProductsPrefix()}`);
+  const config: AxiosRequestConfig = { params: {} };
+  
+  if (name) {
+    config.params.name = name;
+  }
+  
+  if (offset) {
+    config.params.offset = offset;
+  }
+  
+  return axios.get(`${getProductsPrefix()}`, config);
 };

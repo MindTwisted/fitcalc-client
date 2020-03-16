@@ -59,6 +59,8 @@ export default {
   'Carbohydrates': 'Carbohydrates',
   'Fiber': 'Fiber',
   'Calories': 'Calories',
-  'In Favourites': 'In Favourites'
+  'In Favourites': 'In Favourites',
+  'Search': 'Search',
+  'No products': 'No products'
 };
 

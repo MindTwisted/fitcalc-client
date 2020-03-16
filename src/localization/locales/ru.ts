@@ -59,6 +59,8 @@ export default {
   'Carbohydrates': 'Углеводы',
   'Fiber': 'Клетчатка',
   'Calories': 'Калории',
-  'In Favourites': 'В Избранном'
+  'In Favourites': 'В Избранном',
+  'Search': 'Поиск',
+  'No products': 'Нет продуктов'
 };
 
