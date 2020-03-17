@@ -1,11 +1,10 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { Table, Checkbox, Input } from 'semantic-ui-react';
-import { InputOnChangeData } from 'semantic-ui-react/dist/commonjs/elements/Input/Input';
+import { Table, Checkbox } from 'semantic-ui-react';
 import i18n from '../localization/i18n';
-import { debounce } from 'lodash';
 import { boundSetLoading } from '../store/system/actions';
 import { Languages } from '../store/system/types';
 import { getAllProducts, GetAllProductsParams, ProductsResponse } from '../api/products';
+import SearchInput from '../common/SearchInput';
 
 type ProductsPageProps = {
   lang: Languages,
@@ -20,7 +19,6 @@ const ProductsPage: React.FC<ProductsPageProps> = ({
   const [search, setSearch] = useState('');
   const [offset, setOffset] = useState(0);
   
-  const debouncedSetSearch = debounce(setSearch, 500);
   const fetchProducts = useCallback(async ({ name, offset }: GetAllProductsParams = { name: '', offset: 0 }) => {
     setLoading(true);
   
@@ -43,9 +41,8 @@ const ProductsPage: React.FC<ProductsPageProps> = ({
     <React.Fragment>
       <h1>{i18n.t('Products')}</h1>
       
-      <Input icon='search'
-        placeholder={i18n.t('Search')}
-        onChange={(event: React.ChangeEvent<HTMLInputElement>, data: InputOnChangeData) => debouncedSetSearch(data.value)}
+      <SearchInput placeholder={i18n.t('Search')}
+        onSearch={(value: string) => setSearch(value)}
       />
       
       <Table unstackable>
