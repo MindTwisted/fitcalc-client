@@ -1,10 +1,11 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { Table, Checkbox } from 'semantic-ui-react';
+import { Table, Checkbox, Icon, Input } from 'semantic-ui-react';
+import { debounce } from 'lodash';
 import i18n from '../localization/i18n';
 import { boundSetLoading } from '../store/system/actions';
 import { Languages } from '../store/system/types';
 import { getAllProducts, GetAllProductsParams, ProductsResponse } from '../api/products';
-import SearchInput from '../common/SearchInput';
+import { InputOnChangeData } from 'semantic-ui-react/dist/commonjs/elements/Input/Input';
 
 type ProductsPageProps = {
   lang: Languages,
@@ -17,32 +18,56 @@ const ProductsPage: React.FC<ProductsPageProps> = ({
 }: ProductsPageProps) => {
   const [products, setProducts] = useState<Array<ProductsResponse>>([]);
   const [search, setSearch] = useState('');
-  const [offset, setOffset] = useState(0);
   
-  const fetchProducts = useCallback(async ({ name, offset }: GetAllProductsParams = { name: '', offset: 0 }) => {
-    setLoading(true);
+  const fetchProducts = useCallback(
+    debounce(
+      async ({ name, offset }: GetAllProductsParams = { name: '', offset: 0 }, appendProducts: boolean = false) => {
+        setLoading(true);
   
-    try {
-      const productsResponse = await getAllProducts({ name, offset });
-      const { products } = productsResponse.data.data;
+        try {
+          const productsResponse = await getAllProducts({ name, offset });
+          const { products } = productsResponse.data.data;
     
-      setProducts(products);
-      setLoading(false);
-    } catch (error) {
-      setLoading(false);
-    }
-  }, [setLoading, setProducts]);
+          if (appendProducts) {
+            setProducts(currentProducts => [...currentProducts, ...products]);
+          } else {
+            setProducts(products);
+          }
+          
+          setLoading(false);
+        } catch (error) {
+          setLoading(false);
+        }
+      }, 
+      500
+    ), 
+    [setLoading, setProducts]
+  );
   
   useEffect(() => {
-    fetchProducts({ name: search, offset });
-  }, [fetchProducts, lang, search, offset]);
+    fetchProducts();
+    
+    return () => {
+      setSearch('');
+    };
+  }, [fetchProducts, lang]);
+  
+  useEffect(() => {
+    fetchProducts({ name: search });
+  }, [fetchProducts, search]);
   
   return (
     <React.Fragment>
       <h1>{i18n.t('Products')}</h1>
-      
-      <SearchInput placeholder={i18n.t('Search')}
-        onSearch={(value: string) => setSearch(value)}
+  
+      <Input onChange={(event: React.ChangeEvent<HTMLInputElement>, data: InputOnChangeData) => setSearch(data.value)}
+        placeholder={i18n.t('Search')}
+        icon={search ?
+          (<Icon name='close'
+            link
+            onClick={() => setSearch('')}
+          />) : 'search'}
+        value={search}
       />
       
       <Table unstackable>
