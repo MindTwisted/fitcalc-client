@@ -19,53 +19,53 @@ const ProductsPage: React.FC<ProductsPageProps> = ({
   const [products, setProducts] = useState<Array<ProductsResponse>>([]);
   const [search, setSearch] = useState('');
   
-  const fetchProducts = useCallback(
-    debounce(
-      async ({ name, offset }: GetAllProductsParams = { name: '', offset: 0 }, appendProducts: boolean = false) => {
-        setLoading(true);
+  const fetchProducts = async ({ name, offset }: GetAllProductsParams = { name: '', offset: 0 }, appendProducts: boolean = false) => {
+    setLoading(true);
   
-        try {
-          const productsResponse = await getAllProducts({ name, offset });
-          const { products } = productsResponse.data.data;
+    try {
+      const productsResponse = await getAllProducts({ name, offset });
+      const { products } = productsResponse.data.data;
     
-          if (appendProducts) {
-            setProducts(currentProducts => [...currentProducts, ...products]);
-          } else {
-            setProducts(products);
-          }
-          
-          setLoading(false);
-        } catch (error) {
-          setLoading(false);
-        }
-      }, 
-      500
-    ), 
-    [setLoading, setProducts]
-  );
+      if (appendProducts) {
+        setProducts(currentProducts => [...currentProducts, ...products]);
+      } else {
+        setProducts(products);
+      }
+    
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+    }
+  };
+  const fetchProductsDebouncedCallback = useCallback(debounce(fetchProducts, 500), [setLoading, setProducts]);
+  const fetchProductsCallback = useCallback(fetchProducts, [setLoading, setProducts]);
+  const handleSearch = (event: React.ChangeEvent<HTMLInputElement>, data: InputOnChangeData) => {
+    setSearch(data.value);
+    fetchProductsDebouncedCallback({ name: data.value });
+  };
+  const handleClearSearch = () => {
+    setSearch('');
+    fetchProductsCallback();
+  };
   
   useEffect(() => {
-    fetchProducts();
+    fetchProductsCallback();
     
     return () => {
       setSearch('');
     };
-  }, [fetchProducts, lang]);
-  
-  useEffect(() => {
-    fetchProducts({ name: search });
-  }, [fetchProducts, search]);
+  }, [fetchProductsCallback, lang]);
   
   return (
     <React.Fragment>
       <h1>{i18n.t('Products')}</h1>
   
-      <Input onChange={(event: React.ChangeEvent<HTMLInputElement>, data: InputOnChangeData) => setSearch(data.value)}
+      <Input onChange={handleSearch}
         placeholder={i18n.t('Search')}
         icon={search ?
           (<Icon name='close'
             link
-            onClick={() => setSearch('')}
+            onClick={handleClearSearch}
           />) : 'search'}
         value={search}
       />
