@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { Table, Checkbox, Icon, Input } from 'semantic-ui-react';
+import { Table, Checkbox, Icon, Input, Visibility } from 'semantic-ui-react';
 import { debounce } from 'lodash';
 import i18n from '../localization/i18n';
 import { boundSetLoading } from '../store/system/actions';
@@ -12,19 +12,29 @@ type ProductsPageProps = {
   setLoading: typeof boundSetLoading
 };
 
+const initialOffset = { value: 0, done: false };
+
 const ProductsPage: React.FC<ProductsPageProps> = ({
   lang,
   setLoading
 }: ProductsPageProps) => {
   const [products, setProducts] = useState<Array<ProductsResponse>>([]);
   const [search, setSearch] = useState('');
+  const [offset, setOffset] = useState(initialOffset);
   
-  const fetchProducts = async ({ name, offset }: GetAllProductsParams = { name: '', offset: 0 }, appendProducts: boolean = false) => {
+  const fetchProducts = async (
+    { name, offset }: GetAllProductsParams = { name: '', offset: 0 },
+    appendProducts: boolean = false
+  ) => {
     setLoading(true);
   
     try {
       const productsResponse = await getAllProducts({ name, offset });
       const { products } = productsResponse.data.data;
+      
+      if (products.length < 50) {
+        setOffset(currentOffset => ({ ...currentOffset, done: true }));
+      }
     
       if (appendProducts) {
         setProducts(currentProducts => [...currentProducts, ...products]);
@@ -35,17 +45,37 @@ const ProductsPage: React.FC<ProductsPageProps> = ({
       setLoading(false);
     } catch (error) {
       setLoading(false);
+      
+      throw error;
     }
   };
-  const fetchProductsDebouncedCallback = useCallback(debounce(fetchProducts, 500), [setLoading, setProducts]);
-  const fetchProductsCallback = useCallback(fetchProducts, [setLoading, setProducts]);
+  const fetchProductsDebouncedCallback = useCallback(debounce(fetchProducts, 500), [setLoading, setProducts, setOffset]);
+  const fetchProductsCallback = useCallback(fetchProducts, [setLoading, setProducts, setOffset]);
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>, data: InputOnChangeData) => {
+    setOffset(initialOffset);
     setSearch(data.value);
     fetchProductsDebouncedCallback({ name: data.value });
   };
   const handleClearSearch = () => {
+    setOffset(initialOffset);
     setSearch('');
     fetchProductsCallback();
+  };
+  const handleScrollBottom = async () => {
+    if (offset.done) {
+      return;
+    }
+    
+    const oldOffset = offset.value;
+    const newOffset = oldOffset + 50;
+  
+    setOffset(currentOffset => ({ ...currentOffset, value: newOffset }));
+  
+    try {
+      await fetchProductsCallback({ name: search, offset: newOffset }, true);
+    } catch (error) {
+      setOffset(currentOffset => ({ ...currentOffset, value: oldOffset }));
+    }
   };
   
   useEffect(() => {
@@ -53,11 +83,14 @@ const ProductsPage: React.FC<ProductsPageProps> = ({
     
     return () => {
       setSearch('');
+      setOffset(initialOffset);
     };
   }, [fetchProductsCallback, lang]);
   
   return (
-    <React.Fragment>
+    <Visibility once={false}
+      onBottomVisible={handleScrollBottom}
+    >
       <h1>{i18n.t('Products')}</h1>
   
       <Input onChange={handleSearch}
@@ -123,7 +156,7 @@ const ProductsPage: React.FC<ProductsPageProps> = ({
   
         </Table.Body>
       </Table>
-    </React.Fragment>
+    </Visibility>
   );
 };
 
