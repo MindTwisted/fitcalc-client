@@ -4,7 +4,13 @@ import { debounce } from 'lodash';
 import i18n from '../localization/i18n';
 import { boundSetLoading } from '../store/system/actions';
 import { Languages } from '../store/system/types';
-import { getAllProducts, GetAllProductsParams, ProductsResponse } from '../api/products';
+import {
+  addProductToFavourites,
+  getAllProducts,
+  GetAllProductsParams,
+  ProductsResponse,
+  removeProductFromFavourites
+} from '../api/products';
 import { InputOnChangeData } from 'semantic-ui-react/dist/commonjs/elements/Input/Input';
 
 type ProductsPageProps = {
@@ -77,6 +83,50 @@ const ProductsPage: React.FC<ProductsPageProps> = ({
       setOffset(currentOffset => ({ ...currentOffset, value: oldOffset }));
     }
   };
+  const handleAddProductToFavourites = async (id: number) => {
+    setLoading(true);
+    
+    try {
+      await addProductToFavourites(id);
+      
+      setProducts(currentProducts => {
+        return currentProducts.map(product => {
+          const localProduct = { ...product };
+          
+          if (localProduct.id === id) {
+            localProduct.inFavourites = true;
+          }
+          
+          return localProduct;
+        });
+      });
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+    }
+  };
+  const handleRemoveProductFromFavourites = async (id: number) => {
+    setLoading(true);
+  
+    try {
+      await removeProductFromFavourites(id);
+    
+      setProducts(currentProducts => {
+        return currentProducts.map(product => {
+          const localProduct = { ...product };
+        
+          if (localProduct.id === id) {
+            localProduct.inFavourites = false;
+          }
+        
+          return localProduct;
+        });
+      });
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+    }
+  };
   
   useEffect(() => {
     fetchProductsCallback();
@@ -142,6 +192,9 @@ const ProductsPage: React.FC<ProductsPageProps> = ({
                 <Table.Cell>
                   <Checkbox toggle
                     checked={product.inFavourites}
+                    onChange={product.inFavourites ?
+                      () => handleRemoveProductFromFavourites(product.id) :
+                      () => handleAddProductToFavourites(product.id)}
                   />
                 </Table.Cell>
               </Table.Row>
