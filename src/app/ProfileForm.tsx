@@ -131,6 +131,7 @@ const ProfileForm: React.FC<ProfileFormProps> = ({
           />
 
           <Form.Field label={{ children: i18n.t('Email') }}
+            type='email'
             control={EditableInput}
             defaultValue={user.email}
             onSubmitInput={handleChangeEmail}

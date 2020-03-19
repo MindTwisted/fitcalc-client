@@ -132,6 +132,7 @@ const PasswordRecoveryModal: React.FC<PasswordRecoveryModalProps> = ({
             <Form.Input fluid
               autoFocus
               name='email'
+              type='email'
               label={i18n.t('Email')}
               placeholder={i18n.t('Email')}
               value={email}

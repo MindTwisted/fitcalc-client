@@ -64,6 +64,7 @@ const LoginModal: React.FC<LoginModalProps> = ({
             <Form.Input fluid
               autoFocus
               name='email'
+              type='email'
               label={i18n.t('Email')}
               placeholder={i18n.t('Email')}
               value={formData.email}

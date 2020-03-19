@@ -78,6 +78,7 @@ const RegisterModal: React.FC<RegisterModalProps> = ({
             />
             <Form.Input fluid
               name='email'
+              type='email'
               label={i18n.t('Email')}
               placeholder={i18n.t('Email')}
               value={formData.email}

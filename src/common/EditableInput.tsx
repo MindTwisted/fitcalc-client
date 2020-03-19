@@ -4,13 +4,15 @@ import { Input, Icon, Button } from 'semantic-ui-react';
 type EditableInputProps = {
   defaultValue: string,
   onSubmitInput: (value: string) => Promise<void | {changeValue: boolean}> | void | {changeValue: boolean},
-  onCancelEditing: () => void
+  onCancelEditing: () => void,
+  type?: string
 };
 
 const EditableInput: React.FC<EditableInputProps> = ({ 
   defaultValue,
   onSubmitInput,
-  onCancelEditing
+  onCancelEditing, 
+  type= 'text'
 }: EditableInputProps) => {
   const [editable, setEditable] = useState(false);
   const [value, setValue] = useState(defaultValue);
@@ -61,7 +63,8 @@ const EditableInput: React.FC<EditableInputProps> = ({
       action
       onKeyDown={handleKeyDown}
     >
-      <input value={value}
+      <input type={type}
+        value={value}
         onChange={handleChange}
         ref={inputEl}
       />
