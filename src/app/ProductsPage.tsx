@@ -1,17 +1,12 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { Table, Checkbox, Icon, Input, Visibility } from 'semantic-ui-react';
+import { Table, Icon, Input, Visibility } from 'semantic-ui-react';
 import i18n from '../localization/i18n';
 import { boundSetLoading } from '../store/system/actions';
 import { Languages } from '../store/system/types';
-import {
-  addProductToFavourites,
-  getAllProducts,
-  GetAllProductsParams,
-  ProductsResponse,
-  removeProductFromFavourites
-} from '../api/products';
+import { getAllProducts, GetAllProductsParams, ProductsResponse } from '../api/products';
 import { InputOnChangeData } from 'semantic-ui-react/dist/commonjs/elements/Input/Input';
 import useDebounce from '../hooks/useDebounce';
+import ProductsPageTableRow from './ProductsPageTableRow';
 
 type ProductsPageProps = {
   lang: Languages,
@@ -83,50 +78,6 @@ const ProductsPage: React.FC<ProductsPageProps> = ({
       setOffset(currentOffset => ({ ...currentOffset, value: oldOffset }));
     }
   };
-  const handleAddProductToFavourites = async (id: number) => {
-    setLoading(true);
-    
-    try {
-      await addProductToFavourites(id);
-      
-      setProducts(currentProducts => {
-        return currentProducts.map(product => {
-          const localProduct = { ...product };
-          
-          if (localProduct.id === id) {
-            localProduct.inFavourites = true;
-          }
-          
-          return localProduct;
-        });
-      });
-      setLoading(false);
-    } catch (error) {
-      setLoading(false);
-    }
-  };
-  const handleRemoveProductFromFavourites = async (id: number) => {
-    setLoading(true);
-  
-    try {
-      await removeProductFromFavourites(id);
-    
-      setProducts(currentProducts => {
-        return currentProducts.map(product => {
-          const localProduct = { ...product };
-        
-          if (localProduct.id === id) {
-            localProduct.inFavourites = false;
-          }
-        
-          return localProduct;
-        });
-      });
-      setLoading(false);
-    } catch (error) {
-      setLoading(false);
-    }
-  };
   
   useEffect(() => {
     fetchProductsCallback();
@@ -170,34 +121,11 @@ const ProductsPage: React.FC<ProductsPageProps> = ({
     
           {products.length ? (
             products.map(product => (
-              <Table.Row key={product.id}>
-                <Table.Cell>
-                  {product.name}
-                </Table.Cell>
-                <Table.Cell>
-                  {product.proteins}
-                </Table.Cell>
-                <Table.Cell>
-                  {product.fats}
-                </Table.Cell>
-                <Table.Cell>
-                  {product.carbohydrates}
-                </Table.Cell>
-                <Table.Cell>
-                  {product.fiber}
-                </Table.Cell>
-                <Table.Cell>
-                  {product.calories}
-                </Table.Cell>
-                <Table.Cell>
-                  <Checkbox toggle
-                    checked={product.inFavourites}
-                    onChange={product.inFavourites ?
-                      () => handleRemoveProductFromFavourites(product.id) :
-                      () => handleAddProductToFavourites(product.id)}
-                  />
-                </Table.Cell>
-              </Table.Row>
+              <ProductsPageTableRow key={product.id}
+                product={product}
+                setLoading={setLoading}
+                setProducts={setProducts}
+              />
             ))
           ) : (
             <Table.Row>
