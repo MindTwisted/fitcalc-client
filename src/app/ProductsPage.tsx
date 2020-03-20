@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Table, Checkbox, Icon, Input, Visibility } from 'semantic-ui-react';
-import { debounce } from 'lodash';
 import i18n from '../localization/i18n';
 import { boundSetLoading } from '../store/system/actions';
 import { Languages } from '../store/system/types';
@@ -12,6 +11,7 @@ import {
   removeProductFromFavourites
 } from '../api/products';
 import { InputOnChangeData } from 'semantic-ui-react/dist/commonjs/elements/Input/Input';
+import useDebounce from '../hooks/useDebounce';
 
 type ProductsPageProps = {
   lang: Languages,
@@ -55,12 +55,12 @@ const ProductsPage: React.FC<ProductsPageProps> = ({
       throw error;
     }
   };
-  const fetchProductsDebouncedCallback = useCallback(debounce(fetchProducts, 500), [setLoading, setProducts, setOffset]);
+  const fetchProductsDebounced = useDebounce(fetchProducts, 500, [setLoading, setProducts, setOffset]);
   const fetchProductsCallback = useCallback(fetchProducts, [setLoading, setProducts, setOffset]);
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>, data: InputOnChangeData) => {
     setOffset(initialOffset);
     setSearch(data.value);
-    fetchProductsDebouncedCallback({ name: data.value });
+    fetchProductsDebounced({ name: data.value });
   };
   const handleClearSearch = () => {
     setOffset(initialOffset);
