@@ -11,13 +11,14 @@ type LoginModalProps = {
   login: typeof boundLogin
 }
 
+const initialFormData = { email: '', password: '' };
+
 const LoginModal: React.FC<LoginModalProps> = ({ 
   open,
   closeModal,
   login
 }: LoginModalProps) => {
   const [loading, setLoading] = useState(false);
-  const initialFormData = { email: '', password: '' };
   const [formData, setFormData] = useState(initialFormData);
   const [passwordRecoveryModalOpen, setPasswordRecoveryModalOpen] = useState(false);
 

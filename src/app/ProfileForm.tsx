@@ -17,6 +17,8 @@ type ProfileFormProps = {
   setUser: typeof boundSetUser
 };
 
+const initialCurrentPasswordData = { currentPassword: '', verified: false };
+
 const ProfileForm: React.FC<ProfileFormProps> = ({ 
   user ,
   loading,
@@ -26,7 +28,6 @@ const ProfileForm: React.FC<ProfileFormProps> = ({
   const [nameError, setNameError] = useState('');
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
-  const initialCurrentPasswordData = { currentPassword: '', verified: false };
   const [currentPasswordData, setCurrentPasswordData] = useState(initialCurrentPasswordData);
     
   const handleChangeName = async (value: string): Promise<void> => {

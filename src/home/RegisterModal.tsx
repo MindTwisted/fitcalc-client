@@ -10,13 +10,14 @@ type RegisterModalProps = {
   closeModal(): void
 };
 
+const initialFormData = { name: '', email: '', password: '' };
+const initialFormError = { name: null, email: null, password: null };
+
 const RegisterModal: React.FC<RegisterModalProps> = ({ 
   open,
   closeModal 
 }: RegisterModalProps) => {
   const [loading, setLoading] = useState(false);
-  const initialFormData = { name: '', email: '', password: '' };
-  const initialFormError = { name: null, email: null, password: null };
   const [formData, setFormData] = useState(initialFormData);
   const [formError, setFormError] = useState(initialFormError);
 
