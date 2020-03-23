@@ -1,7 +1,7 @@
 import i18next from 'i18next';
 import en from './locales/en';
 import ru from './locales/ru';
-import { Languages } from '../store/system/types';
+import { Languages } from '../types/models';
 
 i18next
   .init({

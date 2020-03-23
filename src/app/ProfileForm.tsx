@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Form, Accordion } from 'semantic-ui-react';
 import i18n from '../localization/i18n';
-import { User } from '../store/auth/types';
+import { User } from '../types/models';
 import { boundSetUser } from '../store/auth/actions';
 import EditableInput from '../common/EditableInput';
 import { updateCurrentUser, updateCurrentUserEmail, updateCurrentUserPassword } from '../api/users';

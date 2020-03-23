@@ -1,13 +1,6 @@
-import {
-  AccessToken,
-  AuthActionTypes,
-  AuthState,
-  RefreshToken,
-  SET_ACCESS_TOKEN,
-  SET_REFRESH_TOKEN,
-  SET_USER,
-  User
-} from './types';
+import { AccessToken, RefreshToken, User } from '../../types/models';
+import { SET_ACCESS_TOKEN, SET_REFRESH_TOKEN, SET_USER } from '../../types/actionTypes';
+import { AuthActionTypes, AuthState } from './types';
 
 const getInitialAccessToken = (): AccessToken | null => {
   const accessToken = localStorage.getItem('accessToken');

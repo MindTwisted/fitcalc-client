@@ -1,6 +1,6 @@
 import axios from './axios';
 import { getAuthPrefix } from './config';
-import { AccessToken, RefreshToken, User } from '../store/auth/types';
+import { AccessToken, User, RefreshToken } from '../types/models';
 
 export const register = ({ 
   name = '', 

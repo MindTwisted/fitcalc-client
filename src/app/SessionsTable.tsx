@@ -1,13 +1,12 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Table, Dimmer, Loader, Label, Button, Icon, Confirm } from 'semantic-ui-react';
 import i18n from '../localization/i18n';
-import { RefreshToken } from '../store/auth/types';
+import { RefreshToken } from '../types/models';
 import { boundSoftLogout } from '../store/auth/actions';
 import {
   deleteAllRefreshTokens,
   deleteRefreshTokenById,
   getAllRefreshTokens,
-  RefreshTokensResponse
 } from '../api/refresh_tokens';
 
 type SessionsTableProps = {
@@ -28,7 +27,7 @@ const SessionsTable: React.FC<SessionsTableProps> = ({
   setLoading,
   softLogout
 }: SessionsTableProps) => {
-  const [refreshTokens, setRefreshTokens] = useState<Array<RefreshTokensResponse>>([]);
+  const [refreshTokens, setRefreshTokens] = useState<Array<RefreshToken>>([]);
   const [confirmData, setConfirmData] = useState<ConfirmData>(null);
   
   const fetchRefreshTokens = useCallback(async () => {

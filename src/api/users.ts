@@ -1,6 +1,6 @@
 import axios from './axios';
 import { getUsersPrefix } from './config';
-import { User } from '../store/auth/types';
+import { User } from '../types/models';
 
 export const initiatePasswordRecovery = (email = ''): Promise<{
   data: {

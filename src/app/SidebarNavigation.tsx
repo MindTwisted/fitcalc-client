@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 import { Icon, Menu, Sidebar, Sticky } from 'semantic-ui-react';
 import i18n from '../localization/i18n';
 import routes from '../routes';
-import { Themes } from '../store/system/types';
+import { Themes } from '../types/models';
 
 type SidebarNavigationProps = {
   theme: Themes,

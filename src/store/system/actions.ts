@@ -1,6 +1,8 @@
 import i18n from '../../localization/i18n';
-import { Languages, SET_LANG, SET_LOADING, SET_THEME, SystemActionTypes, Themes } from './types';
 import { Dispatch } from 'redux';
+import { Languages, Themes } from '../../types/models';
+import { SET_LANG, SET_LOADING, SET_THEME } from '../../types/actionTypes';
+import { SystemActionTypes } from './types';
 
 export function setLang(lang: Languages): SystemActionTypes {
   return {

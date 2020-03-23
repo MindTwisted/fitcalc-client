@@ -1,17 +1,7 @@
 import axios from './axios';
 import { AxiosRequestConfig } from 'axios';
 import { getProductsPrefix } from './config';
-
-export interface ProductsResponse {
-  id: number
-  name: string
-  proteins: number
-  fats: number
-  carbohydrates: number
-  fiber: number
-  calories: number
-  inFavourites?: boolean
-}
+import { Product } from '../types/models';
 
 export interface GetAllProductsParams {
   name?: string
@@ -21,7 +11,7 @@ export interface GetAllProductsParams {
 export const getAllProducts = ({ name, offset }: GetAllProductsParams = { name: '', offset: 0 }): Promise<{
   data: {
     data: {
-      products: ProductsResponse[]
+      products: Product[]
     }
   }
 }> => {

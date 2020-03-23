@@ -1,22 +1,11 @@
-export enum Languages {
-    English = 'en',
-    Russian = 'ru'
-}
-
-export enum Themes {
-    Light = 'light',
-    Dark = 'dark'
-}
+import { Languages, Themes } from '../../types/models';
+import { SET_LANG, SET_LOADING, SET_THEME } from '../../types/actionTypes';
 
 export interface SystemState {
     lang: Languages,
     loading: boolean,
     theme: Themes
 }
-
-export const SET_LANG = 'SET_LANG';
-export const SET_LOADING = 'SET_LOADING';
-export const SET_THEME = 'SET_THEME';
 
 interface SetLangAction {
     type: typeof SET_LANG,

@@ -2,8 +2,8 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { Table, Icon, Input, Visibility } from 'semantic-ui-react';
 import i18n from '../localization/i18n';
 import { boundSetLoading } from '../store/system/actions';
-import { Languages } from '../store/system/types';
-import { getAllProducts, GetAllProductsParams, ProductsResponse } from '../api/products';
+import { Languages, Product } from '../types/models';
+import { getAllProducts, GetAllProductsParams } from '../api/products';
 import { InputOnChangeData } from 'semantic-ui-react/dist/commonjs/elements/Input/Input';
 import useDebounce from '../hooks/useDebounce';
 import ProductsPageTableRow from './ProductsPageTableRow';
@@ -19,7 +19,7 @@ const ProductsPage: React.FC<ProductsPageProps> = ({
   lang,
   setLoading
 }: ProductsPageProps) => {
-  const [products, setProducts] = useState<Array<ProductsResponse>>([]);
+  const [products, setProducts] = useState<Product[]>([]);
   const [search, setSearch] = useState('');
   const [offset, setOffset] = useState(initialOffset);
   

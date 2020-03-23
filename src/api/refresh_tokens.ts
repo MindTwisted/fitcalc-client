@@ -1,11 +1,6 @@
 import axios from './axios';
 import { getRefreshTokensPrefix } from './config';
-
-export interface RefreshTokensResponse {
-  id: number
-  device: string
-  expires_at: string
-}
+import { RefreshToken } from '../types/models';
 
 export const deleteRefreshTokenById = (id: number): Promise<{
   data: {
@@ -18,7 +13,7 @@ export const deleteRefreshTokenById = (id: number): Promise<{
 export const getAllRefreshTokens = (): Promise<{
   data: {
     data: {
-      refreshTokens: RefreshTokensResponse[]
+      refreshTokens: RefreshToken[]
     }
   }
 }> => {

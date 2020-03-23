@@ -1,9 +1,9 @@
 import React from 'react';
 import { Divider, Dropdown, Icon, Menu, Sticky } from 'semantic-ui-react';
 import i18n from '../localization/i18n';
-import { User } from '../store/auth/types';
+import { User } from '../types/models';
 import { boundLogout } from '../store/auth/actions';
-import { Themes } from '../store/system/types';
+import { Themes } from '../types/models';
 
 type NavigationBarProps = {
   sidebarVisible: boolean,

@@ -1,20 +1,5 @@
-export interface AccessToken {
-    expires_at: string
-    token: string
-}
-
-export interface RefreshToken {
-    id: number
-    expires_at: string
-    token: string
-}
-
-export interface User {
-    id: number
-    name: string
-    email: string
-    roles: string[]
-}
+import { AccessToken, RefreshToken, User } from '../../types/models';
+import { SET_ACCESS_TOKEN, SET_REFRESH_TOKEN, SET_USER, SET_TIME_OFFSET } from '../../types/actionTypes';
 
 export interface AuthState {
     accessToken: AccessToken | null
@@ -22,11 +7,6 @@ export interface AuthState {
     user: User | null,
     timeOffset: number
 }
-
-export const SET_ACCESS_TOKEN = 'SET_ACCESS_TOKEN';
-export const SET_REFRESH_TOKEN = 'SET_REFRESH_TOKEN';
-export const SET_USER = 'SET_USER';
-export const SET_TIME_OFFSET = 'SET_TIME_OFFSET';
 
 interface SetAccessTokenAction {
     type: typeof SET_ACCESS_TOKEN,

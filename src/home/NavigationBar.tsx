@@ -6,7 +6,7 @@ import i18n from '../localization/i18n';
 import logo from '../logo.svg';
 import { boundLogout } from '../store/auth/actions';
 import { boundSetLang } from '../store/system/actions';
-import { Languages } from '../store/system/types';
+import { Languages } from '../types/models';
 
 type NavigationBarProps = {
   fixed: boolean,

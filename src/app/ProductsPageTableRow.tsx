@@ -1,12 +1,13 @@
 import React from 'react';
-import { addProductToFavourites, ProductsResponse, removeProductFromFavourites } from '../api/products';
+import { addProductToFavourites, removeProductFromFavourites } from '../api/products';
 import { Checkbox, Table } from 'semantic-ui-react';
+import { Product } from '../types/models';
 import { boundSetLoading } from '../store/system/actions';
 
 type ProductsPageTableRowProps = {
-  product: ProductsResponse,
+  product: Product,
   setLoading: typeof boundSetLoading,
-  setProducts: (products: Array<ProductsResponse> | ((products: Array<ProductsResponse>) => Array<ProductsResponse>)) => void
+  setProducts: (products: Array<Product> | ((products: Array<Product>) => Array<Product>)) => void
 };
 
 const ProductsPageTableRow: React.FC<ProductsPageTableRowProps> = ({ 
