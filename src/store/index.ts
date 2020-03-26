@@ -7,8 +7,8 @@ import { AuthState } from './auth/types';
 import { authReducer } from './auth/reducers';
 
 export interface RootState {
-  system: SystemState
-  auth: AuthState
+  system: SystemState;
+  auth: AuthState;
 }
 
 export const rootReducer = combineReducers<RootState>({

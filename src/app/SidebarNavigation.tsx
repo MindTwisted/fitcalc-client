@@ -6,10 +6,10 @@ import routes from '../routes';
 import { Themes } from '../types/models';
 
 type SidebarNavigationProps = {
-  theme: Themes,
-  mobile: boolean,
-  visible: boolean,
-  setVisible: (visible: boolean) => void
+  theme: Themes;
+  mobile: boolean;
+  visible: boolean;
+  setVisible: (visible: boolean) => void;
 };
 
 const SidebarNavigation: React.FC<SidebarNavigationProps> = ({ 

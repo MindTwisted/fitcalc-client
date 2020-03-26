@@ -9,15 +9,15 @@ import { boundSetLang } from '../store/system/actions';
 import { Languages } from '../types/models';
 
 type NavigationBarProps = {
-  fixed: boolean,
-  lang: Languages,
-  isLoggedIn: boolean,
-  isAppUser: boolean,
-  setLang: typeof boundSetLang,
-  logout: typeof boundLogout,
-  setLoginModalOpen(state: boolean): void,
-  setRegisterModalOpen(state: boolean): void
-}
+  fixed: boolean;
+  lang: Languages;
+  isLoggedIn: boolean;
+  isAppUser: boolean;
+  setLang: typeof boundSetLang;
+  logout: typeof boundLogout;
+  setLoginModalOpen(state: boolean): void;
+  setRegisterModalOpen(state: boolean): void;
+};
 
 const NavigationBar: React.FC<NavigationBarProps> = ({ 
   fixed,

@@ -6,10 +6,10 @@ import PasswordRecoveryModal from './PasswordRecoveryModal';
 import PasswordInput from '../common/PasswordInput';
 
 type LoginModalProps = {
-  open: boolean,
-  closeModal(): void,
-  login: typeof boundLogin
-}
+  open: boolean;
+  closeModal(): void;
+  login: typeof boundLogin;
+};
 
 const initialFormData = { email: '', password: '' };
 

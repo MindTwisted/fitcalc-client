@@ -5,10 +5,10 @@ import routes from '../routes';
 import i18n from '../localization/i18n';
 
 type HeadingProps = {
-    mobile: boolean,
-    isLoggedIn: boolean,
-    isAppUser: boolean,
-    setRegisterModalOpen(state: boolean): void
+    mobile: boolean;
+    isLoggedIn: boolean;
+    isAppUser: boolean;
+    setRegisterModalOpen(state: boolean): void;
 };
 
 const Heading: React.FC<HeadingProps> = ({ 

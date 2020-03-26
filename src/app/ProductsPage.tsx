@@ -10,8 +10,8 @@ import useProductsPageState from '../hooks/useProductsPageState';
 import ProductsPageTableRow from './ProductsPageTableRow';
 
 type ProductsPageProps = {
-  lang: Languages,
-  setLoading: typeof boundSetLoading
+  lang: Languages;
+  setLoading: typeof boundSetLoading;
 };
 
 const ProductsPage: React.FC<ProductsPageProps> = ({

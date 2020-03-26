@@ -13,7 +13,7 @@ import LoginModal from './LoginModal';
 import RegisterModal from './RegisterModal';
 
 type HomeProps = ConnectedProps<typeof connector> & {
-  mobile: boolean
+  mobile: boolean;
 };
 
 const Home: React.FC<HomeProps> = ({ 

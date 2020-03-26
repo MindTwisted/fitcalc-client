@@ -3,8 +3,8 @@ import { Header, Icon, Segment, Container } from 'semantic-ui-react';
 
 type ErrorBoundaryProps = {};
 type ErrorBoundaryState = {
-  hasError: boolean,
-  errorMessage: string
+  hasError: boolean;
+  errorMessage: string;
 };
 
 class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {

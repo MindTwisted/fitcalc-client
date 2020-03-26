@@ -37,7 +37,18 @@ module.exports = {
       "ignoreRestSiblings": false
     }],
     "quotes": [2, "single"],
-    "semi": [2, "always"],
-    "object-curly-newline": [2, { "multiline": true, "consistent": true }]
+    "object-curly-newline": [2, { "multiline": true, "consistent": true }],
+    "semi": "off",
+    "@typescript-eslint/semi": [2, "always"],
+    "@typescript-eslint/member-delimiter-style": [2, {
+      "multiline": {
+        "delimiter": "semi",
+        "requireLast": true
+      },
+      "singleline": {
+        "delimiter": "semi",
+        "requireLast": false
+      }
+    }]
   }
 };

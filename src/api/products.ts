@@ -4,16 +4,16 @@ import { getProductsPrefix } from './config';
 import { Product } from '../types/models';
 
 export interface GetAllProductsParams {
-  name?: string
-  offset?: number
+  name?: string;
+  offset?: number;
 }
 
 export const getAllProducts = ({ name, offset }: GetAllProductsParams = { name: '', offset: 0 }): Promise<{
   data: {
     data: {
-      products: Product[]
-    }
-  }
+      products: Product[];
+    };
+  };
 }> => {
   const config: AxiosRequestConfig = { params: {} };
   
@@ -30,16 +30,16 @@ export const getAllProducts = ({ name, offset }: GetAllProductsParams = { name: 
 
 export const addProductToFavourites = (id: number): Promise<{
   data: {
-    message: string
-  }
+    message: string;
+  };
 }> => {
   return axios.post(`${getProductsPrefix()}/${id}/favourites`);
 };
 
 export const removeProductFromFavourites = (id: number): Promise<{
   data: {
-    message: string
-  }
+    message: string;
+  };
 }> => {
   return axios.delete(`${getProductsPrefix()}/${id}/favourites`);
 };

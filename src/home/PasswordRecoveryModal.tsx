@@ -6,9 +6,9 @@ import { initiatePasswordRecovery, confirmPasswordRecovery } from '../api/users'
 import { getViolationsFromAxiosError } from '../api/utils';
 
 type PasswordRecoveryModalProps = {
-  open: boolean,
-  closeModal(): void
-}
+  open: boolean;
+  closeModal(): void;
+};
 
 const PasswordRecoveryModal: React.FC<PasswordRecoveryModalProps> = ({
   open,

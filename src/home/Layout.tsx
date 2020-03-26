@@ -5,10 +5,10 @@ import routes from '../routes';
 import i18n from '../localization/i18n';
 
 type LayoutProps = {
-  isLoggedIn: boolean,
-  isAppUser: boolean,
-  setRegisterModalOpen(state: boolean): void
-}
+  isLoggedIn: boolean;
+  isAppUser: boolean;
+  setRegisterModalOpen(state: boolean): void;
+};
 
 const Layout: React.FC<LayoutProps> = ({
   isLoggedIn,

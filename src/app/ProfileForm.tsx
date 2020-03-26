@@ -11,10 +11,10 @@ import PasswordInput from '../common/PasswordInput';
 import SubmittableInput from '../common/SubmittableInput';
 
 type ProfileFormProps = {
-  user: User,
-  loading: boolean,
-  setLoading: (loading: boolean) => void,
-  setUser: typeof boundSetUser
+  user: User;
+  loading: boolean;
+  setLoading: (loading: boolean) => void;
+  setUser: typeof boundSetUser;
 };
 
 const initialCurrentPasswordData = { currentPassword: '', verified: false };

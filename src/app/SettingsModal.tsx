@@ -10,16 +10,16 @@ import ProfileForm from './ProfileForm';
 import SessionsTable from './SessionsTable';
 
 type SettingsModalProps = {
-  theme: Themes,
-  lang: Languages,
-  user: User,
-  refreshToken: RefreshToken,
-  open: boolean,
-  closeModal: () => void, 
-  setLang: typeof boundSetLang,
-  setTheme: typeof boundSetTheme,
-  setUser: typeof boundSetUser,
-  softLogout: typeof boundSoftLogout
+  theme: Themes;
+  lang: Languages;
+  user: User;
+  refreshToken: RefreshToken;
+  open: boolean;
+  closeModal: () => void; 
+  setLang: typeof boundSetLang;
+  setTheme: typeof boundSetTheme;
+  setUser: typeof boundSetUser;
+  softLogout: typeof boundSoftLogout;
 };
 
 const SettingsModal: React.FC<SettingsModalProps> = ({ 

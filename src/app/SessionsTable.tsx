@@ -10,15 +10,15 @@ import {
 } from '../api/refresh_tokens';
 
 type SessionsTableProps = {
-  refreshToken: RefreshToken,
-  loading: boolean,
-  setLoading: (loading: boolean) => void,
-  softLogout: typeof boundSoftLogout
+  refreshToken: RefreshToken;
+  loading: boolean;
+  setLoading: (loading: boolean) => void;
+  softLogout: typeof boundSoftLogout;
 };
 
 type ConfirmData = {
-  deleteTokenId: number | 'all',
-  confirmMessage: string
+  deleteTokenId: number | 'all';
+  confirmMessage: string;
 } | null;
 
 const SessionsTable: React.FC<SessionsTableProps> = ({

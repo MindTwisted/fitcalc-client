@@ -2,9 +2,9 @@ import React from 'react';
 import { Route, Redirect, RouteProps } from 'react-router-dom';
 
 type ProtectedRouteProps = {
-    redirect: string,
-    isAllowed: boolean
-} & RouteProps
+    redirect: string;
+    isAllowed: boolean;
+} & RouteProps;
 
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   redirect, 

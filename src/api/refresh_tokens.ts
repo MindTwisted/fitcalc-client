@@ -4,8 +4,8 @@ import { RefreshToken } from '../types/models';
 
 export const deleteRefreshTokenById = (id: number): Promise<{
   data: {
-    message: string
-  }
+    message: string;
+  };
 }> => {
   return axios.delete(`${getRefreshTokensPrefix()}/${id}`);
 };
@@ -13,17 +13,17 @@ export const deleteRefreshTokenById = (id: number): Promise<{
 export const getAllRefreshTokens = (): Promise<{
   data: {
     data: {
-      refreshTokens: RefreshToken[]
-    }
-  }
+      refreshTokens: RefreshToken[];
+    };
+  };
 }> => {
   return axios.get(`${getRefreshTokensPrefix()}`);
 };
 
 export const deleteAllRefreshTokens = (): Promise<{
   data: {
-    message: string
-  }
+    message: string;
+  };
 }> => {
   return axios.delete(`${getRefreshTokensPrefix()}`);
 };

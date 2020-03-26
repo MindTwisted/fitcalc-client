@@ -2,10 +2,10 @@ import React, { ChangeEvent, KeyboardEvent, useEffect, useRef, useState } from '
 import { Input, Icon, Button } from 'semantic-ui-react';
 
 type EditableInputProps = {
-  defaultValue: string,
-  onSubmitInput: (value: string) => Promise<void | {changeValue: boolean}> | void | {changeValue: boolean},
-  onCancelEditing: () => void,
-  type?: string
+  defaultValue: string;
+  onSubmitInput: (value: string) => Promise<void | {changeValue: boolean}> | void | {changeValue: boolean};
+  onCancelEditing: () => void;
+  type?: string;
 };
 
 const EditableInput: React.FC<EditableInputProps> = ({ 

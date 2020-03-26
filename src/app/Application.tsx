@@ -16,7 +16,7 @@ import ProductsPage from './ProductsPage';
 import EatingPage from './EatingPage';
 
 type ApplicationProps = ConnectedProps<typeof connector> & {
-  mobile: boolean
+  mobile: boolean;
 };
 
 const Application: React.FC<ApplicationProps> = ({ 

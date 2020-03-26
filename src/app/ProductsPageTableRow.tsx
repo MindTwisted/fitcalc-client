@@ -5,9 +5,9 @@ import { Product } from '../types/models';
 import { boundSetLoading } from '../store/system/actions';
 
 type ProductsPageTableRowProps = {
-  product: Product,
-  setLoading: typeof boundSetLoading,
-  updateProduct: (product: Product) => void
+  product: Product;
+  setLoading: typeof boundSetLoading;
+  updateProduct: (product: Product) => void;
 };
 
 const ProductsPageTableRow: React.FC<ProductsPageTableRowProps> = ({ 

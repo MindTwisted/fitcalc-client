@@ -6,8 +6,8 @@ import { getViolationsFromAxiosError } from '../api/utils';
 import PasswordInput from '../common/PasswordInput';
 
 type RegisterModalProps = {
-  open: boolean,
-  closeModal(): void
+  open: boolean;
+  closeModal(): void;
 };
 
 const initialFormData = { name: '', email: '', password: '' };
