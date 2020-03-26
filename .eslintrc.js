@@ -37,6 +37,7 @@ module.exports = {
       "ignoreRestSiblings": false
     }],
     "quotes": [2, "single"],
-    "semi": [2, "always"]
+    "semi": [2, "always"],
+    "object-curly-newline": [2, { "multiline": true, "consistent": true }]
   }
 };

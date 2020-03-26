@@ -7,52 +7,38 @@ import { boundSetLoading } from '../store/system/actions';
 type ProductsPageTableRowProps = {
   product: Product,
   setLoading: typeof boundSetLoading,
-  setProducts: (products: Array<Product> | ((products: Array<Product>) => Array<Product>)) => void
+  updateProduct: (product: Product) => void
 };
 
 const ProductsPageTableRow: React.FC<ProductsPageTableRowProps> = ({ 
   product ,
   setLoading,
-  setProducts
+  updateProduct
 }: ProductsPageTableRowProps) => {
-  const handleAddProductToFavourites = async (id: number) => {
+  const handleAddProductToFavourites = async (product: Product) => {
     setLoading(true);
     
     try {
-      await addProductToFavourites(id);
+      await addProductToFavourites(product.id);
       
-      setProducts(currentProducts => {
-        return currentProducts.map(product => {
-          const localProduct = { ...product };
-          
-          if (localProduct.id === id) {
-            localProduct.inFavourites = true;
-          }
-          
-          return localProduct;
-        });
+      updateProduct({
+        ...product,
+        inFavourites: true
       });
       setLoading(false);
     } catch (error) {
       setLoading(false);
     }
   };
-  const handleRemoveProductFromFavourites = async (id: number) => {
+  const handleRemoveProductFromFavourites = async (product: Product) => {
     setLoading(true);
     
     try {
-      await removeProductFromFavourites(id);
+      await removeProductFromFavourites(product.id);
       
-      setProducts(currentProducts => {
-        return currentProducts.map(product => {
-          const localProduct = { ...product };
-          
-          if (localProduct.id === id) {
-            localProduct.inFavourites = false;
-          }
-          
-          return localProduct;
-        });
+      updateProduct({
+        ...product,
+        inFavourites: false
       });
       setLoading(false);
     } catch (error) {
@@ -84,8 +70,8 @@ const ProductsPageTableRow: React.FC<ProductsPageTableRowProps> = ({
         <Checkbox toggle
           checked={product.inFavourites}
           onChange={product.inFavourites ?
-            () => handleRemoveProductFromFavourites(product.id) :
-            () => handleAddProductToFavourites(product.id)}
+            () => handleRemoveProductFromFavourites(product) :
+            () => handleAddProductToFavourites(product)}
         />
       </Table.Cell>
     </Table.Row>

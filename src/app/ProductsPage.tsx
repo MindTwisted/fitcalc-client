@@ -1,11 +1,12 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { Table, Icon, Input, Visibility } from 'semantic-ui-react';
 import i18n from '../localization/i18n';
 import { boundSetLoading } from '../store/system/actions';
-import { Languages, Product } from '../types/models';
+import { Languages } from '../types/models';
 import { getAllProducts, GetAllProductsParams } from '../api/products';
 import { InputOnChangeData } from 'semantic-ui-react/dist/commonjs/elements/Input/Input';
 import useDebounce from '../hooks/useDebounce';
+import useProductsPageState from '../hooks/useProductsPageState';
 import ProductsPageTableRow from './ProductsPageTableRow';
 
 type ProductsPageProps = {
@@ -13,19 +14,31 @@ type ProductsPageProps = {
   setLoading: typeof boundSetLoading
 };
 
-const initialOffset = { value: 0, done: false };
-
 const ProductsPage: React.FC<ProductsPageProps> = ({
   lang,
   setLoading
 }: ProductsPageProps) => {
-  const [products, setProducts] = useState<Product[]>([]);
-  const [search, setSearch] = useState('');
-  const [offset, setOffset] = useState(initialOffset);
+  const {
+    state: {
+      products,
+      offset,
+      search
+    },
+    actionCreators: {
+      setOffsetDone,
+      appendProducts,
+      setProducts,
+      updateProduct,
+      resetOffset,
+      setSearch,
+      resetSearch,
+      setOffsetValue
+    } 
+  } = useProductsPageState();
   
   const fetchProducts = async (
     { name, offset }: GetAllProductsParams = { name: '', offset: 0 },
-    appendProducts: boolean = false
+    append: boolean = false
   ) => {
     setLoading(true);
   
@@ -34,11 +47,11 @@ const ProductsPage: React.FC<ProductsPageProps> = ({
       const { products } = productsResponse.data.data;
       
       if (products.length < 50) {
-        setOffset(currentOffset => ({ ...currentOffset, done: true }));
+        setOffsetDone(true);
       }
     
-      if (appendProducts) {
-        setProducts(currentProducts => [...currentProducts, ...products]);
+      if (append) {
+        appendProducts(products);
       } else {
         setProducts(products);
       }
@@ -50,16 +63,17 @@ const ProductsPage: React.FC<ProductsPageProps> = ({
       throw error;
     }
   };
-  const fetchProductsDebounced = useDebounce(fetchProducts, 500, [setLoading, setProducts, setOffset]);
-  const fetchProductsCallback = useCallback(fetchProducts, [setLoading, setProducts, setOffset]);
+  const fetchProductsDependencies = [setLoading, setOffsetDone, appendProducts, setProducts];
+  const fetchProductsDebounced = useDebounce(fetchProducts, 500, fetchProductsDependencies);
+  const fetchProductsCallback = useCallback(fetchProducts, fetchProductsDependencies);
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>, data: InputOnChangeData) => {
-    setOffset(initialOffset);
+    resetOffset();
     setSearch(data.value);
     fetchProductsDebounced({ name: data.value });
   };
   const handleClearSearch = () => {
-    setOffset(initialOffset);
-    setSearch('');
+    resetOffset();
+    resetSearch();
     fetchProductsCallback();
   };
   const handleScrollBottom = async () => {
@@ -70,12 +84,12 @@ const ProductsPage: React.FC<ProductsPageProps> = ({
     const oldOffset = offset.value;
     const newOffset = oldOffset + 50;
   
-    setOffset(currentOffset => ({ ...currentOffset, value: newOffset }));
+    setOffsetValue(newOffset);
   
     try {
       await fetchProductsCallback({ name: search, offset: newOffset }, true);
     } catch (error) {
-      setOffset(currentOffset => ({ ...currentOffset, value: oldOffset }));
+      setOffsetValue(oldOffset);
     }
   };
   
@@ -83,10 +97,10 @@ const ProductsPage: React.FC<ProductsPageProps> = ({
     fetchProductsCallback();
     
     return () => {
-      setSearch('');
-      setOffset(initialOffset);
+      resetSearch();
+      resetOffset();
     };
-  }, [fetchProductsCallback, lang]);
+  }, [fetchProductsCallback, lang, resetSearch, resetOffset]);
   
   return (
     <Visibility once={false}
@@ -124,7 +138,7 @@ const ProductsPage: React.FC<ProductsPageProps> = ({
               <ProductsPageTableRow key={product.id}
                 product={product}
                 setLoading={setLoading}
-                setProducts={setProducts}
+                updateProduct={updateProduct}
               />
             ))
           ) : (
