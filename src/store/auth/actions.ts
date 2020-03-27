@@ -1,8 +1,9 @@
-import { AuthActionTypes, AuthState } from './types';
+import { AuthActionTypes } from './types';
 import { Dispatch } from 'redux';
 import { RootState } from '../index';
 import { AccessToken, RefreshToken, User } from '../../types/models';
 import { SET_ACCESS_TOKEN, SET_REFRESH_TOKEN, SET_USER, SET_TIME_OFFSET } from '../../types/actionTypes';
+import { AuthState } from '../../types/actions';
 import { boundSetLoading } from '../system/actions';
 import { deleteRefreshTokenById } from '../../api/refresh_tokens';
 import { SystemActionTypes } from '../system/types';

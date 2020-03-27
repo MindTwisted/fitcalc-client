@@ -10,6 +10,16 @@ import {
   SET_SEARCH,
   UPDATE_PRODUCT
 } from '../types/actionTypes';
+import { 
+  SetProductsAction, 
+  AppendProductsAction, 
+  UpdateProductAction,
+  SetSearchAction,
+  ResetSearchAction,
+  SetOffsetValueAction,
+  SetOffsetDoneAction,
+  ResetOffsetAction
+} from '../types/actions';
 
 type ProductsPageState = {
   products: Product[];
@@ -18,44 +28,6 @@ type ProductsPageState = {
     value: number;
     done: boolean;
   };
-};
-
-type SetProductsAction = {
-  type: typeof SET_PRODUCTS;
-  products: Product[];
-};
-
-type AppendProductsAction = {
-  type: typeof APPEND_PRODUCTS;
-  products: Product[];
-};
-
-type UpdateProductAction = {
-  type: typeof UPDATE_PRODUCT;
-  product: Product;
-};
-
-type SetSearchAction = {
-  type: typeof SET_SEARCH;
-  search: string;
-};
-
-type ResetSearchAction = {
-  type: typeof RESET_SEARCH;
-};
-
-type SetOffsetValueAction = {
-  type: typeof SET_OFFSET_VALUE;
-  value: number;
-};
-
-type SetOffsetDoneAction = {
-  type: typeof SET_OFFSET_DONE;
-  done: boolean;
-};
-
-type ResetOffsetAction = {
-  type: typeof RESET_OFFSET;
 };
 
 type ProductsPageAction = SetProductsAction |

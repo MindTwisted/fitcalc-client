@@ -1,45 +1,48 @@
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent } from 'react';
 import { Button, Form, InputOnChangeData, Modal } from 'semantic-ui-react';
 import i18n from '../localization/i18n';
 import { register } from '../api/auth';
 import { getViolationsFromAxiosError } from '../api/utils';
 import PasswordInput from '../common/PasswordInput';
+import useRegisterModalState from '../hooks/useRegisterModalState';
 
 type RegisterModalProps = {
   open: boolean;
   closeModal(): void;
 };
 
-const initialFormData = { name: '', email: '', password: '' };
-const initialFormError = { name: null, email: null, password: null };
-
 const RegisterModal: React.FC<RegisterModalProps> = ({ 
   open,
   closeModal 
 }: RegisterModalProps) => {
-  const [loading, setLoading] = useState(false);
-  const [formData, setFormData] = useState(initialFormData);
-  const [formError, setFormError] = useState(initialFormError);
-
+  const {
+    state: {
+      loading,
+      form
+    },
+    actionCreators: {
+      setLoading,
+      setNameValue,
+      setNameError,
+      setEmailValue,
+      setEmailError,
+      setPasswordValue,
+      setPasswordError,
+      resetForm
+    }
+  } = useRegisterModalState();
+  
   const handleClose = () => {
-    setFormData(initialFormData);
-    setFormError(initialFormError);
+    resetForm();
 
     closeModal();
   };
   
-  const handleChange = (e: ChangeEvent<HTMLInputElement>, { name, value }: InputOnChangeData) => {
-    setFormData({
-      ...formData,
-      [name]: value
-    });
-  };
-
   const handleSubmit = async () => {
     setLoading(true);
 
     try {
-      await register(formData);
+      await register({ name: form.name.value, email: form.email.value, password: form.password.value });
 
       setLoading(false);
       handleClose();
@@ -47,11 +50,9 @@ const RegisterModal: React.FC<RegisterModalProps> = ({
       const violations = getViolationsFromAxiosError(error);
 
       setLoading(false);
-      setFormError({
-        name: violations.name,
-        email: violations.email,
-        password: violations.plainPassword
-      });
+      setNameError(violations.name);
+      setEmailError(violations.email);
+      setPasswordError(violations.plainPassword);
     }
   };
   
@@ -73,27 +74,27 @@ const RegisterModal: React.FC<RegisterModalProps> = ({
               name='name'
               label={i18n.t('Name')}
               placeholder={i18n.t('Name')}
-              value={formData.name}
-              onChange={handleChange}
-              error={formError.name ? { content: formError.name } : null}
+              value={form.name.value}
+              onChange={(e: ChangeEvent<HTMLInputElement>, { value }: InputOnChangeData) => setNameValue(value)}
+              error={form.name.error ? { content: form.name.error } : null}
             />
             <Form.Input fluid
               name='email'
               type='email'
               label={i18n.t('Email')}
               placeholder={i18n.t('Email')}
-              value={formData.email}
-              onChange={handleChange}
-              error={formError.email ? { content: formError.email } : null}
+              value={form.email.value}
+              onChange={(e: ChangeEvent<HTMLInputElement>, { value }: InputOnChangeData) => setEmailValue(value)}
+              error={form.email.error ? { content: form.email.error } : null}
             />
             <Form.Field control={PasswordInput}
               fluid
               name='password'
               label={i18n.t('Password')}
               placeholder={i18n.t('Password')}
-              value={formData.password}
-              onChange={handleChange}
-              error={formError.password ? { content: formError.password } : null}
+              value={form.password.value}
+              onChange={(e: ChangeEvent<HTMLInputElement>, { value }: InputOnChangeData) => setPasswordValue(value)}
+              error={form.password.error ? { content: form.password.error } : null}
             />
             <Button primary
               type='submit'

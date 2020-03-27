@@ -1,7 +1,8 @@
 import i18n from '../../localization/i18n';
 import { Languages, Themes } from '../../types/models';
 import { SET_LANG, SET_LOADING, SET_THEME } from '../../types/actionTypes';
-import { SystemActionTypes, SystemState } from './types';
+import { SystemState } from '../../types/actions';
+import { SystemActionTypes } from './types';
 
 const getInitialLanguage = (): Languages => {
   const cachedLanguage = localStorage.getItem('lang');
