@@ -48,7 +48,7 @@ type RegisterModalAction = SetLoadingAction |
   ResetFormAction;
 
 
-const registerModalInitialState: RegisterModalState = {
+export const registerModalInitialState: RegisterModalState = {
   loading: false,
   form: {
     name: {
