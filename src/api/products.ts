@@ -30,7 +30,9 @@ export const getAllProducts = ({ name, offset }: GetAllProductsParams = { name: 
 
 export const addProductToFavourites = (id: number): Promise<{
   data: {
-    message: string;
+    data: {
+      message: string;
+    };
   };
 }> => {
   return axios.post(`${getProductsPrefix()}/${id}/favourites`);
@@ -38,8 +40,28 @@ export const addProductToFavourites = (id: number): Promise<{
 
 export const removeProductFromFavourites = (id: number): Promise<{
   data: {
-    message: string;
+    data: {
+      message: string;
+    };
   };
 }> => {
   return axios.delete(`${getProductsPrefix()}/${id}/favourites`);
+};
+
+export const addProduct = (product: Product): Promise<{
+  data: {
+    data: {
+      message: string;
+      product: Product;
+    };
+  };
+}> => {
+  return axios.post(`${getProductsPrefix()}`, {
+    name: product.name,
+    proteins: product.proteins,
+    carbohydrates: product.carbohydrates,
+    fats: product.fats,
+    fiber: product.fiber,
+    calories: product.calories
+  });
 };

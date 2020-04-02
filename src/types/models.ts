@@ -28,7 +28,7 @@ export interface User {
 }
 
 export interface Product {
-  id: number;
+  id?: number;
   name: string;
   proteins: number;
   fats: number;

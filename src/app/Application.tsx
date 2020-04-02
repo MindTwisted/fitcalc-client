@@ -99,6 +99,7 @@ const Application: React.FC<ApplicationProps> = ({
             </Route>
             <Route path={routes.app.products}>
               <ProductsPage lang={system.lang}
+                theme={system.theme}
                 setLoading={setLoading}
               />
             </Route>

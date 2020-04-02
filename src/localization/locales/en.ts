@@ -61,6 +61,7 @@ export default {
   'Calories': 'Calories',
   'In Favourites': 'In Favourites',
   'Search': 'Search',
-  'No products': 'No products'
+  'No products': 'No products',
+  'Add product': 'Add product'
 };
 

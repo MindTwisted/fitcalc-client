@@ -1,38 +1,46 @@
 import React, { useCallback, useEffect } from 'react';
-import { Table, Icon, Input, Visibility } from 'semantic-ui-react';
+import { Table, Icon, Input, Visibility, Button, Grid } from 'semantic-ui-react';
 import i18n from '../localization/i18n';
 import { boundSetLoading } from '../store/system/actions';
-import { Languages } from '../types/models';
+import { Languages, Product, Themes } from '../types/models';
 import { getAllProducts, GetAllProductsParams } from '../api/products';
 import { InputOnChangeData } from 'semantic-ui-react/dist/commonjs/elements/Input/Input';
 import useDebounce from '../hooks/useDebounce';
 import useProductsPageState from '../hooks/useProductsPageState';
 import ProductsPageTableRow from './ProductsPageTableRow';
+import AddProductModal from './AddProductModal';
 
 type ProductsPageProps = {
   lang: Languages;
+  theme: Themes;
   setLoading: typeof boundSetLoading;
 };
 
 const ProductsPage: React.FC<ProductsPageProps> = ({
   lang,
+  theme,
   setLoading
 }: ProductsPageProps) => {
   const {
     state: {
       products,
       offset,
-      search
+      search,
+      actions: {
+        addProductModalOpen
+      }
     },
     actionCreators: {
       setOffsetDone,
       appendProducts,
+      prependProducts,
       setProducts,
       updateProduct,
       resetOffset,
       setSearch,
       resetSearch,
-      setOffsetValue
+      setOffsetValue,
+      setAddProductModalOpen
     } 
   } = useProductsPageState();
   
@@ -108,15 +116,31 @@ const ProductsPage: React.FC<ProductsPageProps> = ({
     >
       <h1>{i18n.t('Products')}</h1>
   
-      <Input onChange={handleSearch}
-        placeholder={i18n.t('Search')}
-        icon={search ?
-          (<Icon name='close'
-            link
-            onClick={handleClearSearch}
-          />) : 'search'}
-        value={search}
-      />
+      <Grid columns={2}>
+        <Grid.Column>
+          <Input onChange={handleSearch}
+            placeholder={i18n.t('Search')}
+            icon={search ?
+              (<Icon name='close'
+                link
+                onClick={handleClearSearch}
+              />) : 'search'}
+            value={search}
+          />
+        </Grid.Column>
+  
+        <Grid.Column>
+          <Button icon
+            circular
+            primary
+            size='large'
+            floated='right'
+            onClick={() => setAddProductModalOpen(true)}
+          >
+            <Icon name='plus' />
+          </Button>
+        </Grid.Column>
+      </Grid>
       
       <Table unstackable>
         <Table.Header>
@@ -151,6 +175,12 @@ const ProductsPage: React.FC<ProductsPageProps> = ({
   
         </Table.Body>
       </Table>
+      
+      <AddProductModal theme={theme}
+        open={addProductModalOpen}
+        onAddProduct={(product: Product) => prependProducts(product)}
+        closeModal={() => setAddProductModalOpen(false)}
+      />
     </Visibility>
   );
 };

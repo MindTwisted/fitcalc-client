@@ -20,7 +20,10 @@ import {
   SET_EMAIL_VALUE,
   SET_EMAIL_ERROR,
   SET_PASSWORD_VALUE,
-  SET_PASSWORD_ERROR, RESET_FORM
+  SET_PASSWORD_ERROR,
+  RESET_FORM,
+  SET_ADD_PRODUCT_MODAL_OPEN,
+  PREPEND_PRODUCTS
 } from './actionTypes';
 
 export interface SystemState {
@@ -78,6 +81,11 @@ export interface SetProductsAction {
 
 export interface AppendProductsAction {
   type: typeof APPEND_PRODUCTS;
+  products: Product[];
+}
+
+export interface PrependProductsAction {
+  type: typeof PREPEND_PRODUCTS;
   products: Product[];
 }
 
@@ -141,4 +149,9 @@ export interface SetPasswordErrorAction {
 
 export interface ResetFormAction {
   type: typeof RESET_FORM;
+}
+
+export interface SetAddProductModalOpen {
+  type: typeof SET_ADD_PRODUCT_MODAL_OPEN;
+  open: boolean;
 }

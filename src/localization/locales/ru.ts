@@ -61,6 +61,7 @@ export default {
   'Calories': 'Калории',
   'In Favourites': 'В Избранном',
   'Search': 'Поиск',
-  'No products': 'Нет продуктов'
+  'No products': 'Нет продуктов',
+  'Add product': 'Добавить продукт'
 };
 

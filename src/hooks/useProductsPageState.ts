@@ -4,21 +4,24 @@ import {
   APPEND_PRODUCTS,
   RESET_OFFSET,
   RESET_SEARCH,
+  SET_ADD_PRODUCT_MODAL_OPEN,
   SET_OFFSET_DONE,
   SET_OFFSET_VALUE,
   SET_PRODUCTS,
   SET_SEARCH,
-  UPDATE_PRODUCT
+  UPDATE_PRODUCT,
+  PREPEND_PRODUCTS
 } from '../types/actionTypes';
-import { 
-  SetProductsAction, 
-  AppendProductsAction, 
-  UpdateProductAction,
-  SetSearchAction,
+import {
+  AppendProductsAction, PrependProductsAction,
+  ResetOffsetAction,
   ResetSearchAction,
-  SetOffsetValueAction,
+  SetAddProductModalOpen,
   SetOffsetDoneAction,
-  ResetOffsetAction
+  SetOffsetValueAction,
+  SetProductsAction,
+  SetSearchAction,
+  UpdateProductAction
 } from '../types/actions';
 
 type ProductsPageState = {
@@ -28,16 +31,21 @@ type ProductsPageState = {
     value: number;
     done: boolean;
   };
+  actions: {
+    addProductModalOpen: boolean;
+  };
 };
 
 type ProductsPageAction = SetProductsAction |
   AppendProductsAction |
+  PrependProductsAction |
   UpdateProductAction |
   SetSearchAction |
   ResetSearchAction |
   SetOffsetValueAction | 
   SetOffsetDoneAction |
-  ResetOffsetAction;
+  ResetOffsetAction |
+  SetAddProductModalOpen;
 
 const productsPageInitialState: ProductsPageState = {
   products: [],
@@ -45,6 +53,9 @@ const productsPageInitialState: ProductsPageState = {
   offset: {
     value: 0,
     done: false
+  },
+  actions: {
+    addProductModalOpen: false
   }
 };
 
@@ -59,6 +70,11 @@ const productsPageReducer = (state: ProductsPageState, action: ProductsPageActio
       return {
         ...state,
         products: [...state.products, ...action.products]
+      };
+    case PREPEND_PRODUCTS:
+      return {
+        ...state,
+        products: [...action.products, ...state.products]
       };
     case UPDATE_PRODUCT:
       return {
@@ -96,6 +112,14 @@ const productsPageReducer = (state: ProductsPageState, action: ProductsPageActio
         ...state,
         offset: { ...productsPageInitialState.offset }
       };
+    case SET_ADD_PRODUCT_MODAL_OPEN:
+      return {
+        ...state,
+        actions: {
+          ...state.actions,
+          addProductModalOpen: action.open
+        }
+      };
     default:
       throw new Error('Unknown action type');
   }
@@ -110,9 +134,23 @@ const useProductsPageState = () => {
       products
     });
   }, [dispatch]);
-  const appendProducts = useCallback((products: Product[]) => {
+  const appendProducts = useCallback((products: Product[] | Product) => {
+    if (!Array.isArray(products)) {
+      products = [products];
+    }
+    
     dispatch({
       type: APPEND_PRODUCTS,
+      products
+    });
+  }, [dispatch]);
+  const prependProducts = useCallback((products: Product[] | Product) => {
+    if (!Array.isArray(products)) {
+      products = [products];
+    }
+    
+    dispatch({
+      type: PREPEND_PRODUCTS,
       products
     });
   }, [dispatch]);
@@ -150,16 +188,24 @@ const useProductsPageState = () => {
       type: RESET_OFFSET
     });
   }, [dispatch]);
+  const setAddProductModalOpen = useCallback((open: boolean) => {
+    dispatch({
+      type: SET_ADD_PRODUCT_MODAL_OPEN,
+      open
+    });
+  }, [dispatch]);
   
   const actionCreators = {
     setProducts,
     appendProducts,
+    prependProducts,
     updateProduct,
     setSearch,
     resetSearch,
     setOffsetValue,
     setOffsetDone,
-    resetOffset
+    resetOffset,
+    setAddProductModalOpen
   };
   
   return {

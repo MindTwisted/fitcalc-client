@@ -16,6 +16,10 @@ const ProductsPageTableRow: React.FC<ProductsPageTableRowProps> = ({
   updateProduct
 }: ProductsPageTableRowProps) => {
   const handleAddProductToFavourites = async (product: Product) => {
+    if (!product.id) {
+      return;
+    }
+    
     setLoading(true);
     
     try {
@@ -31,6 +35,10 @@ const ProductsPageTableRow: React.FC<ProductsPageTableRowProps> = ({
     }
   };
   const handleRemoveProductFromFavourites = async (product: Product) => {
+    if (!product.id) {
+      return;
+    }
+    
     setLoading(true);
     
     try {
