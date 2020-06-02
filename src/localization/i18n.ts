@@ -1,7 +1,7 @@
-import i18next from 'i18next';
-import en from './locales/en';
-import ru from './locales/ru';
-import { Languages } from '../types/models';
+import i18next from 'i18next'
+import en from './locales/en'
+import ru from './locales/ru'
+import { Languages } from '../types/models'
 
 i18next
   .init({
@@ -20,6 +20,6 @@ i18next
         translation: ru
       },
     },
-  });
+  })
 
-export default i18next;
+export default i18next

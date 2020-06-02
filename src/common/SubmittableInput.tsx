@@ -1,39 +1,39 @@
-import React, { ChangeEvent, KeyboardEvent, useState } from 'react';
-import { Input, Icon, Button } from 'semantic-ui-react';
+import React, { ChangeEvent, KeyboardEvent, useState } from 'react'
+import { Input, Icon, Button } from 'semantic-ui-react'
 
 type SubmittableInputProps = {
-  onSubmitInput: (value: string) => Promise<void | {clearValue: boolean}> | void | {clearValue: boolean};
-  inputEl?: React.ElementType;
-};
+  onSubmitInput: (value: string) => Promise<void | {clearValue: boolean}> | void | {clearValue: boolean}
+  inputEl?: React.ElementType
+}
 
 const SubmittableInput: React.FC<SubmittableInputProps> = ({
   onSubmitInput,
   inputEl,
   ...rest
 }: SubmittableInputProps) => {
-  const [value, setValue] = useState('');
-  const InputElement = inputEl ? inputEl : Input;
+  const [value, setValue] = useState('')
+  const InputElement = inputEl ? inputEl : Input
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setValue(e.target.value);
-  };
+    setValue(e.target.value)
+  }
 
   const handleSubmit = async () => {
-    const submitData = await onSubmitInput(value);
+    const submitData = await onSubmitInput(value)
 
     // noinspection PointlessBooleanExpressionJS
     if (submitData && submitData.clearValue === true) {
-      setValue('');
+      setValue('')
     }
-  };
+  }
 
   const handleKeyDown = async (e: KeyboardEvent) => {
     if (e.key === 'Enter') {
-      e.preventDefault();
+      e.preventDefault()
 
-      await handleSubmit();
+      await handleSubmit()
     }
-  };
+  }
   
   return (
     <Input action>
@@ -61,7 +61,7 @@ const SubmittableInput: React.FC<SubmittableInputProps> = ({
         </Button.Group>
       )}
     </Input>
-  );
-};
+  )
+}
 
-export default SubmittableInput;
+export default SubmittableInput

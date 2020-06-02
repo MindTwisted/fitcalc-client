@@ -1,29 +1,29 @@
-import axios from './axios';
-import { getRefreshTokensPrefix } from './config';
-import { RefreshToken } from '../types/models';
+import axios from './axios'
+import { getRefreshTokensPrefix } from './config'
+import { RefreshToken } from '../types/models'
 
 export const deleteRefreshTokenById = (id: number): Promise<{
   data: {
-    message: string;
-  };
+    message: string
+  }
 }> => {
-  return axios.delete(`${getRefreshTokensPrefix()}/${id}`);
-};
+  return axios.delete(`${getRefreshTokensPrefix()}/${id}`)
+}
 
 export const getAllRefreshTokens = (): Promise<{
   data: {
     data: {
-      refreshTokens: RefreshToken[];
-    };
-  };
+      refreshTokens: RefreshToken[]
+    }
+  }
 }> => {
-  return axios.get(`${getRefreshTokensPrefix()}`);
-};
+  return axios.get(`${getRefreshTokensPrefix()}`)
+}
 
 export const deleteAllRefreshTokens = (): Promise<{
   data: {
-    message: string;
-  };
+    message: string
+  }
 }> => {
-  return axios.delete(`${getRefreshTokensPrefix()}`);
-};
+  return axios.delete(`${getRefreshTokensPrefix()}`)
+}

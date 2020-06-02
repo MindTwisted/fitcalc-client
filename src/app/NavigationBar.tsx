@@ -1,19 +1,19 @@
-import React from 'react';
-import { Divider, Dropdown, Icon, Menu, Sticky } from 'semantic-ui-react';
-import i18n from '../localization/i18n';
-import { User } from '../types/models';
-import { boundLogout } from '../store/auth/actions';
-import { Themes } from '../types/models';
+import React from 'react'
+import { Divider, Dropdown, Icon, Menu, Sticky } from 'semantic-ui-react'
+import i18n from '../localization/i18n'
+import { User } from '../types/models'
+import { boundLogout } from '../store/auth/actions'
+import { Themes } from '../types/models'
 
 type NavigationBarProps = {
-  sidebarVisible: boolean;
-  setSidebarVisible: (visible: boolean) => void;
-  mobile: boolean;
-  user: User;
-  logout: typeof boundLogout;
-  theme: Themes;
-  setSettingsModalOpen: (open: boolean) => void;
-};
+  sidebarVisible: boolean
+  setSidebarVisible: (visible: boolean) => void
+  mobile: boolean
+  user: User
+  logout: typeof boundLogout
+  theme: Themes
+  setSettingsModalOpen: (open: boolean) => void
+}
 
 const NavigationBar: React.FC<NavigationBarProps> = ({ 
   sidebarVisible, 
@@ -60,7 +60,7 @@ const NavigationBar: React.FC<NavigationBarProps> = ({
         </Menu.Menu>
       </Menu>
     </Sticky>
-  );
-};
+  )
+}
 
-export default NavigationBar;
+export default NavigationBar

@@ -1,26 +1,26 @@
-import React, { useState } from 'react';
-import { Modal, Tab } from 'semantic-ui-react';
-import { TabProps } from 'semantic-ui-react/dist/commonjs/modules/Tab/Tab';
-import i18n from '../localization/i18n';
-import { boundSetLang, boundSetTheme } from '../store/system/actions';
-import { boundSetUser, boundSoftLogout } from '../store/auth/actions';
-import { Languages, Themes, RefreshToken, User } from '../types/models';
-import GeneralSettingsForm from './GeneralSettingsForm';
-import ProfileForm from './ProfileForm';
-import SessionsTable from './SessionsTable';
+import React, { useState } from 'react'
+import { Modal, Tab } from 'semantic-ui-react'
+import { TabProps } from 'semantic-ui-react/dist/commonjs/modules/Tab/Tab'
+import i18n from '../localization/i18n'
+import { boundSetLang, boundSetTheme } from '../store/system/actions'
+import { boundSetUser, boundSoftLogout } from '../store/auth/actions'
+import { Languages, Themes, RefreshToken, User } from '../types/models'
+import GeneralSettingsForm from './GeneralSettingsForm'
+import ProfileForm from './ProfileForm'
+import SessionsTable from './SessionsTable'
 
 type SettingsModalProps = {
-  theme: Themes;
-  lang: Languages;
-  user: User;
-  refreshToken: RefreshToken;
-  open: boolean;
-  closeModal: () => void; 
-  setLang: typeof boundSetLang;
-  setTheme: typeof boundSetTheme;
-  setUser: typeof boundSetUser;
-  softLogout: typeof boundSoftLogout;
-};
+  theme: Themes
+  lang: Languages
+  user: User
+  refreshToken: RefreshToken
+  open: boolean
+  closeModal: () => void 
+  setLang: typeof boundSetLang
+  setTheme: typeof boundSetTheme
+  setUser: typeof boundSetUser
+  softLogout: typeof boundSoftLogout
+}
 
 const SettingsModal: React.FC<SettingsModalProps> = ({ 
   theme,
@@ -34,22 +34,22 @@ const SettingsModal: React.FC<SettingsModalProps> = ({
   setUser,
   softLogout
 }: SettingsModalProps) => {
-  const [loading, setLoading] = useState(false);
-  const [activeTab, setActiveTab] = useState(0);
+  const [loading, setLoading] = useState(false)
+  const [activeTab, setActiveTab] = useState(0)
 
   const handleClose = () => {
-    setActiveTab(0);
+    setActiveTab(0)
 
-    closeModal();
-  };
+    closeModal()
+  }
   
   const handleTabChange = (event: React.MouseEvent<HTMLDivElement>, data: TabProps) => {
     if (loading) {
-      return;
+      return
     }
 
-    setActiveTab(data.activeIndex as number);
-  };
+    setActiveTab(data.activeIndex as number)
+  }
 
   return (
     <Modal open={open}
@@ -103,7 +103,7 @@ const SettingsModal: React.FC<SettingsModalProps> = ({
         />
       </Modal.Content>
     </Modal>
-  );
-};
+  )
+}
 
-export default SettingsModal;
+export default SettingsModal

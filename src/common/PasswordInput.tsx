@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import { Icon, Input } from 'semantic-ui-react';
+import React, { useState } from 'react'
+import { Icon, Input } from 'semantic-ui-react'
 
-type PasswordInputProps = {};
+type PasswordInputProps = {}
 
 const PasswordInput: React.FC<PasswordInputProps> = (props: PasswordInputProps) => {
-  const [showPassword, setShowPassword] = useState(false);
+  const [showPassword, setShowPassword] = useState(false)
     
   return (
     <Input {...props}
@@ -16,7 +16,7 @@ const PasswordInput: React.FC<PasswordInputProps> = (props: PasswordInputProps) 
         />
       )}
     />
-  );
-};
+  )
+}
 
-export default PasswordInput;
+export default PasswordInput

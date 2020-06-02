@@ -7,7 +7,7 @@ import {
   SET_PASSWORD_VALUE,
   SET_PASSWORD_ERROR,
   RESET_FORM
-} from '../types/actionTypes';
+} from '../types/actionTypes'
 import {
   SetNameValueAction,
   SetLoadingAction,
@@ -17,35 +17,35 @@ import {
   SetPasswordValueAction,
   SetPasswordErrorAction,
   ResetFormAction
-} from '../types/actions';
-import { useCallback, useReducer } from 'react';
+} from '../types/actions'
+import { useCallback, useReducer } from 'react'
 
 type RegisterModalState = {
-  loading: boolean;
+  loading: boolean
   form: {
     name: {
-      value: string;
-      error: string;
-    };
+      value: string
+      error: string
+    }
     email: {
-      value: string;
-      error: string;
-    };
+      value: string
+      error: string
+    }
     password: {
-      value: string;
-      error: string;
-    };
-  };
-};
+      value: string
+      error: string
+    }
+  }
+}
 
 type RegisterModalAction = SetLoadingAction |
-  SetNameValueAction |
-  SetNameErrorAction |
-  SetEmailValueAction |
-  SetEmailErrorAction |
-  SetPasswordValueAction |
-  SetPasswordErrorAction |
-  ResetFormAction;
+SetNameValueAction |
+SetNameErrorAction |
+SetEmailValueAction |
+SetEmailErrorAction |
+SetPasswordValueAction |
+SetPasswordErrorAction |
+ResetFormAction
 
 
 export const registerModalInitialState: RegisterModalState = {
@@ -64,7 +64,7 @@ export const registerModalInitialState: RegisterModalState = {
       error: ''
     }
   }
-};
+}
 
 const registerModalReducer = (state: RegisterModalState, action: RegisterModalAction): RegisterModalState => {
   switch (action.type) {
@@ -72,7 +72,7 @@ const registerModalReducer = (state: RegisterModalState, action: RegisterModalAc
       return {
         ...state,
         loading: action.loading
-      };
+      }
     case SET_NAME_VALUE:
       return {
         ...state,
@@ -83,7 +83,7 @@ const registerModalReducer = (state: RegisterModalState, action: RegisterModalAc
             value: action.value
           }
         }
-      };
+      }
     case SET_NAME_ERROR:
       return {
         ...state,
@@ -94,7 +94,7 @@ const registerModalReducer = (state: RegisterModalState, action: RegisterModalAc
             error: action.error
           }
         }
-      };
+      }
     case SET_EMAIL_VALUE:
       return {
         ...state,
@@ -105,7 +105,7 @@ const registerModalReducer = (state: RegisterModalState, action: RegisterModalAc
             value: action.value
           }
         }
-      };
+      }
     case SET_EMAIL_ERROR:
       return {
         ...state,
@@ -116,7 +116,7 @@ const registerModalReducer = (state: RegisterModalState, action: RegisterModalAc
             error: action.error
           }
         }
-      };
+      }
     case SET_PASSWORD_VALUE:
       return {
         ...state,
@@ -127,7 +127,7 @@ const registerModalReducer = (state: RegisterModalState, action: RegisterModalAc
             value: action.value
           }
         }
-      };
+      }
     case SET_PASSWORD_ERROR:
       return {
         ...state,
@@ -138,67 +138,67 @@ const registerModalReducer = (state: RegisterModalState, action: RegisterModalAc
             error: action.error
           }
         }
-      };
+      }
     case RESET_FORM:
       return {
         ...state,
         form: { ...registerModalInitialState.form }
-      };
+      }
     default:
-      throw new Error('Unknown action type');
+      throw new Error('Unknown action type')
   }
-};
+}
 
 const useRegisterModalState = () => {
-  const [state, dispatch] = useReducer(registerModalReducer, { ...registerModalInitialState });
+  const [state, dispatch] = useReducer(registerModalReducer, { ...registerModalInitialState })
   
   const setLoading = useCallback((loading: boolean) => {
     dispatch({
       type: SET_LOADING,
       loading
-    });
-  }, [dispatch]);
+    })
+  }, [dispatch])
   const setNameValue = useCallback((value: string) => {
     dispatch({
       type: SET_NAME_VALUE,
       value
-    });
-  }, [dispatch]);
+    })
+  }, [dispatch])
   const setNameError = useCallback((error: string) => {
     dispatch({
       type: SET_NAME_ERROR,
       error
-    });
-  }, [dispatch]);
+    })
+  }, [dispatch])
   const setEmailValue = useCallback((value: string) => {
     dispatch({
       type: SET_EMAIL_VALUE,
       value
-    });
-  }, [dispatch]);
+    })
+  }, [dispatch])
   const setEmailError = useCallback((error: string) => {
     dispatch({
       type: SET_EMAIL_ERROR,
       error
-    });
-  }, [dispatch]);
+    })
+  }, [dispatch])
   const setPasswordValue = useCallback((value: string) => {
     dispatch({
       type: SET_PASSWORD_VALUE,
       value
-    });
-  }, [dispatch]);
+    })
+  }, [dispatch])
   const setPasswordError = useCallback((error: string) => {
     dispatch({
       type: SET_PASSWORD_ERROR,
       error
-    });
-  }, [dispatch]);
+    })
+  }, [dispatch])
   const resetForm = useCallback(() => {
     dispatch({
       type: RESET_FORM
-    });
-  }, [dispatch]);
+    })
+  }, [dispatch])
   
   const actionCreators = {
     setLoading,
@@ -209,12 +209,12 @@ const useRegisterModalState = () => {
     setPasswordValue,
     setPasswordError,
     resetForm
-  };
+  }
   
   return {
     state,
     actionCreators
-  };
-};
+  }
+}
 
-export default useRegisterModalState;
+export default useRegisterModalState

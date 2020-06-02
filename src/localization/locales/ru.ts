@@ -63,5 +63,5 @@ export default {
   'Search': 'Поиск',
   'No products': 'Нет продуктов',
   'Add product': 'Добавить продукт'
-};
+}
 

@@ -1,15 +1,15 @@
-import React, { SyntheticEvent } from 'react';
-import { Form, Select } from 'semantic-ui-react';
-import i18n from '../localization/i18n';
-import { boundSetLang, boundSetTheme } from '../store/system/actions';
-import { Languages, Themes } from '../types/models';
+import React, { SyntheticEvent } from 'react'
+import { Form, Select } from 'semantic-ui-react'
+import i18n from '../localization/i18n'
+import { boundSetLang, boundSetTheme } from '../store/system/actions'
+import { Languages, Themes } from '../types/models'
 
 type GeneralSettingsFormProps = {
-  lang: Languages;
-  setLang: typeof boundSetLang;
-  theme: Themes;
-  setTheme: typeof boundSetTheme;
-};
+  lang: Languages
+  setLang: typeof boundSetLang
+  theme: Themes
+  setTheme: typeof boundSetTheme
+}
 
 const GeneralSettingsForm: React.FC<GeneralSettingsFormProps> = ({ 
   lang ,
@@ -52,7 +52,7 @@ const GeneralSettingsForm: React.FC<GeneralSettingsFormProps> = ({
       />
 
     </Form>
-  );
-};
+  )
+}
 
-export default GeneralSettingsForm;
+export default GeneralSettingsForm

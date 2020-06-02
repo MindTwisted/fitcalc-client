@@ -1,3 +1,3 @@
-import { SetLangAction, SetLoadingAction, SetThemeAction } from '../../types/actions';
+import { SetLangAction, SetLoadingAction, SetThemeAction } from '../../types/actions'
 
-export type SystemActionTypes = SetLangAction | SetLoadingAction | SetThemeAction;
+export type SystemActionTypes = SetLangAction | SetLoadingAction | SetThemeAction

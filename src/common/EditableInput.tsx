@@ -1,12 +1,12 @@
-import React, { ChangeEvent, KeyboardEvent, useEffect, useRef, useState } from 'react';
-import { Input, Icon, Button } from 'semantic-ui-react';
+import React, { ChangeEvent, KeyboardEvent, useEffect, useRef, useState } from 'react'
+import { Input, Icon, Button } from 'semantic-ui-react'
 
 type EditableInputProps = {
-  defaultValue: string;
-  onSubmitInput: (value: string) => Promise<void | {changeValue: boolean}> | void | {changeValue: boolean};
-  onCancelEditing: () => void;
-  type?: string;
-};
+  defaultValue: string
+  onSubmitInput: (value: string) => Promise<void | {changeValue: boolean}> | void | {changeValue: boolean}
+  onCancelEditing: () => void
+  type?: string
+}
 
 const EditableInput: React.FC<EditableInputProps> = ({ 
   defaultValue,
@@ -14,49 +14,49 @@ const EditableInput: React.FC<EditableInputProps> = ({
   onCancelEditing, 
   type= 'text'
 }: EditableInputProps) => {
-  const [editable, setEditable] = useState(false);
-  const [value, setValue] = useState(defaultValue);
-  const inputEl = useRef<HTMLInputElement>(null!);
+  const [editable, setEditable] = useState(false)
+  const [value, setValue] = useState(defaultValue)
+  const inputEl = useRef<HTMLInputElement>(null!)
   
   useEffect(() => {
     if (editable) {
-      inputEl.current.focus();
+      inputEl.current.focus()
     }
-  }, [editable]);
+  }, [editable])
 
-  const isChanged = () => value !== defaultValue;
+  const isChanged = () => value !== defaultValue
   
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setValue(e.target.value);
-  };
+    setValue(e.target.value)
+  }
   
   const handleCancel = () => {
-    setValue(defaultValue);
-    setEditable(false);
+    setValue(defaultValue)
+    setEditable(false)
     
-    onCancelEditing();
-  };
+    onCancelEditing()
+  }
   
   const handleSubmit = async () => {
-    const submitData = await onSubmitInput(value);
+    const submitData = await onSubmitInput(value)
 
     // noinspection PointlessBooleanExpressionJS
     if (submitData && submitData.changeValue === false) {
-      setValue(defaultValue);
+      setValue(defaultValue)
     }
 
-    setEditable(false);
-  };
+    setEditable(false)
+  }
 
   const handleKeyDown = async (e: KeyboardEvent) => {
     if (e.key === 'Enter') {
-      e.preventDefault();
+      e.preventDefault()
       
       if (isChanged()) {
-        await handleSubmit();
+        await handleSubmit()
       }
     }
-  };
+  }
   
   return (
     <Input disabled={!editable}
@@ -96,7 +96,7 @@ const EditableInput: React.FC<EditableInputProps> = ({
         </Button>
       )}
     </Input>
-  );
-};
+  )
+}
 
-export default EditableInput;
+export default EditableInput

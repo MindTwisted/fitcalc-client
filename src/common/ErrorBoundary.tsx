@@ -1,27 +1,27 @@
-import React, { Component } from 'react';
-import { Header, Icon, Segment, Container } from 'semantic-ui-react';
+import React, { Component } from 'react'
+import { Header, Icon, Segment, Container } from 'semantic-ui-react'
 
-type ErrorBoundaryProps = {};
+type ErrorBoundaryProps = {}
 type ErrorBoundaryState = {
-  hasError: boolean;
-  errorMessage: string;
-};
+  hasError: boolean
+  errorMessage: string
+}
 
 class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
   constructor(props: ErrorBoundaryProps) {
-    super(props);
+    super(props)
     
     this.state = { 
       hasError: false,
       errorMessage: ''
-    };
+    }
   }
 
   componentDidCatch(error: Error) {
     this.setState({
       hasError: true,
       errorMessage: error.message
-    });
+    })
   }
   
   render() {
@@ -39,11 +39,11 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
             <h4>{this.state.errorMessage}</h4>
           </Segment>
         </Container>
-      );
+      )
     }
 
-    return this.props.children;
+    return this.props.children
   }
 }
 
-export default ErrorBoundary;
+export default ErrorBoundary

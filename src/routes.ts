@@ -1,16 +1,16 @@
 export interface HomeRoutes {
-  index: string;
+  index: string
 }
 
 export interface ApplicationRoutes {
-  index: string;
-  products: string;
-  eating: string;
+  index: string
+  products: string
+  eating: string
 }
 
 export interface RootRoutes {
-  home: HomeRoutes;
-  app: ApplicationRoutes;
+  home: HomeRoutes
+  app: ApplicationRoutes
 }
 
 const routes: RootRoutes = {
@@ -22,6 +22,6 @@ const routes: RootRoutes = {
     products: '/app/products',
     eating: '/app/eating'
   }
-};
+}
 
-export default routes;
+export default routes

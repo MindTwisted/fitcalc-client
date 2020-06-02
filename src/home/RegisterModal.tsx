@@ -1,15 +1,15 @@
-import React, { ChangeEvent } from 'react';
-import { Button, Form, InputOnChangeData, Modal } from 'semantic-ui-react';
-import i18n from '../localization/i18n';
-import { register } from '../api/auth';
-import { getViolationsFromAxiosError } from '../api/utils';
-import PasswordInput from '../common/PasswordInput';
-import useRegisterModalState from '../hooks/useRegisterModalState';
+import React, { ChangeEvent } from 'react'
+import { Button, Form, InputOnChangeData, Modal } from 'semantic-ui-react'
+import i18n from '../localization/i18n'
+import { register } from '../api/auth'
+import { getViolationsFromAxiosError } from '../api/utils'
+import PasswordInput from '../common/PasswordInput'
+import useRegisterModalState from '../hooks/useRegisterModalState'
 
 type RegisterModalProps = {
-  open: boolean;
-  closeModal(): void;
-};
+  open: boolean
+  closeModal(): void
+}
 
 const RegisterModal: React.FC<RegisterModalProps> = ({ 
   open,
@@ -30,31 +30,31 @@ const RegisterModal: React.FC<RegisterModalProps> = ({
       setPasswordError,
       resetForm
     }
-  } = useRegisterModalState();
+  } = useRegisterModalState()
   
   const handleClose = () => {
-    resetForm();
+    resetForm()
 
-    closeModal();
-  };
+    closeModal()
+  }
   
   const handleSubmit = async () => {
-    setLoading(true);
+    setLoading(true)
 
     try {
-      await register({ name: form.name.value, email: form.email.value, password: form.password.value });
+      await register({ name: form.name.value, email: form.email.value, password: form.password.value })
 
-      setLoading(false);
-      handleClose();
+      setLoading(false)
+      handleClose()
     } catch(error) {
-      const violations = getViolationsFromAxiosError(error);
+      const violations = getViolationsFromAxiosError(error)
 
-      setLoading(false);
-      setNameError(violations.name);
-      setEmailError(violations.email);
-      setPasswordError(violations.plainPassword);
+      setLoading(false)
+      setNameError(violations.name)
+      setEmailError(violations.email)
+      setPasswordError(violations.plainPassword)
     }
-  };
+  }
   
   return (
     <Modal closeIcon={!loading}
@@ -105,7 +105,7 @@ const RegisterModal: React.FC<RegisterModalProps> = ({
         </Modal.Description>
       </Modal.Content>
     </Modal>
-  );
-};
+  )
+}
 
-export default RegisterModal;
+export default RegisterModal

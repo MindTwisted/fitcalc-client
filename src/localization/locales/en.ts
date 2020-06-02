@@ -63,5 +63,5 @@ export default {
   'Search': 'Search',
   'No products': 'No products',
   'Add product': 'Add product'
-};
+}
 

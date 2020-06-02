@@ -1,60 +1,60 @@
-import axios from './axios';
-import { AxiosRequestConfig } from 'axios';
-import { getProductsPrefix } from './config';
-import { Product } from '../types/models';
+import axios from './axios'
+import { AxiosRequestConfig } from 'axios'
+import { getProductsPrefix } from './config'
+import { Product } from '../types/models'
 
 export interface GetAllProductsParams {
-  name?: string;
-  offset?: number;
+  name?: string
+  offset?: number
 }
 
 export const getAllProducts = ({ name, offset }: GetAllProductsParams = { name: '', offset: 0 }): Promise<{
   data: {
     data: {
-      products: Product[];
-    };
-  };
+      products: Product[]
+    }
+  }
 }> => {
-  const config: AxiosRequestConfig = { params: {} };
+  const config: AxiosRequestConfig = { params: {} }
   
   if (name) {
-    config.params.name = name;
+    config.params.name = name
   }
   
   if (offset) {
-    config.params.offset = offset;
+    config.params.offset = offset
   }
   
-  return axios.get(`${getProductsPrefix()}`, config);
-};
+  return axios.get(`${getProductsPrefix()}`, config)
+}
 
 export const addProductToFavourites = (id: number): Promise<{
   data: {
     data: {
-      message: string;
-    };
-  };
+      message: string
+    }
+  }
 }> => {
-  return axios.post(`${getProductsPrefix()}/${id}/favourites`);
-};
+  return axios.post(`${getProductsPrefix()}/${id}/favourites`)
+}
 
 export const removeProductFromFavourites = (id: number): Promise<{
   data: {
     data: {
-      message: string;
-    };
-  };
+      message: string
+    }
+  }
 }> => {
-  return axios.delete(`${getProductsPrefix()}/${id}/favourites`);
-};
+  return axios.delete(`${getProductsPrefix()}/${id}/favourites`)
+}
 
 export const addProduct = (product: Product): Promise<{
   data: {
     data: {
-      message: string;
-      product: Product;
-    };
-  };
+      message: string
+      product: Product
+    }
+  }
 }> => {
   return axios.post(`${getProductsPrefix()}`, {
     name: product.name,
@@ -63,5 +63,5 @@ export const addProduct = (product: Product): Promise<{
     fats: product.fats,
     fiber: product.fiber,
     calories: product.calories
-  });
-};
+  })
+}

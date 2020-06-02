@@ -1,15 +1,15 @@
-import React from 'react';
-import { Container, Header, Button, Icon } from 'semantic-ui-react';
-import { Link } from 'react-router-dom';
-import routes from '../routes';
-import i18n from '../localization/i18n';
+import React from 'react'
+import { Container, Header, Button, Icon } from 'semantic-ui-react'
+import { Link } from 'react-router-dom'
+import routes from '../routes'
+import i18n from '../localization/i18n'
 
 type HeadingProps = {
-    mobile: boolean;
-    isLoggedIn: boolean;
-    isAppUser: boolean;
-    setRegisterModalOpen(state: boolean): void;
-};
+  mobile: boolean
+  isLoggedIn: boolean
+  isAppUser: boolean
+  setRegisterModalOpen(state: boolean): void
+}
 
 const Heading: React.FC<HeadingProps> = ({ 
   mobile,
@@ -61,7 +61,7 @@ const Heading: React.FC<HeadingProps> = ({
       )}
       
     </Container>
-  );
-};
+  )
+}
 
-export default Heading;
+export default Heading

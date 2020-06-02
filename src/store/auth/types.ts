@@ -1,3 +1,3 @@
-import { SetAccessTokenAction, SetRefreshTokenAction, SetUserAction, SetTimeOffsetAction } from '../../types/actions';
+import { SetAccessTokenAction, SetRefreshTokenAction, SetUserAction, SetTimeOffsetAction } from '../../types/actions'
 
-export type AuthActionTypes = SetAccessTokenAction | SetRefreshTokenAction | SetUserAction | SetTimeOffsetAction ;
+export type AuthActionTypes = SetAccessTokenAction | SetRefreshTokenAction | SetUserAction | SetTimeOffsetAction 

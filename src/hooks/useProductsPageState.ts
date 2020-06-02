@@ -1,5 +1,5 @@
-import { useCallback, useReducer } from 'react';
-import { Product } from '../types/models';
+import { useCallback, useReducer } from 'react'
+import { Product } from '../types/models'
 import {
   APPEND_PRODUCTS,
   RESET_OFFSET,
@@ -11,7 +11,7 @@ import {
   SET_SEARCH,
   UPDATE_PRODUCT,
   PREPEND_PRODUCTS
-} from '../types/actionTypes';
+} from '../types/actionTypes'
 import {
   AppendProductsAction, PrependProductsAction,
   ResetOffsetAction,
@@ -22,30 +22,30 @@ import {
   SetProductsAction,
   SetSearchAction,
   UpdateProductAction
-} from '../types/actions';
+} from '../types/actions'
 
 type ProductsPageState = {
-  products: Product[];
-  search: string;
+  products: Product[]
+  search: string
   offset: {
-    value: number;
-    done: boolean;
-  };
+    value: number
+    done: boolean
+  }
   actions: {
-    addProductModalOpen: boolean;
-  };
-};
+    addProductModalOpen: boolean
+  }
+}
 
 type ProductsPageAction = SetProductsAction |
-  AppendProductsAction |
-  PrependProductsAction |
-  UpdateProductAction |
-  SetSearchAction |
-  ResetSearchAction |
-  SetOffsetValueAction | 
-  SetOffsetDoneAction |
-  ResetOffsetAction |
-  SetAddProductModalOpen;
+AppendProductsAction |
+PrependProductsAction |
+UpdateProductAction |
+SetSearchAction |
+ResetSearchAction |
+SetOffsetValueAction | 
+SetOffsetDoneAction |
+ResetOffsetAction |
+SetAddProductModalOpen
 
 const productsPageInitialState: ProductsPageState = {
   products: [],
@@ -57,7 +57,7 @@ const productsPageInitialState: ProductsPageState = {
   actions: {
     addProductModalOpen: false
   }
-};
+}
 
 const productsPageReducer = (state: ProductsPageState, action: ProductsPageAction): ProductsPageState => {
   switch (action.type) {
@@ -65,32 +65,32 @@ const productsPageReducer = (state: ProductsPageState, action: ProductsPageActio
       return {
         ...state,
         products: action.products
-      };
+      }
     case APPEND_PRODUCTS:
       return {
         ...state,
         products: [...state.products, ...action.products]
-      };
+      }
     case PREPEND_PRODUCTS:
       return {
         ...state,
         products: [...action.products, ...state.products]
-      };
+      }
     case UPDATE_PRODUCT:
       return {
         ...state,
         products: state.products.map(product => product.id === action.product.id ? action.product : product)
-      };
+      }
     case SET_SEARCH:
       return {
         ...state,
         search: action.search
-      };
+      }
     case RESET_SEARCH:
       return {
         ...state,
         search: productsPageInitialState.search
-      };
+      }
     case SET_OFFSET_VALUE:
       return {
         ...state,
@@ -98,7 +98,7 @@ const productsPageReducer = (state: ProductsPageState, action: ProductsPageActio
           ...state.offset,
           value: action.value
         }
-      };
+      }
     case SET_OFFSET_DONE:
       return {
         ...state,
@@ -106,12 +106,12 @@ const productsPageReducer = (state: ProductsPageState, action: ProductsPageActio
           ...state.offset,
           done: action.done
         }
-      };
+      }
     case RESET_OFFSET:
       return {
         ...state,
         offset: { ...productsPageInitialState.offset }
-      };
+      }
     case SET_ADD_PRODUCT_MODAL_OPEN:
       return {
         ...state,
@@ -119,81 +119,81 @@ const productsPageReducer = (state: ProductsPageState, action: ProductsPageActio
           ...state.actions,
           addProductModalOpen: action.open
         }
-      };
+      }
     default:
-      throw new Error('Unknown action type');
+      throw new Error('Unknown action type')
   }
-};
+}
 
 const useProductsPageState = () => {
-  const [state, dispatch] = useReducer(productsPageReducer, { ...productsPageInitialState });
+  const [state, dispatch] = useReducer(productsPageReducer, { ...productsPageInitialState })
   
   const setProducts = useCallback((products: Product[]) => {
     dispatch({
       type: SET_PRODUCTS,
       products
-    });
-  }, [dispatch]);
+    })
+  }, [dispatch])
   const appendProducts = useCallback((products: Product[] | Product) => {
     if (!Array.isArray(products)) {
-      products = [products];
+      products = [products]
     }
     
     dispatch({
       type: APPEND_PRODUCTS,
       products
-    });
-  }, [dispatch]);
+    })
+  }, [dispatch])
   const prependProducts = useCallback((products: Product[] | Product) => {
     if (!Array.isArray(products)) {
-      products = [products];
+      products = [products]
     }
     
     dispatch({
       type: PREPEND_PRODUCTS,
       products
-    });
-  }, [dispatch]);
+    })
+  }, [dispatch])
   const updateProduct = useCallback((product: Product) => {
     dispatch({
       type: UPDATE_PRODUCT,
       product
-    });
-  }, [dispatch]);
+    })
+  }, [dispatch])
   const setSearch = useCallback((search: string) => {
     dispatch({
       type: SET_SEARCH,
       search
-    });
-  }, [dispatch]);
+    })
+  }, [dispatch])
   const resetSearch = useCallback(() => {
     dispatch({
       type: RESET_SEARCH
-    });
-  }, [dispatch]);
+    })
+  }, [dispatch])
   const setOffsetValue = useCallback((value: number) => {
     dispatch({
       type: SET_OFFSET_VALUE,
       value
-    });
-  }, [dispatch]);
+    })
+  }, [dispatch])
   const setOffsetDone = useCallback((done: boolean) => {
     dispatch({
       type: SET_OFFSET_DONE,
       done
-    });
-  }, [dispatch]);
+    })
+  }, [dispatch])
   const resetOffset = useCallback(() => {
     dispatch({
       type: RESET_OFFSET
-    });
-  }, [dispatch]);
+    })
+  }, [dispatch])
   const setAddProductModalOpen = useCallback((open: boolean) => {
     dispatch({
       type: SET_ADD_PRODUCT_MODAL_OPEN,
       open
-    });
-  }, [dispatch]);
+    })
+  }, [dispatch])
   
   const actionCreators = {
     setProducts,
@@ -206,12 +206,12 @@ const useProductsPageState = () => {
     setOffsetDone,
     resetOffset,
     setAddProductModalOpen
-  };
+  }
   
   return {
     state,
     actionCreators
-  };
-};
+  }
+}
 
-export default useProductsPageState;
+export default useProductsPageState

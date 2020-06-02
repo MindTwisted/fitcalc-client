@@ -1,10 +1,10 @@
-import React from 'react';
-import { Route, Redirect, RouteProps } from 'react-router-dom';
+import React from 'react'
+import { Route, Redirect, RouteProps } from 'react-router-dom'
 
 type ProtectedRouteProps = {
-    redirect: string;
-    isAllowed: boolean;
-} & RouteProps;
+  redirect: string
+  isAllowed: boolean
+} & RouteProps
 
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   redirect, 
@@ -18,7 +18,7 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
         <Redirect to={{ pathname: redirect }} />
       }
     </React.Fragment>
-  );
-};
+  )
+}
 
-export default ProtectedRoute;
+export default ProtectedRoute

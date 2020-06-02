@@ -1,16 +1,16 @@
-import React, { useState } from 'react';
-import { Modal } from 'semantic-ui-react';
-import i18n from '../localization/i18n';
-import { Product, Themes } from '../types/models';
-import { addProduct } from '../api/products';
-import EditProductForm from './EditProductForm';
+import React, { useState } from 'react'
+import { Modal } from 'semantic-ui-react'
+import i18n from '../localization/i18n'
+import { Product, Themes } from '../types/models'
+import { addProduct } from '../api/products'
+import EditProductForm from './EditProductForm'
 
 type AddProductModalProps = {
-  theme: Themes;
-  open: boolean;
-  onAddProduct: (product: Product) => void;
-  closeModal: () => void;
-};
+  theme: Themes
+  open: boolean
+  onAddProduct: (product: Product) => void
+  closeModal: () => void
+}
 
 const AddProductModal: React.FC<AddProductModalProps> = ({
   theme,
@@ -18,25 +18,25 @@ const AddProductModal: React.FC<AddProductModalProps> = ({
   onAddProduct,
   closeModal
 }: AddProductModalProps) => {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false)
   
   const handleAddProduct = async (product: Product) => {
-    setLoading(true);
+    setLoading(true)
     
     try {
-      const addProductResponse = await addProduct(product);
+      const addProductResponse = await addProduct(product)
       
-      onAddProduct(addProductResponse.data.data.product);
-      setLoading(false);
-      closeModal();
+      onAddProduct(addProductResponse.data.data.product)
+      setLoading(false)
+      closeModal()
       
-      return addProductResponse;
+      return addProductResponse
     } catch (error) {
-      setLoading(false);
+      setLoading(false)
       
-      throw error;
+      throw error
     }
-  };
+  }
   
   return (
     <Modal open={open}
@@ -55,7 +55,7 @@ const AddProductModal: React.FC<AddProductModalProps> = ({
         </Modal.Description>
       </Modal.Content>
     </Modal>
-  );
-};
+  )
+}
 
-export default AddProductModal;
+export default AddProductModal

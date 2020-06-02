@@ -1,14 +1,14 @@
-import React, { ChangeEvent, useEffect, useState } from 'react';
-import { Button, Form, InputOnChangeData } from 'semantic-ui-react';
-import { Product } from '../types/models';
-import i18n from '../localization/i18n';
-import { getViolationsFromAxiosError } from '../api/utils';
+import React, { ChangeEvent, useEffect, useState } from 'react'
+import { Button, Form, InputOnChangeData } from 'semantic-ui-react'
+import { Product } from '../types/models'
+import i18n from '../localization/i18n'
+import { getViolationsFromAxiosError } from '../api/utils'
 
 type EditProductFormProps = {
-  product?: Product;
-  loading: boolean;
-  onSubmit: (product: Product) => void;
-};
+  product?: Product
+  loading: boolean
+  onSubmit: (product: Product) => void
+}
 
 const emptyProduct: Product = {
   name: '',
@@ -18,7 +18,7 @@ const emptyProduct: Product = {
   fiber: 0,
   calories: 0,
   inFavourites: false
-};
+}
 
 const productErrorsInitialState = {
   name: '',
@@ -27,38 +27,38 @@ const productErrorsInitialState = {
   carbohydrates: '',
   fiber: '',
   calories: ''
-};
+}
 
 const EditProductForm: React.FC<EditProductFormProps> = ({
   onSubmit,
   loading,
   product
 }: EditProductFormProps) => {
-  const [productState, setProductState] = useState<Product>(product || emptyProduct);
-  const [productErrors, setProductErrors] = useState({ ...productErrorsInitialState });
+  const [productState, setProductState] = useState<Product>(product || emptyProduct)
+  const [productErrors, setProductErrors] = useState({ ...productErrorsInitialState })
   
   useEffect(() => {
-    setProductState(product || emptyProduct);
-  }, [product]);
+    setProductState(product || emptyProduct)
+  }, [product])
   
   const handleSubmit = async () => {
     try {
-      await onSubmit(productState);
+      await onSubmit(productState)
     } catch (error) {
-      const violations = getViolationsFromAxiosError(error);
+      const violations = getViolationsFromAxiosError(error)
       
-      setProductErrors(violations);
+      setProductErrors(violations)
     }
-  };
+  }
   const handleChange = (e: ChangeEvent<HTMLInputElement>, { value, name }: InputOnChangeData) => {
     if (name === 'name') {
-      setProductState(current => ({ ...current, name: value }));
+      setProductState(current => ({ ...current, name: value }))
       
-      return;
+      return
     }
   
-    setProductState(current => ({ ...current, [name]: Number(value) || 0 }));
-  };
+    setProductState(current => ({ ...current, [name]: Number(value) || 0 }))
+  }
   
   return (
     <Form onSubmit={handleSubmit}
@@ -124,7 +124,7 @@ const EditProductForm: React.FC<EditProductFormProps> = ({
         {i18n.t('Submit')}
       </Button>
     </Form>
-  );
-};
+  )
+}
 
-export default EditProductForm;
+export default EditProductForm

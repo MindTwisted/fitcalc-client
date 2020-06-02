@@ -1,14 +1,14 @@
-import React from 'react';
-import { addProductToFavourites, removeProductFromFavourites } from '../api/products';
-import { Checkbox, Table } from 'semantic-ui-react';
-import { Product } from '../types/models';
-import { boundSetLoading } from '../store/system/actions';
+import React from 'react'
+import { addProductToFavourites, removeProductFromFavourites } from '../api/products'
+import { Checkbox, Table } from 'semantic-ui-react'
+import { Product } from '../types/models'
+import { boundSetLoading } from '../store/system/actions'
 
 type ProductsPageTableRowProps = {
-  product: Product;
-  setLoading: typeof boundSetLoading;
-  updateProduct: (product: Product) => void;
-};
+  product: Product
+  setLoading: typeof boundSetLoading
+  updateProduct: (product: Product) => void
+}
 
 const ProductsPageTableRow: React.FC<ProductsPageTableRowProps> = ({ 
   product ,
@@ -17,42 +17,42 @@ const ProductsPageTableRow: React.FC<ProductsPageTableRowProps> = ({
 }: ProductsPageTableRowProps) => {
   const handleAddProductToFavourites = async (product: Product) => {
     if (!product.id) {
-      return;
+      return
     }
     
-    setLoading(true);
+    setLoading(true)
     
     try {
-      await addProductToFavourites(product.id);
+      await addProductToFavourites(product.id)
       
       updateProduct({
         ...product,
         inFavourites: true
-      });
-      setLoading(false);
+      })
+      setLoading(false)
     } catch (error) {
-      setLoading(false);
+      setLoading(false)
     }
-  };
+  }
   const handleRemoveProductFromFavourites = async (product: Product) => {
     if (!product.id) {
-      return;
+      return
     }
     
-    setLoading(true);
+    setLoading(true)
     
     try {
-      await removeProductFromFavourites(product.id);
+      await removeProductFromFavourites(product.id)
       
       updateProduct({
         ...product,
         inFavourites: false
-      });
-      setLoading(false);
+      })
+      setLoading(false)
     } catch (error) {
-      setLoading(false);
+      setLoading(false)
     }
-  };
+  }
   
   return (
     <Table.Row>
@@ -83,7 +83,7 @@ const ProductsPageTableRow: React.FC<ProductsPageTableRowProps> = ({
         />
       </Table.Cell>
     </Table.Row>
-  );
-};
+  )
+}
 
-export default ProductsPageTableRow;
+export default ProductsPageTableRow

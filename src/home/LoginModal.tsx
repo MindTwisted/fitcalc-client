@@ -1,53 +1,53 @@
-import React, { ChangeEvent, useState } from 'react';
-import { Button, Form, InputOnChangeData, Modal } from 'semantic-ui-react';
-import i18n from '../localization/i18n';
-import { boundLogin } from '../store/auth/actions';
-import PasswordRecoveryModal from './PasswordRecoveryModal';
-import PasswordInput from '../common/PasswordInput';
+import React, { ChangeEvent, useState } from 'react'
+import { Button, Form, InputOnChangeData, Modal } from 'semantic-ui-react'
+import i18n from '../localization/i18n'
+import { boundLogin } from '../store/auth/actions'
+import PasswordRecoveryModal from './PasswordRecoveryModal'
+import PasswordInput from '../common/PasswordInput'
 
 type LoginModalProps = {
-  open: boolean;
-  closeModal(): void;
-  login: typeof boundLogin;
-};
+  open: boolean
+  closeModal(): void
+  login: typeof boundLogin
+}
 
-const initialFormData = { email: '', password: '' };
+const initialFormData = { email: '', password: '' }
 
 const LoginModal: React.FC<LoginModalProps> = ({ 
   open,
   closeModal,
   login
 }: LoginModalProps) => {
-  const [loading, setLoading] = useState(false);
-  const [formData, setFormData] = useState(initialFormData);
-  const [passwordRecoveryModalOpen, setPasswordRecoveryModalOpen] = useState(false);
+  const [loading, setLoading] = useState(false)
+  const [formData, setFormData] = useState(initialFormData)
+  const [passwordRecoveryModalOpen, setPasswordRecoveryModalOpen] = useState(false)
 
   const handleClose = () => {
-    setFormData(initialFormData);
+    setFormData(initialFormData)
 
-    closeModal();
-  };
+    closeModal()
+  }
   
   const handleChange = (e: ChangeEvent<HTMLInputElement>, { name, value }: InputOnChangeData) => {
     setFormData({
       ...formData,
       [name]: value
-    });
-  };
+    })
+  }
 
   const handleSubmit = async () => {
-    setLoading(true);
+    setLoading(true)
 
     try {
-      await login(formData);
+      await login(formData)
       
-      setLoading(false);
+      setLoading(false)
 
-      handleClose();
+      handleClose()
     } catch(error) {
-      setLoading(false);
+      setLoading(false)
     }
-  };
+  }
 
   return (
     <Modal closeIcon={!loading} 
@@ -100,7 +100,7 @@ const LoginModal: React.FC<LoginModalProps> = ({
         closeModal={() => setPasswordRecoveryModalOpen(false)}
       />
     </Modal>
-  );
-};
+  )
+}
 
-export default LoginModal;
+export default LoginModal

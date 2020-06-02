@@ -9,31 +9,31 @@ export enum Themes {
 }
 
 export interface AccessToken {
-  expires_at: string;
-  token: string;
+  expires_at: string
+  token: string
 }
 
 export interface RefreshToken {
-  id: number;
-  expires_at: string;
-  token?: string;
-  device?: string;
+  id: number
+  expires_at: string
+  token?: string
+  device?: string
 }
 
 export interface User {
-  id: number;
-  name: string;
-  email: string;
-  roles: string[];
+  id: number
+  name: string
+  email: string
+  roles: string[]
 }
 
 export interface Product {
-  id?: number;
-  name: string;
-  proteins: number;
-  fats: number;
-  carbohydrates: number;
-  fiber: number;
-  calories: number;
-  inFavourites?: boolean;
+  id?: number
+  name: string
+  proteins: number
+  fats: number
+  carbohydrates: number
+  fiber: number
+  calories: number
+  inFavourites?: boolean
 }

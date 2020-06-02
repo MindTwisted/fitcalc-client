@@ -1,16 +1,16 @@
-import React from 'react';
-import { NavLink } from 'react-router-dom';
-import { Icon, Menu, Sidebar, Sticky } from 'semantic-ui-react';
-import i18n from '../localization/i18n';
-import routes from '../routes';
-import { Themes } from '../types/models';
+import React from 'react'
+import { NavLink } from 'react-router-dom'
+import { Icon, Menu, Sidebar, Sticky } from 'semantic-ui-react'
+import i18n from '../localization/i18n'
+import routes from '../routes'
+import { Themes } from '../types/models'
 
 type SidebarNavigationProps = {
-  theme: Themes;
-  mobile: boolean;
-  visible: boolean;
-  setVisible: (visible: boolean) => void;
-};
+  theme: Themes
+  mobile: boolean
+  visible: boolean
+  setVisible: (visible: boolean) => void
+}
 
 const SidebarNavigation: React.FC<SidebarNavigationProps> = ({ 
   theme,
@@ -54,7 +54,7 @@ const SidebarNavigation: React.FC<SidebarNavigationProps> = ({
 
       </Sidebar>
     </Sticky>
-  );
-};
+  )
+}
 
-export default SidebarNavigation;
+export default SidebarNavigation

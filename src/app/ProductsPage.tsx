@@ -1,20 +1,20 @@
-import React, { useCallback, useEffect } from 'react';
-import { Table, Icon, Input, Visibility, Button, Grid } from 'semantic-ui-react';
-import i18n from '../localization/i18n';
-import { boundSetLoading } from '../store/system/actions';
-import { Languages, Product, Themes } from '../types/models';
-import { getAllProducts, GetAllProductsParams } from '../api/products';
-import { InputOnChangeData } from 'semantic-ui-react/dist/commonjs/elements/Input/Input';
-import useDebounce from '../hooks/useDebounce';
-import useProductsPageState from '../hooks/useProductsPageState';
-import ProductsPageTableRow from './ProductsPageTableRow';
-import AddProductModal from './AddProductModal';
+import React, { useCallback, useEffect } from 'react'
+import { Table, Icon, Input, Visibility, Button, Grid } from 'semantic-ui-react'
+import i18n from '../localization/i18n'
+import { boundSetLoading } from '../store/system/actions'
+import { Languages, Product, Themes } from '../types/models'
+import { getAllProducts, GetAllProductsParams } from '../api/products'
+import { InputOnChangeData } from 'semantic-ui-react/dist/commonjs/elements/Input/Input'
+import useDebounce from '../hooks/useDebounce'
+import useProductsPageState from '../hooks/useProductsPageState'
+import ProductsPageTableRow from './ProductsPageTableRow'
+import AddProductModal from './AddProductModal'
 
 type ProductsPageProps = {
-  lang: Languages;
-  theme: Themes;
-  setLoading: typeof boundSetLoading;
-};
+  lang: Languages
+  theme: Themes
+  setLoading: typeof boundSetLoading
+}
 
 const ProductsPage: React.FC<ProductsPageProps> = ({
   lang,
@@ -42,73 +42,73 @@ const ProductsPage: React.FC<ProductsPageProps> = ({
       setOffsetValue,
       setAddProductModalOpen
     } 
-  } = useProductsPageState();
+  } = useProductsPageState()
   
   const fetchProducts = async (
     { name, offset }: GetAllProductsParams = { name: '', offset: 0 },
     append: boolean = false
   ) => {
-    setLoading(true);
+    setLoading(true)
   
     try {
-      const productsResponse = await getAllProducts({ name, offset });
-      const { products } = productsResponse.data.data;
+      const productsResponse = await getAllProducts({ name, offset })
+      const { products } = productsResponse.data.data
       
       if (products.length < 50) {
-        setOffsetDone(true);
+        setOffsetDone(true)
       }
     
       if (append) {
-        appendProducts(products);
+        appendProducts(products)
       } else {
-        setProducts(products);
+        setProducts(products)
       }
     
-      setLoading(false);
+      setLoading(false)
     } catch (error) {
-      setLoading(false);
+      setLoading(false)
       
-      throw error;
+      throw error
     }
-  };
-  const fetchProductsDependencies = [setLoading, setOffsetDone, appendProducts, setProducts];
-  const fetchProductsDebounced = useDebounce(fetchProducts, 500, fetchProductsDependencies);
-  const fetchProductsCallback = useCallback(fetchProducts, fetchProductsDependencies);
+  }
+  const fetchProductsDependencies = [setLoading, setOffsetDone, appendProducts, setProducts]
+  const fetchProductsDebounced = useDebounce(fetchProducts, 500, fetchProductsDependencies)
+  const fetchProductsCallback = useCallback(fetchProducts, fetchProductsDependencies)
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>, data: InputOnChangeData) => {
-    resetOffset();
-    setSearch(data.value);
-    fetchProductsDebounced({ name: data.value });
-  };
+    resetOffset()
+    setSearch(data.value)
+    fetchProductsDebounced({ name: data.value })
+  }
   const handleClearSearch = () => {
-    resetOffset();
-    resetSearch();
-    fetchProductsCallback();
-  };
+    resetOffset()
+    resetSearch()
+    fetchProductsCallback()
+  }
   const handleScrollBottom = async () => {
     if (offset.done) {
-      return;
+      return
     }
     
-    const oldOffset = offset.value;
-    const newOffset = oldOffset + 50;
+    const oldOffset = offset.value
+    const newOffset = oldOffset + 50
   
-    setOffsetValue(newOffset);
+    setOffsetValue(newOffset)
   
     try {
-      await fetchProductsCallback({ name: search, offset: newOffset }, true);
+      await fetchProductsCallback({ name: search, offset: newOffset }, true)
     } catch (error) {
-      setOffsetValue(oldOffset);
+      setOffsetValue(oldOffset)
     }
-  };
+  }
   
   useEffect(() => {
-    fetchProductsCallback();
+    fetchProductsCallback()
     
     return () => {
-      resetSearch();
-      resetOffset();
-    };
-  }, [fetchProductsCallback, lang, resetSearch, resetOffset]);
+      resetSearch()
+      resetOffset()
+    }
+  }, [fetchProductsCallback, lang, resetSearch, resetOffset])
   
   return (
     <Visibility once={false}
@@ -182,7 +182,7 @@ const ProductsPage: React.FC<ProductsPageProps> = ({
         closeModal={() => setAddProductModalOpen(false)}
       />
     </Visibility>
-  );
-};
+  )
+}
 
-export default ProductsPage;
+export default ProductsPage

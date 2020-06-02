@@ -1,20 +1,20 @@
-import React, { useState } from 'react';
-import { connect, ConnectedProps } from 'react-redux';
-import { Responsive, Visibility, Segment } from 'semantic-ui-react';
-import NavigationBar from './NavigationBar';
-import Heading from './Heading';
-import Layout from './Layout';
-import { RootState } from '../store';
-import { boundSetLang } from '../store/system/actions';
-import { bindActionCreators, Dispatch } from 'redux';
-import { boundLogin, boundLogout } from '../store/auth/actions';
-import { isAppUserSelector, isLoggedInSelector } from '../store/auth/selectors';
-import LoginModal from './LoginModal';
-import RegisterModal from './RegisterModal';
+import React, { useState } from 'react'
+import { connect, ConnectedProps } from 'react-redux'
+import { Responsive, Visibility, Segment } from 'semantic-ui-react'
+import NavigationBar from './NavigationBar'
+import Heading from './Heading'
+import Layout from './Layout'
+import { RootState } from '../store'
+import { boundSetLang } from '../store/system/actions'
+import { bindActionCreators, Dispatch } from 'redux'
+import { boundLogin, boundLogout } from '../store/auth/actions'
+import { isAppUserSelector, isLoggedInSelector } from '../store/auth/selectors'
+import LoginModal from './LoginModal'
+import RegisterModal from './RegisterModal'
 
 type HomeProps = ConnectedProps<typeof connector> & {
-  mobile: boolean;
-};
+  mobile: boolean
+}
 
 const Home: React.FC<HomeProps> = ({ 
   system,
@@ -25,9 +25,9 @@ const Home: React.FC<HomeProps> = ({
   logout,
   mobile
 }: HomeProps) => {
-  const [fixed, setFixed] = useState(false);
-  const [registerModalOpen, setRegisterModalOpen] = useState(false);
-  const [loginModalOpen, setLoginModalOpen] = useState(false);
+  const [fixed, setFixed] = useState(false)
+  const [registerModalOpen, setRegisterModalOpen] = useState(false)
+  const [loginModalOpen, setLoginModalOpen] = useState(false)
 
   return (
     <React.Fragment>
@@ -74,21 +74,21 @@ const Home: React.FC<HomeProps> = ({
         closeModal={() => setRegisterModalOpen(false)}
       />
     </React.Fragment>
-  );
-};
+  )
+}
 
 const mapStateToProps = (state: RootState) => ({
   system: state.system,
   isLoggedIn: isLoggedInSelector(state),
   isAppUser: isAppUserSelector(state)
-});
+})
 const mapDispatchToProps = (dispatch: Dispatch) => {
   return bindActionCreators({
     setLang: boundSetLang,
     login: boundLogin,
     logout: boundLogout
-  }, dispatch);
-};
-const connector = connect(mapStateToProps, mapDispatchToProps);
+  }, dispatch)
+}
+const connector = connect(mapStateToProps, mapDispatchToProps)
 
-export default connector(Home);
+export default connector(Home)

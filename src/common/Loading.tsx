@@ -1,9 +1,9 @@
-import React from 'react';
-import { Dimmer, Loader } from 'semantic-ui-react';
+import React from 'react'
+import { Dimmer, Loader } from 'semantic-ui-react'
 
 type LoadingProps = {
-  active: boolean;
-};
+  active: boolean
+}
 
 const Loading: React.FC<LoadingProps> = ({ active }: LoadingProps) => {
   return (
@@ -12,7 +12,7 @@ const Loading: React.FC<LoadingProps> = ({ active }: LoadingProps) => {
     >
       <Loader />
     </Dimmer>
-  );
-};
+  )
+}
 
-export default Loading;
+export default Loading

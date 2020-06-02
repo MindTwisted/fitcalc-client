@@ -1,5 +1,5 @@
-import React from 'react';
-import { SemanticToastContainer } from 'react-semantic-toasts';
+import React from 'react'
+import { SemanticToastContainer } from 'react-semantic-toasts'
 
 const Notification: React.FC = () => {
   return (
@@ -10,7 +10,7 @@ const Notification: React.FC = () => {
         animation='slide left'
       />
     </div>
-  );
-};
+  )
+}
 
-export default Notification;
+export default Notification

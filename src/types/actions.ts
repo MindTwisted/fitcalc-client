@@ -1,4 +1,4 @@
-import { AccessToken, Languages, Product, RefreshToken, Themes, User } from './models';
+import { AccessToken, Languages, Product, RefreshToken, Themes, User } from './models'
 import {
   APPEND_PRODUCTS,
   RESET_OFFSET,
@@ -24,134 +24,134 @@ import {
   RESET_FORM,
   SET_ADD_PRODUCT_MODAL_OPEN,
   PREPEND_PRODUCTS
-} from './actionTypes';
+} from './actionTypes'
 
 export interface SystemState {
-  lang: Languages;
-  loading: boolean;
-  theme: Themes;
+  lang: Languages
+  loading: boolean
+  theme: Themes
 }
 
 export interface SetLangAction {
-  type: typeof SET_LANG;
-  lang: Languages;
+  type: typeof SET_LANG
+  lang: Languages
 }
 
 export interface SetLoadingAction {
-  type: typeof SET_LOADING;
-  loading: boolean;
+  type: typeof SET_LOADING
+  loading: boolean
 }
 
 export interface SetThemeAction {
-  type: typeof SET_THEME;
-  theme: Themes;
+  type: typeof SET_THEME
+  theme: Themes
 }
 
 export interface AuthState {
-  accessToken: AccessToken | null;
-  refreshToken: RefreshToken | null;
-  user: User | null;
-  timeOffset: number;
+  accessToken: AccessToken | null
+  refreshToken: RefreshToken | null
+  user: User | null
+  timeOffset: number
 }
 
 export interface SetAccessTokenAction {
-  type: typeof SET_ACCESS_TOKEN;
-  accessToken: AccessToken | null;
+  type: typeof SET_ACCESS_TOKEN
+  accessToken: AccessToken | null
 }
 
 export interface SetRefreshTokenAction {
-  type: typeof SET_REFRESH_TOKEN;
-  refreshToken: RefreshToken | null;
+  type: typeof SET_REFRESH_TOKEN
+  refreshToken: RefreshToken | null
 }
 
 export interface SetUserAction {
-  type: typeof SET_USER;
-  user: User | null;
+  type: typeof SET_USER
+  user: User | null
 }
 
 export interface SetTimeOffsetAction {
-  type: typeof SET_TIME_OFFSET;
-  timeOffset: number;
+  type: typeof SET_TIME_OFFSET
+  timeOffset: number
 }
 
 export interface SetProductsAction {
-  type: typeof SET_PRODUCTS;
-  products: Product[];
+  type: typeof SET_PRODUCTS
+  products: Product[]
 }
 
 export interface AppendProductsAction {
-  type: typeof APPEND_PRODUCTS;
-  products: Product[];
+  type: typeof APPEND_PRODUCTS
+  products: Product[]
 }
 
 export interface PrependProductsAction {
-  type: typeof PREPEND_PRODUCTS;
-  products: Product[];
+  type: typeof PREPEND_PRODUCTS
+  products: Product[]
 }
 
 export interface UpdateProductAction {
-  type: typeof UPDATE_PRODUCT;
-  product: Product;
+  type: typeof UPDATE_PRODUCT
+  product: Product
 }
 
 export interface SetSearchAction {
-  type: typeof SET_SEARCH;
-  search: string;
+  type: typeof SET_SEARCH
+  search: string
 }
 
 export interface ResetSearchAction {
-  type: typeof RESET_SEARCH;
+  type: typeof RESET_SEARCH
 }
 
 export interface SetOffsetValueAction {
-  type: typeof SET_OFFSET_VALUE;
-  value: number;
+  type: typeof SET_OFFSET_VALUE
+  value: number
 }
 
 export interface SetOffsetDoneAction {
-  type: typeof SET_OFFSET_DONE;
-  done: boolean;
+  type: typeof SET_OFFSET_DONE
+  done: boolean
 }
 
 export interface ResetOffsetAction {
-  type: typeof RESET_OFFSET;
+  type: typeof RESET_OFFSET
 }
 
 export interface SetNameValueAction {
-  type: typeof SET_NAME_VALUE;
-  value: string;
+  type: typeof SET_NAME_VALUE
+  value: string
 }
 
 export interface SetNameErrorAction {
-  type: typeof SET_NAME_ERROR;
-  error: string;
+  type: typeof SET_NAME_ERROR
+  error: string
 }
 
 export interface SetEmailValueAction {
-  type: typeof SET_EMAIL_VALUE;
-  value: string;
+  type: typeof SET_EMAIL_VALUE
+  value: string
 }
 
 export interface SetEmailErrorAction {
-  type: typeof SET_EMAIL_ERROR;
-  error: string;
+  type: typeof SET_EMAIL_ERROR
+  error: string
 }
 
 export interface SetPasswordValueAction {
-  type: typeof SET_PASSWORD_VALUE;
-  value: string;
+  type: typeof SET_PASSWORD_VALUE
+  value: string
 }
 
 export interface SetPasswordErrorAction {
-  type: typeof SET_PASSWORD_ERROR;
-  error: string;
+  type: typeof SET_PASSWORD_ERROR
+  error: string
 }
 
 export interface ResetFormAction {
-  type: typeof RESET_FORM;
+  type: typeof RESET_FORM
 }
 
 export interface SetAddProductModalOpen {
-  type: typeof SET_ADD_PRODUCT_MODAL_OPEN;
-  open: boolean;
+  type: typeof SET_ADD_PRODUCT_MODAL_OPEN
+  open: boolean
 }

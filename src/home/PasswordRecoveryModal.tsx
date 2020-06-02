@@ -1,91 +1,91 @@
-import React, { useState } from 'react';
-import { Modal, Step, Button, Icon, Form, Loader, Dimmer } from 'semantic-ui-react';
-import { InputOnChangeData } from 'semantic-ui-react/dist/commonjs/elements/Input/Input';
-import i18n from '../localization/i18n';
-import { initiatePasswordRecovery, confirmPasswordRecovery } from '../api/users';
-import { getViolationsFromAxiosError } from '../api/utils';
+import React, { useState } from 'react'
+import { Modal, Step, Button, Icon, Form, Loader, Dimmer } from 'semantic-ui-react'
+import { InputOnChangeData } from 'semantic-ui-react/dist/commonjs/elements/Input/Input'
+import i18n from '../localization/i18n'
+import { initiatePasswordRecovery, confirmPasswordRecovery } from '../api/users'
+import { getViolationsFromAxiosError } from '../api/utils'
 
 type PasswordRecoveryModalProps = {
-  open: boolean;
-  closeModal(): void;
-};
+  open: boolean
+  closeModal(): void
+}
 
 const PasswordRecoveryModal: React.FC<PasswordRecoveryModalProps> = ({
   open,
   closeModal 
 }: PasswordRecoveryModalProps) => {
-  const [loading, setLoading] = useState(false);
-  const [step, setStep] = useState(1);
-  const [email, setEmail] = useState('');
-  const [emailError, setEmailError] = useState('');
-  const [code, setCode] = useState('');
-  const [password, setPassword] = useState('');
-  const [showPassword, setShowPassword] = useState(false);
-  const [passwordError, setPasswordError] = useState('');
+  const [loading, setLoading] = useState(false)
+  const [step, setStep] = useState(1)
+  const [email, setEmail] = useState('')
+  const [emailError, setEmailError] = useState('')
+  const [code, setCode] = useState('')
+  const [password, setPassword] = useState('')
+  const [showPassword, setShowPassword] = useState(false)
+  const [passwordError, setPasswordError] = useState('')
 
   const handlePrevStep = () => {
     if (step > 1) {
-      setStep(step - 1);
+      setStep(step - 1)
     }
-  };
+  }
 
   const handleNextStep = () => {
     if (step === 2 && !code) {
-      return;
+      return
     }
 
     if (step < 3) {
-      setStep(step + 1);
+      setStep(step + 1)
     }
-  };
+  }
 
   const handleInitiatePasswordRecovery = async () => {
-    setLoading(true);
+    setLoading(true)
 
     try {
-      await initiatePasswordRecovery(email);
+      await initiatePasswordRecovery(email)
 
-      setLoading(false);
-      setEmailError('');
+      setLoading(false)
+      setEmailError('')
 
-      handleNextStep();
+      handleNextStep()
     } catch (error) {
-      const violations = getViolationsFromAxiosError(error);
+      const violations = getViolationsFromAxiosError(error)
 
-      setLoading(false);
-      setEmailError(violations['children[email].data']);
+      setLoading(false)
+      setEmailError(violations['children[email].data'])
     }
-  };
+  }
 
   const handleConfirmPasswordRecovery = async () => {
-    setLoading(true);
+    setLoading(true)
 
     try {
-      await confirmPasswordRecovery({ token: code, password: password });
+      await confirmPasswordRecovery({ token: code, password: password })
 
-      setLoading(false);
-      setPasswordError('');
+      setLoading(false)
+      setPasswordError('')
 
-      handleClose();
+      handleClose()
     } catch (error) {
-      const violations = getViolationsFromAxiosError(error);
+      const violations = getViolationsFromAxiosError(error)
 
-      setLoading(false);
-      setPasswordError(violations.plainPassword);
+      setLoading(false)
+      setPasswordError(violations.plainPassword)
     }
-  };
+  }
 
   const handleClose = () => {
-    setStep(1);
-    setEmail('');
-    setCode('');
-    setPassword('');
-    setEmailError('');
-    setPasswordError('');
-    setShowPassword(false);
+    setStep(1)
+    setEmail('')
+    setCode('')
+    setPassword('')
+    setEmailError('')
+    setPasswordError('')
+    setShowPassword(false)
 
-    closeModal();
-  };
+    closeModal()
+  }
 
   return (
     <Modal closeIcon={!loading}
@@ -210,7 +210,7 @@ const PasswordRecoveryModal: React.FC<PasswordRecoveryModalProps> = ({
         </Button.Group>
       </Modal.Actions>
     </Modal>
-  );
-};
+  )
+}
 
-export default PasswordRecoveryModal;
+export default PasswordRecoveryModal

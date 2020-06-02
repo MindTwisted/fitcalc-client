@@ -1,25 +1,25 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { Table, Dimmer, Loader, Label, Button, Icon, Confirm } from 'semantic-ui-react';
-import i18n from '../localization/i18n';
-import { RefreshToken } from '../types/models';
-import { boundSoftLogout } from '../store/auth/actions';
+import React, { useCallback, useEffect, useState } from 'react'
+import { Table, Dimmer, Loader, Label, Button, Icon, Confirm } from 'semantic-ui-react'
+import i18n from '../localization/i18n'
+import { RefreshToken } from '../types/models'
+import { boundSoftLogout } from '../store/auth/actions'
 import {
   deleteAllRefreshTokens,
   deleteRefreshTokenById,
   getAllRefreshTokens,
-} from '../api/refresh_tokens';
+} from '../api/refresh_tokens'
 
 type SessionsTableProps = {
-  refreshToken: RefreshToken;
-  loading: boolean;
-  setLoading: (loading: boolean) => void;
-  softLogout: typeof boundSoftLogout;
-};
+  refreshToken: RefreshToken
+  loading: boolean
+  setLoading: (loading: boolean) => void
+  softLogout: typeof boundSoftLogout
+}
 
 type ConfirmData = {
-  deleteTokenId: number | 'all';
-  confirmMessage: string;
-} | null;
+  deleteTokenId: number | 'all'
+  confirmMessage: string
+} | null
 
 const SessionsTable: React.FC<SessionsTableProps> = ({
   refreshToken,
@@ -27,69 +27,69 @@ const SessionsTable: React.FC<SessionsTableProps> = ({
   setLoading,
   softLogout
 }: SessionsTableProps) => {
-  const [refreshTokens, setRefreshTokens] = useState<Array<RefreshToken>>([]);
-  const [confirmData, setConfirmData] = useState<ConfirmData>(null);
+  const [refreshTokens, setRefreshTokens] = useState<Array<RefreshToken>>([])
+  const [confirmData, setConfirmData] = useState<ConfirmData>(null)
   
   const fetchRefreshTokens = useCallback(async () => {
-    setLoading(true);
+    setLoading(true)
     
     try {
-      const refreshTokensResponse = await getAllRefreshTokens();
+      const refreshTokensResponse = await getAllRefreshTokens()
       
-      setRefreshTokens(refreshTokensResponse.data.data.refreshTokens);
-      setLoading(false);
+      setRefreshTokens(refreshTokensResponse.data.data.refreshTokens)
+      setLoading(false)
     } catch (error) {
-      setLoading(false);
+      setLoading(false)
     }
-  }, [setLoading]);
+  }, [setLoading])
   
   const handleAllSessionsLogout = async () => {
-    setConfirmData(null);
-    setLoading(true);
+    setConfirmData(null)
+    setLoading(true)
   
-    await deleteAllRefreshTokens();
+    await deleteAllRefreshTokens()
   
-    setRefreshTokens([]);
-    setLoading(false);
-  };
+    setRefreshTokens([])
+    setLoading(false)
+  }
   
   const handleSessionLogout = async (id: number) => {
-    setConfirmData(null);
-    setLoading(true);
+    setConfirmData(null)
+    setLoading(true)
   
-    await deleteRefreshTokenById(id);
+    await deleteRefreshTokenById(id)
   
-    setRefreshTokens(refreshTokens.filter(token => token.id !== id));
-    setLoading(false);
-  };
+    setRefreshTokens(refreshTokens.filter(token => token.id !== id))
+    setLoading(false)
+  }
   
   const handleConfirm = async () => {
     if (!confirmData) {
-      return;
+      return
     }
     
-    const tokenId = confirmData.deleteTokenId;
+    const tokenId = confirmData.deleteTokenId
     
     if (tokenId === 'all') {
-      await handleAllSessionsLogout();
-      softLogout();
+      await handleAllSessionsLogout()
+      softLogout()
       
-      return;
+      return
     }
     
     if (tokenId === refreshToken.id)  {
-      await handleSessionLogout(tokenId);
-      softLogout();
+      await handleSessionLogout(tokenId)
+      softLogout()
       
-      return;
+      return
     }
   
-    await handleSessionLogout(tokenId);
-  };
+    await handleSessionLogout(tokenId)
+  }
   
   useEffect(() => {
-    fetchRefreshTokens();
-  }, [fetchRefreshTokens]);
+    fetchRefreshTokens()
+  }, [fetchRefreshTokens])
   
   return (
     <Dimmer.Dimmable>
@@ -181,7 +181,7 @@ const SessionsTable: React.FC<SessionsTableProps> = ({
       />
     </Dimmer.Dimmable>
     
-  );
-};
+  )
+}
 
-export default SessionsTable;
+export default SessionsTable
