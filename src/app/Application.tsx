@@ -1,12 +1,12 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import { bindActionCreators, Dispatch } from 'redux'
-import { connect, ConnectedProps } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { Route } from 'react-router-dom'
 import { Segment, Sidebar } from 'semantic-ui-react'
 import routes from '../routes'
 import { RootState } from '../store'
 import { boundLogout, boundSetUser, boundSoftLogout } from '../store/auth/actions'
 import { boundSetLang, boundSetLoading, boundSetTheme } from '../store/system/actions'
+import useActions from '../hooks/useActions'
 import { auth as fetchAuth } from '../api/auth'
 import SidebarNavigation from './SidebarNavigation'
 import NavigationBar from './NavigationBar'
@@ -15,21 +15,22 @@ import StatisticsPage from './StatisticsPage'
 import ProductsPage from './ProductsPage'
 import EatingPage from './EatingPage'
 
-type ApplicationProps = ConnectedProps<typeof connector> & {
+type ApplicationProps = {
   mobile: boolean
 }
 
-const Application: React.FC<ApplicationProps> = ({ 
-  system, 
-  auth,
-  logout,
-  softLogout,
-  setLang,
-  setTheme,
-  setUser,
-  setLoading,
-  mobile
-}: ApplicationProps) => {
+const Application: React.FC<ApplicationProps> = ({ mobile }: ApplicationProps) => {
+  const system = useSelector((state: RootState) => state.system)
+  const auth = useSelector((state: RootState) => state.auth)
+  const [logout, softLogout, setLang, setTheme, setUser, setLoading] = useActions([
+    boundLogout,
+    boundSoftLogout,
+    boundSetLang,
+    boundSetTheme,
+    boundSetUser,
+    boundSetLoading
+  ])
+  
   if (!auth.user || !auth.refreshToken || !auth.accessToken) {
     throw new Error('Application component requires logged-in user to work properly.')
   }
@@ -125,20 +126,4 @@ const Application: React.FC<ApplicationProps> = ({
   )
 }
 
-const mapStateToProps = (state: RootState) => ({
-  system: state.system,
-  auth: state.auth
-})
-const mapDispatchToProps = (dispatch: Dispatch) => {
-  return bindActionCreators({
-    logout: boundLogout,
-    softLogout: boundSoftLogout,
-    setLang: boundSetLang,
-    setTheme: boundSetTheme,
-    setUser: boundSetUser,
-    setLoading: boundSetLoading
-  }, dispatch)
-}
-const connector = connect(mapStateToProps, mapDispatchToProps)
-
-export default connector(Application)
+export default Application

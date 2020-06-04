@@ -1,22 +1,23 @@
 import React, { useEffect, useState } from 'react'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import { useSelector } from 'react-redux'
+import { RootState } from './store'
+import { isAppUserSelector, isLoggedInSelector } from './store/auth/selectors'
 import loadable from '@loadable/component'
 import routes from './routes'
 import Home from './home/Home'
 import Loading from './common/Loading'
 import Notification from './common/Notification'
 import ProtectedRoute from './common/ProtectedRoute'
-import { RootState } from './store'
-import { isAppUserSelector, isLoggedInSelector } from './store/auth/selectors'
-import { connect, ConnectedProps } from 'react-redux'
 
 const Application = loadable(() => import('./app/Application'), {
   fallback: <Loading active={true} />
 })
 
-type AppProps = ConnectedProps<typeof connector>
-
-const App: React.FC<AppProps> = ({ system, isLoggedIn, isAppUser }: AppProps) => {
+const App: React.FC = () => {
+  const isLoggedIn = useSelector(isLoggedInSelector)
+  const isAppUser = useSelector(isAppUserSelector)
+  const loading = useSelector((state: RootState) => state.system.loading)
   const [mobile, setMobile] = useState(window.innerWidth < 768)
   
   const handleResize = () => {
@@ -50,16 +51,9 @@ const App: React.FC<AppProps> = ({ system, isLoggedIn, isAppUser }: AppProps) =>
       </Router>
 
       <Notification />
-      <Loading active={system.loading} />
+      <Loading active={loading} />
     </div>
   )
 }
 
-const mapStateToProps = (state: RootState) => ({
-  system: state.system,
-  isLoggedIn: isLoggedInSelector(state),
-  isAppUser: isAppUserSelector(state)
-})
-const connector = connect(mapStateToProps)
-
-export default connector(App)
+export default App
