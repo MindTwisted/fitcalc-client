@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
+import { shallowEqual, useSelector } from 'react-redux'
 import { Route } from 'react-router-dom'
 import { Segment, Sidebar } from 'semantic-ui-react'
 import routes from '../routes'
@@ -20,8 +20,8 @@ type ApplicationProps = {
 }
 
 const Application: React.FC<ApplicationProps> = ({ mobile }: ApplicationProps) => {
-  const system = useSelector((state: RootState) => state.system)
-  const auth = useSelector((state: RootState) => state.auth)
+  const system = useSelector((state: RootState) => state.system, shallowEqual)
+  const auth = useSelector((state: RootState) => state.auth, shallowEqual)
   const [logout, softLogout, setLang, setTheme, setUser, setLoading] = useActions([
     boundLogout,
     boundSoftLogout,
