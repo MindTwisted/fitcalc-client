@@ -101,6 +101,7 @@ const Application: React.FC<ApplicationProps> = ({ mobile }: ApplicationProps) =
             <Route path={routes.app.products}>
               <ProductsPage lang={system.lang}
                 theme={system.theme}
+                user={auth.user}
                 setLoading={setLoading}
               />
             </Route>

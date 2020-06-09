@@ -36,4 +36,5 @@ export interface Product {
   fiber: number
   calories: number
   inFavourites?: boolean
+  user?: User
 }

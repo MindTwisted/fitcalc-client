@@ -1,17 +1,19 @@
 import React from 'react'
 import { addProductToFavourites, removeProductFromFavourites } from '../api/products'
-import { Checkbox, Table } from 'semantic-ui-react'
-import { Product } from '../types/models'
+import { Checkbox, Table, Button, Icon } from 'semantic-ui-react'
+import { Product, User } from '../types/models'
 import { boundSetLoading } from '../store/system/actions'
 
 type ProductsPageTableRowProps = {
   product: Product
+  user: User
   setLoading: typeof boundSetLoading
   updateProduct: (product: Product) => void
 }
 
 const ProductsPageTableRow: React.FC<ProductsPageTableRowProps> = ({ 
   product ,
+  user,
   setLoading,
   updateProduct
 }: ProductsPageTableRowProps) => {
@@ -81,6 +83,24 @@ const ProductsPageTableRow: React.FC<ProductsPageTableRowProps> = ({
             () => handleRemoveProductFromFavourites(product) :
             () => handleAddProductToFavourites(product)}
         />
+      </Table.Cell>
+      <Table.Cell textAlign='center'>
+        {product.user && user.id === product.user.id && (
+          <React.Fragment>
+            <Button icon
+              primary
+              size='small'
+            >
+              <Icon name='edit' />
+            </Button>
+            <Button icon
+              color='red'
+              size='small'
+            >
+              <Icon name='trash alternate' />
+            </Button>
+          </React.Fragment>
+        )}
       </Table.Cell>
     </Table.Row>
   )

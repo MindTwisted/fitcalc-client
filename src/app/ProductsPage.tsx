@@ -2,7 +2,7 @@ import React, { useCallback, useEffect } from 'react'
 import { Table, Icon, Input, Visibility, Button, Grid } from 'semantic-ui-react'
 import i18n from '../localization/i18n'
 import { boundSetLoading } from '../store/system/actions'
-import { Languages, Product, Themes } from '../types/models'
+import { Languages, Product, Themes, User } from '../types/models'
 import { getAllProducts, GetAllProductsParams } from '../api/products'
 import { InputOnChangeData } from 'semantic-ui-react/dist/commonjs/elements/Input/Input'
 import useDebounce from '../hooks/useDebounce'
@@ -13,12 +13,14 @@ import AddProductModal from './AddProductModal'
 type ProductsPageProps = {
   lang: Languages
   theme: Themes
+  user: User
   setLoading: typeof boundSetLoading
 }
 
 const ProductsPage: React.FC<ProductsPageProps> = ({
   lang,
   theme,
+  user,
   setLoading
 }: ProductsPageProps) => {
   const {
@@ -152,6 +154,7 @@ const ProductsPage: React.FC<ProductsPageProps> = ({
             <Table.HeaderCell>{i18n.t('Fiber')}</Table.HeaderCell>
             <Table.HeaderCell>{i18n.t('Calories')}</Table.HeaderCell>
             <Table.HeaderCell>{i18n.t('In Favourites')}</Table.HeaderCell>
+            <Table.HeaderCell />
           </Table.Row>
         </Table.Header>
   
@@ -161,6 +164,7 @@ const ProductsPage: React.FC<ProductsPageProps> = ({
             products.map(product => (
               <ProductsPageTableRow key={product.id}
                 product={product}
+                user={user}
                 setLoading={setLoading}
                 updateProduct={updateProduct}
               />
