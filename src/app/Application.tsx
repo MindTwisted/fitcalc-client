@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { shallowEqual, useSelector } from 'react-redux'
 import { Route } from 'react-router-dom'
-import { Segment, Sidebar } from 'semantic-ui-react'
+import { Button, Confirm, Segment, Sidebar } from 'semantic-ui-react'
 import routes from '../routes'
 import { RootState } from '../store'
 import { boundLogout, boundSetUser, boundSoftLogout } from '../store/auth/actions'
@@ -14,10 +14,16 @@ import SettingsModal from './SettingsModal'
 import StatisticsPage from './StatisticsPage'
 import ProductsPage from './ProductsPage'
 import EatingPage from './EatingPage'
+import i18n from '../localization/i18n'
 
 type ApplicationProps = {
   mobile: boolean
 }
+
+export type ConfirmData = {
+  message: string
+  onConfirm: () => void
+} | null
 
 const Application: React.FC<ApplicationProps> = ({ mobile }: ApplicationProps) => {
   const system = useSelector((state: RootState) => state.system, shallowEqual)
@@ -37,6 +43,7 @@ const Application: React.FC<ApplicationProps> = ({ mobile }: ApplicationProps) =
 
   const [sidebarVisible, setSidebarVisible] = useState(!mobile)
   const [settingsModalOpen, setSettingsModalOpen] = useState(false)
+  const [confirmData, setConfirmData] = useState<ConfirmData>(null)
 
   const fetchCurrentUser = useCallback(async () => {
     setLoading(true)
@@ -122,6 +129,15 @@ const Application: React.FC<ApplicationProps> = ({ mobile }: ApplicationProps) =
         setTheme={setTheme}
         setUser={setUser}
         softLogout={softLogout}
+        setConfirmData={setConfirmData}
+      />
+  
+      <Confirm open={Boolean(confirmData)}
+        content={confirmData?.message}
+        onConfirm={confirmData?.onConfirm}
+        onCancel={() => setConfirmData(null)}
+        confirmButton={<Button color='blue'>{i18n.t('Submit')}</Button>}
+        cancelButton={<Button color='red'>{i18n.t('Cancel')}</Button>}
       />
     </React.Fragment>
   )

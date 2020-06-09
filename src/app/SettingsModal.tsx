@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { Dispatch, SetStateAction, useState } from 'react'
 import { Modal, Tab } from 'semantic-ui-react'
 import { TabProps } from 'semantic-ui-react/dist/commonjs/modules/Tab/Tab'
 import i18n from '../localization/i18n'
@@ -8,6 +8,7 @@ import { Languages, Themes, RefreshToken, User } from '../types/models'
 import GeneralSettingsForm from './GeneralSettingsForm'
 import ProfileForm from './ProfileForm'
 import SessionsTable from './SessionsTable'
+import { ConfirmData } from './Application'
 
 type SettingsModalProps = {
   theme: Themes
@@ -20,6 +21,7 @@ type SettingsModalProps = {
   setTheme: typeof boundSetTheme
   setUser: typeof boundSetUser
   softLogout: typeof boundSoftLogout
+  setConfirmData: Dispatch<SetStateAction<ConfirmData>>
 }
 
 const SettingsModal: React.FC<SettingsModalProps> = ({ 
@@ -32,7 +34,8 @@ const SettingsModal: React.FC<SettingsModalProps> = ({
   setLang,
   setTheme,
   setUser,
-  softLogout
+  softLogout,
+  setConfirmData
 }: SettingsModalProps) => {
   const [loading, setLoading] = useState(false)
   const [activeTab, setActiveTab] = useState(0)
@@ -96,6 +99,7 @@ const SettingsModal: React.FC<SettingsModalProps> = ({
                   loading={loading}
                   setLoading={setLoading}
                   softLogout={softLogout}
+                  setConfirmData={setConfirmData}
                 />
               </Tab.Pane>
             }
