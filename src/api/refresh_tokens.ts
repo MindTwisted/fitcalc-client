@@ -1,5 +1,5 @@
 import axios from './axios'
-import { getRefreshTokensPrefix } from './config'
+import { getRefreshTokensUrl } from './config'
 import { RefreshToken } from '../types/models'
 
 export const deleteRefreshTokenById = (id: number): Promise<{
@@ -7,7 +7,7 @@ export const deleteRefreshTokenById = (id: number): Promise<{
     message: string
   }
 }> => {
-  return axios.delete(`${getRefreshTokensPrefix()}/${id}`)
+  return axios.delete(`${getRefreshTokensUrl()}/${id}`)
 }
 
 export const getAllRefreshTokens = (): Promise<{
@@ -17,7 +17,7 @@ export const getAllRefreshTokens = (): Promise<{
     }
   }
 }> => {
-  return axios.get(`${getRefreshTokensPrefix()}`)
+  return axios.get(`${getRefreshTokensUrl()}`)
 }
 
 export const deleteAllRefreshTokens = (): Promise<{
@@ -25,5 +25,5 @@ export const deleteAllRefreshTokens = (): Promise<{
     message: string
   }
 }> => {
-  return axios.delete(`${getRefreshTokensPrefix()}`)
+  return axios.delete(`${getRefreshTokensUrl()}`)
 }

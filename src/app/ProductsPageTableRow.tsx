@@ -9,13 +9,15 @@ type ProductsPageTableRowProps = {
   user: User
   setLoading: typeof boundSetLoading
   updateProduct: (product: Product) => void
+  handleConfirmDeleteProduct: (product: Product) => void
 }
 
 const ProductsPageTableRow: React.FC<ProductsPageTableRowProps> = ({ 
   product ,
   user,
   setLoading,
-  updateProduct
+  updateProduct,
+  handleConfirmDeleteProduct
 }: ProductsPageTableRowProps) => {
   const handleAddProductToFavourites = async (product: Product) => {
     if (!product.id) {
@@ -96,6 +98,7 @@ const ProductsPageTableRow: React.FC<ProductsPageTableRowProps> = ({
             <Button icon
               color='red'
               size='small'
+              onClick={() => handleConfirmDeleteProduct(product)}
             >
               <Icon name='trash alternate' />
             </Button>

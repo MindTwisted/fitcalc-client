@@ -110,6 +110,7 @@ const Application: React.FC<ApplicationProps> = ({ mobile }: ApplicationProps) =
                 theme={system.theme}
                 user={auth.user}
                 setLoading={setLoading}
+                setConfirmData={setConfirmData}
               />
             </Route>
             <Route path={routes.app.eating}>

@@ -62,6 +62,7 @@ export default {
   'In Favourites': 'В Избранном',
   'Search': 'Поиск',
   'No products': 'Нет продуктов',
-  'Add product': 'Добавить продукт'
+  'Add product': 'Добавить продукт',
+  'Delete product?': 'Удалить продукт?'
 }
 

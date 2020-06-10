@@ -2,6 +2,8 @@ import { useCallback, useReducer } from 'react'
 import { Product } from '../types/models'
 import {
   APPEND_PRODUCTS,
+  DELETE_PRODUCT,
+  PREPEND_PRODUCTS,
   RESET_OFFSET,
   RESET_SEARCH,
   SET_ADD_PRODUCT_MODAL_OPEN,
@@ -9,11 +11,12 @@ import {
   SET_OFFSET_VALUE,
   SET_PRODUCTS,
   SET_SEARCH,
-  UPDATE_PRODUCT,
-  PREPEND_PRODUCTS
+  UPDATE_PRODUCT
 } from '../types/actionTypes'
 import {
-  AppendProductsAction, PrependProductsAction,
+  AppendProductsAction,
+  DeleteProductAction,
+  PrependProductsAction,
   ResetOffsetAction,
   ResetSearchAction,
   SetAddProductModalOpen,
@@ -40,6 +43,7 @@ type ProductsPageAction = SetProductsAction |
 AppendProductsAction |
 PrependProductsAction |
 UpdateProductAction |
+DeleteProductAction |
 SetSearchAction |
 ResetSearchAction |
 SetOffsetValueAction | 
@@ -80,6 +84,11 @@ const productsPageReducer = (state: ProductsPageState, action: ProductsPageActio
       return {
         ...state,
         products: state.products.map(product => product.id === action.product.id ? action.product : product)
+      }
+    case DELETE_PRODUCT:
+      return {
+        ...state,
+        products: state.products.filter(product => product.id !== action.product.id)
       }
     case SET_SEARCH:
       return {
@@ -160,6 +169,12 @@ const useProductsPageState = () => {
       product
     })
   }, [dispatch])
+  const deleteProduct = useCallback((product: Product) => {
+    dispatch({
+      type: DELETE_PRODUCT,
+      product
+    })
+  }, [dispatch])
   const setSearch = useCallback((search: string) => {
     dispatch({
       type: SET_SEARCH,
@@ -200,6 +215,7 @@ const useProductsPageState = () => {
     appendProducts,
     prependProducts,
     updateProduct,
+    deleteProduct,
     setSearch,
     resetSearch,
     setOffsetValue,

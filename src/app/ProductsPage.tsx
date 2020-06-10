@@ -1,27 +1,30 @@
-import React, { useCallback, useEffect } from 'react'
+import React, { Dispatch, SetStateAction, useCallback, useEffect } from 'react'
 import { Table, Icon, Input, Visibility, Button, Grid } from 'semantic-ui-react'
 import i18n from '../localization/i18n'
 import { boundSetLoading } from '../store/system/actions'
 import { Languages, Product, Themes, User } from '../types/models'
-import { getAllProducts, GetAllProductsParams } from '../api/products'
+import { getAllProducts, GetAllProductsParams, deleteProduct as deleteProductRequest } from '../api/products'
 import { InputOnChangeData } from 'semantic-ui-react/dist/commonjs/elements/Input/Input'
 import useDebounce from '../hooks/useDebounce'
 import useProductsPageState from '../hooks/useProductsPageState'
 import ProductsPageTableRow from './ProductsPageTableRow'
 import AddProductModal from './AddProductModal'
+import { ConfirmData } from './Application'
 
 type ProductsPageProps = {
   lang: Languages
   theme: Themes
   user: User
   setLoading: typeof boundSetLoading
+  setConfirmData: Dispatch<SetStateAction<ConfirmData>>
 }
 
 const ProductsPage: React.FC<ProductsPageProps> = ({
   lang,
   theme,
   user,
-  setLoading
+  setLoading,
+  setConfirmData
 }: ProductsPageProps) => {
   const {
     state: {
@@ -38,6 +41,7 @@ const ProductsPage: React.FC<ProductsPageProps> = ({
       prependProducts,
       setProducts,
       updateProduct,
+      deleteProduct,
       resetOffset,
       setSearch,
       resetSearch,
@@ -101,6 +105,25 @@ const ProductsPage: React.FC<ProductsPageProps> = ({
     } catch (error) {
       setOffsetValue(oldOffset)
     }
+  }
+  const handleDeleteProduct = async (product: Product) => {
+    setConfirmData(null)
+    setLoading(true)
+
+    try {
+      await deleteProductRequest(product)
+
+      deleteProduct(product)
+      setLoading(false)
+    } catch (error) {
+      setLoading(false)
+    }
+  }
+  const handleConfirmDeleteProduct = (product: Product) => {
+    setConfirmData({
+      message: i18n.t('Delete product?'),
+      onConfirm: () => handleDeleteProduct(product)
+    })
   }
   
   useEffect(() => {
@@ -167,6 +190,7 @@ const ProductsPage: React.FC<ProductsPageProps> = ({
                 user={user}
                 setLoading={setLoading}
                 updateProduct={updateProduct}
+                handleConfirmDeleteProduct={handleConfirmDeleteProduct}
               />
             ))
           ) : (

@@ -1,5 +1,5 @@
 import axios from './axios'
-import { getUsersPrefix } from './config'
+import { getUsersUrl } from './config'
 import { User } from '../types/models'
 
 export const initiatePasswordRecovery = (email = ''): Promise<{
@@ -7,7 +7,7 @@ export const initiatePasswordRecovery = (email = ''): Promise<{
     message: string
   }
 }> => {
-  return axios.post(`${getUsersPrefix()}/initiate_password_recovery`, { email })
+  return axios.post(`${getUsersUrl()}/initiate_password_recovery`, { email })
 }
 
 export const confirmPasswordRecovery = ({ token = '', password = '' } = {}): Promise<{
@@ -15,7 +15,7 @@ export const confirmPasswordRecovery = ({ token = '', password = '' } = {}): Pro
     message: string
   }
 }> => {
-  return axios.post(`${getUsersPrefix()}/confirm_password_recovery`, { token, password })
+  return axios.post(`${getUsersUrl()}/confirm_password_recovery`, { token, password })
 }
 
 export const updateCurrentUser = ({ name = '' } = {}): Promise<{
@@ -26,7 +26,7 @@ export const updateCurrentUser = ({ name = '' } = {}): Promise<{
     }
   }
 }> => {
-  return axios.put(`${getUsersPrefix()}`, { name })
+  return axios.put(`${getUsersUrl()}`, { name })
 }
 
 export const updateCurrentUserEmail = ({ currentPassword = '', email = '' } = {}): Promise<{
@@ -34,7 +34,7 @@ export const updateCurrentUserEmail = ({ currentPassword = '', email = '' } = {}
     message: string
   }
 }> => {
-  return axios.put(`${getUsersPrefix()}/email`, { current_password: currentPassword, email })
+  return axios.put(`${getUsersUrl()}/email`, { current_password: currentPassword, email })
 }
 
 export const updateCurrentUserPassword = ({ currentPassword = '', newPassword = '' } = {}): Promise<{
@@ -45,7 +45,7 @@ export const updateCurrentUserPassword = ({ currentPassword = '', newPassword = 
     }
   }
 }> => {
-  return axios.put(`${getUsersPrefix()}/password`, {
+  return axios.put(`${getUsersUrl()}/password`, {
     current_password: currentPassword,
     new_password: newPassword
   })

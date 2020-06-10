@@ -23,7 +23,8 @@ import {
   SET_PASSWORD_ERROR,
   RESET_FORM,
   SET_ADD_PRODUCT_MODAL_OPEN,
-  PREPEND_PRODUCTS
+  PREPEND_PRODUCTS,
+  DELETE_PRODUCT
 } from './actionTypes'
 
 export interface SystemState {
@@ -91,6 +92,11 @@ export interface PrependProductsAction {
 
 export interface UpdateProductAction {
   type: typeof UPDATE_PRODUCT
+  product: Product
+}
+
+export interface DeleteProductAction {
+  type: typeof DELETE_PRODUCT
   product: Product
 }
 

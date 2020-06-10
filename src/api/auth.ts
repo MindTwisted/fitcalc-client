@@ -1,5 +1,5 @@
 import axios from './axios'
-import { getAuthPrefix } from './config'
+import { getAuthUrl } from './config'
 import { AccessToken, User, RefreshToken } from '../types/models'
 
 export const register = ({ 
@@ -13,7 +13,7 @@ export const register = ({
     }
   }
 }> => {
-  return axios.post(`${getAuthPrefix()}/register`, { name, email, password })
+  return axios.post(`${getAuthUrl()}/register`, { name, email, password })
 }
 
 export const login = ({ 
@@ -29,7 +29,7 @@ export const login = ({
     }
   }
 }> => {
-  return axios.post(`${getAuthPrefix()}/login`, { email, password })
+  return axios.post(`${getAuthUrl()}/login`, { email, password })
 }
 
 export const auth = (): Promise<{
@@ -39,7 +39,7 @@ export const auth = (): Promise<{
     }
   }
 }> => {
-  return axios.get(`${getAuthPrefix()}/`)
+  return axios.get(`${getAuthUrl()}/`)
 }
 
 export const refresh = (refreshToken: RefreshToken): Promise<{
@@ -49,7 +49,7 @@ export const refresh = (refreshToken: RefreshToken): Promise<{
     }
   }
 }> => {
-  return axios.post(`${getAuthPrefix()}/refresh`, { refresh_token: refreshToken.token }, { headers: { noAuth: true } })
+  return axios.post(`${getAuthUrl()}/refresh`, { refresh_token: refreshToken.token }, { headers: { noAuth: true } })
 }
 
 export const verifyPassword = (password: string): Promise<{
@@ -59,5 +59,5 @@ export const verifyPassword = (password: string): Promise<{
     }
   }
 }> => {
-  return axios.post(`${getAuthPrefix()}/verify_password`, { password })
+  return axios.post(`${getAuthUrl()}/verify_password`, { password })
 }

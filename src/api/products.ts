@@ -1,6 +1,6 @@
 import axios from './axios'
 import { AxiosRequestConfig } from 'axios'
-import { getProductsPrefix } from './config'
+import { getProductsUrl } from './config'
 import { Product } from '../types/models'
 
 export interface GetAllProductsParams {
@@ -25,7 +25,7 @@ export const getAllProducts = ({ name, offset }: GetAllProductsParams = { name: 
     config.params.offset = offset
   }
   
-  return axios.get(`${getProductsPrefix()}`, config)
+  return axios.get(`${getProductsUrl()}`, config)
 }
 
 export const addProductToFavourites = (id: number): Promise<{
@@ -35,7 +35,7 @@ export const addProductToFavourites = (id: number): Promise<{
     }
   }
 }> => {
-  return axios.post(`${getProductsPrefix()}/${id}/favourites`)
+  return axios.post(`${getProductsUrl()}/${id}/favourites`)
 }
 
 export const removeProductFromFavourites = (id: number): Promise<{
@@ -45,7 +45,7 @@ export const removeProductFromFavourites = (id: number): Promise<{
     }
   }
 }> => {
-  return axios.delete(`${getProductsPrefix()}/${id}/favourites`)
+  return axios.delete(`${getProductsUrl()}/${id}/favourites`)
 }
 
 export const addProduct = (product: Product): Promise<{
@@ -56,7 +56,7 @@ export const addProduct = (product: Product): Promise<{
     }
   }
 }> => {
-  return axios.post(`${getProductsPrefix()}`, {
+  return axios.post(`${getProductsUrl()}`, {
     name: product.name,
     proteins: product.proteins,
     carbohydrates: product.carbohydrates,
@@ -64,4 +64,14 @@ export const addProduct = (product: Product): Promise<{
     fiber: product.fiber,
     calories: product.calories
   })
+}
+
+export const deleteProduct = (product: Product): Promise<{
+  data: {
+    data: {
+      message: string
+    }
+  }
+}> => {
+  return axios.delete(`${getProductsUrl()}/${product.id}`)
 }
