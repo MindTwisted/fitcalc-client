@@ -121,7 +121,7 @@ const ProductsPage: React.FC<ProductsPageProps> = ({
   }
   const handleConfirmDeleteProduct = (product: Product) => {
     setConfirmData({
-      message: i18n.t('Delete product?'),
+      message: `${i18n.t('Delete product')} ${product.name} ?`,
       onConfirm: () => handleDeleteProduct(product)
     })
   }

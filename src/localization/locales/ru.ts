@@ -63,6 +63,6 @@ export default {
   'Search': 'Поиск',
   'No products': 'Нет продуктов',
   'Add product': 'Добавить продукт',
-  'Delete product?': 'Удалить продукт?'
+  'Delete product': 'Удалить продукт'
 }
 
