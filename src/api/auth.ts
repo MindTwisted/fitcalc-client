@@ -1,56 +1,21 @@
 import axios from './axios'
 import { getAuthUrl } from './config'
-import { AccessToken, User, RefreshToken } from '../types/models'
+import { RefreshToken } from '../types/models'
+import { AuthResponse, LoginResponse, RegisterResponse, RefreshResponse, VerifyPasswordResponse } from './responseTypes'
 
-export const register = ({ 
-  name = '', 
-  email = '', 
-  password = '' 
-} = {}): Promise<{
-  data: {
-    data: {
-      user: User
-    }
-  }
-}> => {
+export const register = ({ name = '', email = '', password = '' } = {}): Promise<RegisterResponse> => {
   return axios.post(`${getAuthUrl()}/register`, { name, email, password })
 }
 
-export const login = ({ 
-  email = '', 
-  password = '' 
-} = {}): Promise<{
-  data: {
-    message: string
-    data: {
-      access_token: AccessToken
-      refresh_token: RefreshToken
-      date: string
-    }
-  }
-}> => {
+export const login = ({ email = '', password = '' } = {}): Promise<LoginResponse> => {
   return axios.post(`${getAuthUrl()}/login`, { email, password })
 }
 
-export const auth = (): Promise<{
-  data: {
-    data: {
-      user: User
-    }
-  }
-}> => {
+export const auth = (): Promise<AuthResponse> => {
   return axios.get(`${getAuthUrl()}/`)
 }
 
 export const refresh = (() => {
-  type RefreshResponse = {
-    data: {
-      data: {
-        access_token: AccessToken
-      }
-    }
-  }
-  
   let refreshPromise: Promise<RefreshResponse> | null = null
   
   return (refreshToken: RefreshToken): Promise<RefreshResponse> => {
@@ -78,12 +43,6 @@ export const refresh = (() => {
   }
 })()
 
-export const verifyPassword = (password: string): Promise<{
-  data: {
-    data: {
-      message: string
-    }
-  }
-}> => {
+export const verifyPassword = (password: string): Promise<VerifyPasswordResponse> => {
   return axios.post(`${getAuthUrl()}/verify_password`, { password })
 }

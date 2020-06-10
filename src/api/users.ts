@@ -1,50 +1,34 @@
 import axios from './axios'
 import { getUsersUrl } from './config'
-import { User } from '../types/models'
+import {
+  ConfirmPasswordRecoveryResponse,
+  InitiatePasswordRecoveryResponse,
+  UpdateCurrentUserEmailResponse,
+  UpdateCurrentUserPasswordResponse,
+  UpdateCurrentUserResponse
+} from './responseTypes'
 
-export const initiatePasswordRecovery = (email = ''): Promise<{
-  data: {
-    message: string
-  }
-}> => {
+export const initiatePasswordRecovery = (email = ''): Promise<InitiatePasswordRecoveryResponse> => {
   return axios.post(`${getUsersUrl()}/initiate_password_recovery`, { email })
 }
 
-export const confirmPasswordRecovery = ({ token = '', password = '' } = {}): Promise<{
-  data: {
-    message: string
-  }
-}> => {
+export const confirmPasswordRecovery = ({ token = '', password = '' } = {}): Promise<ConfirmPasswordRecoveryResponse> => {
   return axios.post(`${getUsersUrl()}/confirm_password_recovery`, { token, password })
 }
 
-export const updateCurrentUser = ({ name = '' } = {}): Promise<{
-  data: {
-    message: string
-    data: {
-      user: User
-    }
-  }
-}> => {
+export const updateCurrentUser = ({ name = '' } = {}): Promise<UpdateCurrentUserResponse> => {
   return axios.put(`${getUsersUrl()}`, { name })
 }
 
-export const updateCurrentUserEmail = ({ currentPassword = '', email = '' } = {}): Promise<{
-  data: {
-    message: string
-  }
-}> => {
+export const updateCurrentUserEmail = (
+  { currentPassword = '', email = '' } = {}
+): Promise<UpdateCurrentUserEmailResponse> => {
   return axios.put(`${getUsersUrl()}/email`, { current_password: currentPassword, email })
 }
 
-export const updateCurrentUserPassword = ({ currentPassword = '', newPassword = '' } = {}): Promise<{
-  data: {
-    message: string
-    data: {
-      user: User
-    }
-  }
-}> => {
+export const updateCurrentUserPassword = (
+  { currentPassword = '', newPassword = '' } = {}
+): Promise<UpdateCurrentUserPasswordResponse> => {
   return axios.put(`${getUsersUrl()}/password`, {
     current_password: currentPassword,
     new_password: newPassword

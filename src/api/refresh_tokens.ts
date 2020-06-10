@@ -1,29 +1,19 @@
 import axios from './axios'
 import { getRefreshTokensUrl } from './config'
-import { RefreshToken } from '../types/models'
+import {
+  DeleteAllRefreshTokensResponse,
+  DeleteRefreshTokenByIdResponse,
+  GetAllRefreshTokensResponse
+} from './responseTypes'
 
-export const deleteRefreshTokenById = (id: number): Promise<{
-  data: {
-    message: string
-  }
-}> => {
+export const deleteRefreshTokenById = (id: number): Promise<DeleteRefreshTokenByIdResponse> => {
   return axios.delete(`${getRefreshTokensUrl()}/${id}`)
 }
 
-export const getAllRefreshTokens = (): Promise<{
-  data: {
-    data: {
-      refreshTokens: RefreshToken[]
-    }
-  }
-}> => {
+export const getAllRefreshTokens = (): Promise<GetAllRefreshTokensResponse> => {
   return axios.get(`${getRefreshTokensUrl()}`)
 }
 
-export const deleteAllRefreshTokens = (): Promise<{
-  data: {
-    message: string
-  }
-}> => {
+export const deleteAllRefreshTokens = (): Promise<DeleteAllRefreshTokensResponse> => {
   return axios.delete(`${getRefreshTokensUrl()}`)
 }

@@ -3,7 +3,7 @@ import { Table, Icon, Input, Visibility, Button, Grid } from 'semantic-ui-react'
 import i18n from '../localization/i18n'
 import { boundSetLoading } from '../store/system/actions'
 import { Languages, Product, Themes, User } from '../types/models'
-import { getAllProducts, GetAllProductsParams, deleteProduct as deleteProductRequest } from '../api/products'
+import { getAllProducts, deleteProduct as deleteProductRequest } from '../api/products'
 import { InputOnChangeData } from 'semantic-ui-react/dist/commonjs/elements/Input/Input'
 import useDebounce from '../hooks/useDebounce'
 import useProductsPageState from '../hooks/useProductsPageState'
@@ -50,10 +50,7 @@ const ProductsPage: React.FC<ProductsPageProps> = ({
     } 
   } = useProductsPageState()
   
-  const fetchProducts = async (
-    { name, offset }: GetAllProductsParams = { name: '', offset: 0 },
-    append: boolean = false
-  ) => {
+  const fetchProducts = async ({ name = '', offset = 0 } = {}, append: boolean = false) => {
     setLoading(true)
   
     try {
