@@ -42,15 +42,41 @@ export const auth = (): Promise<{
   return axios.get(`${getAuthUrl()}/`)
 }
 
-export const refresh = (refreshToken: RefreshToken): Promise<{
-  data: {
+export const refresh = (() => {
+  type RefreshResponse = {
     data: {
-      access_token: AccessToken
+      data: {
+        access_token: AccessToken
+      }
     }
   }
-}> => {
-  return axios.post(`${getAuthUrl()}/refresh`, { refresh_token: refreshToken.token }, { headers: { noAuth: true } })
-}
+  
+  let refreshPromise: Promise<RefreshResponse> | null = null
+  
+  return (refreshToken: RefreshToken): Promise<RefreshResponse> => {
+    if (refreshPromise) {
+      return refreshPromise
+    }
+
+    refreshPromise = axios.post(
+      `${getAuthUrl()}/refresh`,
+      { refresh_token: refreshToken.token },
+      { headers: { noAuth: true } }
+    )
+      .then((response) => {
+        refreshPromise = null
+
+        return response
+      })
+      .catch((error) => {
+        refreshPromise = null
+
+        return error
+      })
+
+    return refreshPromise
+  }
+})()
 
 export const verifyPassword = (password: string): Promise<{
   data: {
