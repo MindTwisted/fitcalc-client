@@ -3,7 +3,12 @@ import { Table, Icon, Input, Visibility, Button, Grid } from 'semantic-ui-react'
 import i18n from '../localization/i18n'
 import { boundSetLoading } from '../store/system/actions'
 import { Languages, Product, Themes, User } from '../types/models'
-import { getAllProducts, deleteProduct as deleteProductRequest } from '../api/products'
+import {
+  getAllProducts,
+  deleteProduct as deleteProductRequest,
+  addProductToFavourites,
+  removeProductFromFavourites
+} from '../api/products'
 import { InputOnChangeData } from 'semantic-ui-react/dist/commonjs/elements/Input/Input'
 import useDebounce from '../hooks/useDebounce'
 import useProductsPageState from '../hooks/useProductsPageState'
@@ -122,6 +127,44 @@ const ProductsPage: React.FC<ProductsPageProps> = ({
       onConfirm: () => handleDeleteProduct(product)
     })
   }
+  const handleAddProductToFavourites = async (product: Product) => {
+    if (!product.id) {
+      return
+    }
+    
+    setLoading(true)
+    
+    try {
+      await addProductToFavourites(product.id)
+      
+      updateProduct({
+        ...product,
+        inFavourites: true
+      })
+      setLoading(false)
+    } catch (error) {
+      setLoading(false)
+    }
+  }
+  const handleRemoveProductFromFavourites = async (product: Product) => {
+    if (!product.id) {
+      return
+    }
+    
+    setLoading(true)
+    
+    try {
+      await removeProductFromFavourites(product.id)
+      
+      updateProduct({
+        ...product,
+        inFavourites: false
+      })
+      setLoading(false)
+    } catch (error) {
+      setLoading(false)
+    }
+  }
   
   useEffect(() => {
     fetchProductsCallback()
@@ -185,8 +228,8 @@ const ProductsPage: React.FC<ProductsPageProps> = ({
               <ProductsPageTableRow key={product.id}
                 product={product}
                 user={user}
-                setLoading={setLoading}
-                updateProduct={updateProduct}
+                handleAddProductToFavourites={handleAddProductToFavourites}
+                handleRemoveProductFromFavourites={handleRemoveProductFromFavourites}
                 handleConfirmDeleteProduct={handleConfirmDeleteProduct}
               />
             ))
