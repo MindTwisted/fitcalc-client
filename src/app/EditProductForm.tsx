@@ -5,7 +5,7 @@ import i18n from '../localization/i18n'
 import { getViolationsFromAxiosError } from '../api/utils'
 
 type EditProductFormProps = {
-  product?: Product
+  product?: Product | null
   loading: boolean
   onSubmit: (product: Product) => void
 }

@@ -15,6 +15,7 @@ import useProductsPageState from '../hooks/useProductsPageState'
 import ProductsPageTableRow from './ProductsPageTableRow'
 import AddProductModal from './AddProductModal'
 import { ConfirmData } from './Application'
+import EditProductModal from './EditProductModal'
 
 type ProductsPageProps = {
   lang: Languages
@@ -34,6 +35,7 @@ const ProductsPage: React.FC<ProductsPageProps> = ({
   const {
     state: {
       products,
+      productUnderEdit,
       offset,
       search,
       actions: {
@@ -45,6 +47,7 @@ const ProductsPage: React.FC<ProductsPageProps> = ({
       appendProducts,
       prependProducts,
       setProducts,
+      setProductUnderEdit,
       updateProduct,
       deleteProduct,
       resetOffset,
@@ -231,6 +234,7 @@ const ProductsPage: React.FC<ProductsPageProps> = ({
                 handleAddProductToFavourites={handleAddProductToFavourites}
                 handleRemoveProductFromFavourites={handleRemoveProductFromFavourites}
                 handleConfirmDeleteProduct={handleConfirmDeleteProduct}
+                setProductUnderEdit={setProductUnderEdit}
               />
             ))
           ) : (
@@ -248,6 +252,13 @@ const ProductsPage: React.FC<ProductsPageProps> = ({
         open={addProductModalOpen}
         onAddProduct={(product: Product) => prependProducts(product)}
         closeModal={() => setAddProductModalOpen(false)}
+      />
+  
+      <EditProductModal theme={theme}
+        open={Boolean(productUnderEdit)}
+        product={productUnderEdit}
+        onEditProduct={(product: Product) => updateProduct(product)}
+        closeModal={() => setProductUnderEdit(null)}
       />
     </Visibility>
   )

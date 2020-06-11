@@ -70,6 +70,15 @@ export interface AddProductResponse {
   }
 }
 
+export interface UpdateProductResponse {
+  data: {
+    message: string
+    data: {
+      product: Product
+    }
+  }
+}
+
 export interface DeleteProductResponse {
   data: {
     message: string

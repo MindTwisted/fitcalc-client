@@ -4,9 +4,11 @@ import { getProductsUrl } from './config'
 import { Product } from '../types/models'
 import {
   AddProductResponse,
-  AddProductToFavouritesResponse, DeleteProductResponse,
+  AddProductToFavouritesResponse,
+  DeleteProductResponse,
   GetAllProductsResponse,
-  RemoveProductFromFavouritesResponse
+  RemoveProductFromFavouritesResponse,
+  UpdateProductResponse
 } from './responseTypes'
 
 export const getAllProducts = ({ name = '', offset = 0 } = {}): Promise<GetAllProductsResponse> => {
@@ -33,6 +35,17 @@ export const removeProductFromFavourites = (id: number): Promise<RemoveProductFr
 
 export const addProduct = (product: Product): Promise<AddProductResponse> => {
   return axios.post(`${getProductsUrl()}`, {
+    name: product.name,
+    proteins: product.proteins,
+    carbohydrates: product.carbohydrates,
+    fats: product.fats,
+    fiber: product.fiber,
+    calories: product.calories
+  })
+}
+
+export const updateProduct = (product: Product): Promise<UpdateProductResponse> => {
+  return axios.put(`${getProductsUrl()}/${product.id}`, {
     name: product.name,
     proteins: product.proteins,
     carbohydrates: product.carbohydrates,

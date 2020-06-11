@@ -8,6 +8,7 @@ type ProductsPageTableRowProps = {
   handleAddProductToFavourites: (product: Product) => Promise<void>
   handleRemoveProductFromFavourites: (product: Product) => Promise<void>
   handleConfirmDeleteProduct: (product: Product) => void
+  setProductUnderEdit: (product: Product) => void
 }
 
 const ProductsPageTableRow: React.FC<ProductsPageTableRowProps> = ({ 
@@ -15,7 +16,8 @@ const ProductsPageTableRow: React.FC<ProductsPageTableRowProps> = ({
   user,
   handleAddProductToFavourites,
   handleRemoveProductFromFavourites,
-  handleConfirmDeleteProduct
+  handleConfirmDeleteProduct,
+  setProductUnderEdit
 }: ProductsPageTableRowProps) => {
   return (
     <Table.Row>
@@ -51,6 +53,7 @@ const ProductsPageTableRow: React.FC<ProductsPageTableRowProps> = ({
             <Button icon
               primary
               size='small'
+              onClick={() => setProductUnderEdit(product)}
             >
               <Icon name='edit' />
             </Button>
