@@ -33,7 +33,7 @@ const App: React.FC = () => {
   }, [])
     
   return (
-    <div className='App'>
+    <main className='App'>
       <Router>
         <Switch>
           <Route exact
@@ -52,7 +52,7 @@ const App: React.FC = () => {
 
       <Notification />
       <Loading active={loading} />
-    </div>
+    </main>
   )
 }
 

@@ -109,6 +109,7 @@ const Application: React.FC<ApplicationProps> = ({ mobile }: ApplicationProps) =
               <ProductsPage lang={system.lang}
                 theme={system.theme}
                 user={auth.user}
+                mobile={mobile}
                 setLoading={setLoading}
                 setConfirmData={setConfirmData}
               />

@@ -24,7 +24,9 @@ import {
   RESET_FORM,
   SET_ADD_PRODUCT_MODAL_OPEN,
   PREPEND_PRODUCTS,
-  DELETE_PRODUCT, SET_PRODUCT_UNDER_EDIT
+  DELETE_PRODUCT,
+  SET_PRODUCT_UNDER_EDIT,
+  SET_PRODUCT_UNDER_VIEWING
 } from './actionTypes'
 
 export interface SystemState {
@@ -82,6 +84,11 @@ export interface SetProductsAction {
 
 export interface SetProductUnderEditAction {
   type: typeof SET_PRODUCT_UNDER_EDIT
+  product: Product | null
+}
+
+export interface SetProductUnderViewingAction {
+  type: typeof SET_PRODUCT_UNDER_VIEWING
   product: Product | null
 }
 

@@ -64,60 +64,78 @@ const EditProductForm: React.FC<EditProductFormProps> = ({
     <Form onSubmit={handleSubmit}
       loading={loading}
     >
-      <Form.Input fluid
-        autoFocus
-        name='name'
-        label={i18n.t('Name')}
-        placeholder={i18n.t('Name')}
-        value={productState.name}
-        onChange={handleChange}
-        error={productErrors.name ? { content: productErrors.name } : null}
-      />
-      <Form.Input fluid
-        type='number'
-        name='proteins'
-        label={i18n.t('Proteins')}
-        placeholder={i18n.t('Proteins')}
-        value={productState.proteins}
-        onChange={handleChange}
-        error={productErrors.proteins ? { content: productErrors.proteins } : null}
-      />
-      <Form.Input fluid
-        type='number'
-        name='fats'
-        label={i18n.t('Fats')}
-        placeholder={i18n.t('Fats')}
-        value={productState.fats}
-        onChange={handleChange}
-        error={productErrors.fats ? { content: productErrors.fats } : null}
-      />
-      <Form.Input fluid
-        type='number'
-        name='carbohydrates'
-        label={i18n.t('Carbohydrates')}
-        placeholder={i18n.t('Carbohydrates')}
-        value={productState.carbohydrates}
-        onChange={handleChange}
-        error={productErrors.carbohydrates ? { content: productErrors.carbohydrates } : null}
-      />
-      <Form.Input fluid
-        type='number'
-        name='fiber'
-        label={i18n.t('Fiber')}
-        placeholder={i18n.t('Fiber')}
-        value={productState.fiber}
-        onChange={handleChange}
-        error={productErrors.fiber ? { content: productErrors.fiber } : null}
-      />
-      <Form.Input fluid
-        type='number'
-        name='calories'
-        label={i18n.t('Calories')}
-        placeholder={i18n.t('Calories')}
-        value={productState.calories}
-        onChange={handleChange}
-        error={productErrors.calories ? { content: productErrors.calories } : null}
-      />
+      <Form.Field>
+        <label htmlFor='productNameInput'>{i18n.t('Name')}</label>
+        <Form.Input fluid
+          id='productNameInput'
+          autoFocus
+          name='name'
+          placeholder={i18n.t('Name')}
+          value={productState.name}
+          onChange={handleChange}
+          error={productErrors.name ? { content: productErrors.name } : null}
+        />
+      </Form.Field>
+      <Form.Field>
+        <label htmlFor='productProteinsInput'>{i18n.t('Proteins')}</label>
+        <Form.Input fluid
+          id='productProteinsInput'
+          type='number'
+          name='proteins'
+          placeholder={i18n.t('Proteins')}
+          value={productState.proteins}
+          onChange={handleChange}
+          error={productErrors.proteins ? { content: productErrors.proteins } : null}
+        />
+      </Form.Field>
+      <Form.Field>
+        <label htmlFor='productFatsInput'>{i18n.t('Fats')}</label>
+        <Form.Input fluid
+          id='productFatsInput'
+          type='number'
+          name='fats'
+          placeholder={i18n.t('Fats')}
+          value={productState.fats}
+          onChange={handleChange}
+          error={productErrors.fats ? { content: productErrors.fats } : null}
+        />
+      </Form.Field>
+      <Form.Field>
+        <label htmlFor='productCarbohydratesInput'>{i18n.t('Carbohydrates')}</label>
+        <Form.Input fluid
+          id='productCarbohydratesInput'
+          type='number'
+          name='carbohydrates'
+          placeholder={i18n.t('Carbohydrates')}
+          value={productState.carbohydrates}
+          onChange={handleChange}
+          error={productErrors.carbohydrates ? { content: productErrors.carbohydrates } : null}
+        />
+      </Form.Field>
+      <Form.Field>
+        <label htmlFor='productFiberInput'>{i18n.t('Fiber')}</label>
+        <Form.Input fluid
+          id='productFiberInput'
+          type='number'
+          name='fiber'
+          placeholder={i18n.t('Fiber')}
+          value={productState.fiber}
+          onChange={handleChange}
+          error={productErrors.fiber ? { content: productErrors.fiber } : null}
+        />
+      </Form.Field>
+      <Form.Field>
+        <label htmlFor='productCaloriesInput'>{i18n.t('Calories')}</label>
+        <Form.Input fluid
+          id='productCaloriesInput'
+          type='number'
+          name='calories'
+          placeholder={i18n.t('Calories')}
+          value={productState.calories}
+          onChange={handleChange}
+          error={productErrors.calories ? { content: productErrors.calories } : null}
+        />
+      </Form.Field>
       <Button primary
         type='submit'
       >

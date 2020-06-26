@@ -1,17 +1,19 @@
 import React, { ChangeEvent, KeyboardEvent, useEffect, useRef, useState } from 'react'
-import { Input, Icon, Button } from 'semantic-ui-react'
+import { Input, Icon, Button, InputProps } from 'semantic-ui-react'
+import i18n from '../localization/i18n'
 
 type EditableInputProps = {
   defaultValue: string
   onSubmitInput: (value: string) => Promise<void | {changeValue: boolean}> | void | {changeValue: boolean}
   onCancelEditing: () => void
   type?: string
-}
+} & InputProps
 
 const EditableInput: React.FC<EditableInputProps> = ({ 
   defaultValue,
   onSubmitInput,
-  onCancelEditing, 
+  onCancelEditing,
+  id,
   type= 'text'
 }: EditableInputProps) => {
   const [editable, setEditable] = useState(false)
@@ -67,6 +69,7 @@ const EditableInput: React.FC<EditableInputProps> = ({
         value={value}
         onChange={handleChange}
         ref={inputEl}
+        id={id}
       />
       
       {editable ? (
@@ -74,6 +77,7 @@ const EditableInput: React.FC<EditableInputProps> = ({
           <Button icon
             secondary
             onClick={handleCancel}
+            aria-label={i18n.t('Cancel')}
           >
             <Icon name='cancel' />
           </Button>
@@ -82,6 +86,7 @@ const EditableInput: React.FC<EditableInputProps> = ({
             <Button icon
               primary
               onClick={handleSubmit}
+              aria-label={i18n.t('Save')}
             >
               <Icon name='save' />
             </Button>
@@ -91,6 +96,7 @@ const EditableInput: React.FC<EditableInputProps> = ({
         <Button icon
           secondary
           onClick={() => setEditable(true)}
+          aria-label={i18n.t('Edit')}
         >
           <Icon name='edit' />
         </Button>

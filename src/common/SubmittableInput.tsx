@@ -1,10 +1,11 @@
 import React, { ChangeEvent, KeyboardEvent, useState } from 'react'
-import { Input, Icon, Button } from 'semantic-ui-react'
+import { Input, Icon, Button, InputProps } from 'semantic-ui-react'
+import i18n from '../localization/i18n'
 
 type SubmittableInputProps = {
   onSubmitInput: (value: string) => Promise<void | {clearValue: boolean}> | void | {clearValue: boolean}
   inputEl?: React.ElementType
-}
+} & InputProps
 
 const SubmittableInput: React.FC<SubmittableInputProps> = ({
   onSubmitInput,
@@ -48,6 +49,7 @@ const SubmittableInput: React.FC<SubmittableInputProps> = ({
           <Button icon
             secondary
             onClick={() => setValue('')}
+            aria-label={i18n.t('Cancel')}
           >
             <Icon name='cancel' />
           </Button>
@@ -55,6 +57,7 @@ const SubmittableInput: React.FC<SubmittableInputProps> = ({
           <Button icon
             primary
             onClick={handleSubmit}
+            aria-label={i18n.t('Save')}
           >
             <Icon name='save' />
           </Button>

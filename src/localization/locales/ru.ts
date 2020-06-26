@@ -64,6 +64,10 @@ export default {
   'No products': 'Нет продуктов',
   'Add product': 'Добавить продукт',
   'Edit product': 'Редактировать продукт',
-  'Delete product': 'Удалить продукт'
+  'Delete product': 'Удалить продукт',
+  'Actions': 'Действия',
+  'Product info': 'Информация о продукте',
+  'Save': 'Сохранить',
+  'Edit': 'Редактировать'
 }
 

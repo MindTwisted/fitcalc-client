@@ -112,33 +112,41 @@ const ProfileForm: React.FC<ProfileFormProps> = ({
     <Form loading={loading}>
       
       {!currentPasswordData.verified && (
-        <Form.Field label={i18n.t('Current password')}
-          placeholder={i18n.t('Current password')}
-          autoFocus
-          control={SubmittableInput}
-          inputEl={PasswordInput}
-          onSubmitInput={handleVerifyPassword}
-        />
+        <Form.Field >
+          <label htmlFor='currentPasswordInput'>{i18n.t('Current password')}</label>
+          <SubmittableInput placeholder={i18n.t('Current password')}
+            id='currentPasswordInput'
+            autoFocus
+            onSubmitInput={handleVerifyPassword}
+            inputEl={PasswordInput}
+          />
+        </Form.Field>
       )}
 
       {(currentPasswordData.currentPassword && currentPasswordData.verified) && (
         <React.Fragment>
-          <Form.Field label={{ children: i18n.t('Name') }}
-            control={EditableInput}
-            defaultValue={user.name}
-            onSubmitInput={handleChangeName}
-            onCancelEditing={() => setNameError('')}
-            error={nameError ? { content: nameError } : null}
-          />
-
-          <Form.Field label={{ children: i18n.t('Email') }}
-            type='email'
-            control={EditableInput}
-            defaultValue={user.email}
-            onSubmitInput={handleChangeEmail}
-            onCancelEditing={() => setEmailError('')}
-            error={emailError ? { content: emailError } : null}
-          />
+          <Form.Field>
+            <label htmlFor='userNameInput'>{i18n.t('Name')}</label>
+            <Form.Input control={EditableInput}
+              id='userNameInput'
+              defaultValue={user.name}
+              onSubmitInput={handleChangeName}
+              onCancelEditing={() => setNameError('')}
+              error={nameError ? { content: nameError } : null}
+            />
+          </Form.Field>
+          
+          <Form.Field>
+            <label htmlFor='userEmailInput'>{i18n.t('Email')}</label>
+            <Form.Input type='email'
+              id='userEmailInput'
+              control={EditableInput}
+              defaultValue={user.email}
+              onSubmitInput={handleChangeEmail}
+              onCancelEditing={() => setEmailError('')}
+              error={emailError ? { content: emailError } : null}
+            />
+          </Form.Field>
 
           <Accordion as={Form.Field}
             panels={[
@@ -147,12 +155,20 @@ const ProfileForm: React.FC<ProfileFormProps> = ({
                 title: i18n.t('Password'),
                 content: {
                   content: (
-                    <Form.Field control={SubmittableInput}
-                      inputEl={PasswordInput}
-                      placeholder={i18n.t('Password')}
-                      onSubmitInput={handleChangePassword}
-                      error={passwordError ? { content: passwordError } : null}
-                    />
+                    <Form.Field>
+                      <label htmlFor='newPasswordInput'
+                        style={{ display: 'none' }}
+                      >
+                        {i18n.t('Password')}
+                      </label>
+                      <Form.Input control={SubmittableInput}
+                        id='newPasswordInput'
+                        inputEl={PasswordInput}
+                        placeholder={i18n.t('Password')}
+                        onSubmitInput={handleChangePassword}
+                        error={passwordError ? { content: passwordError } : null}
+                      />
+                    </Form.Field>
                   )
                 }
               }

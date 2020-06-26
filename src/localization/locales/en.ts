@@ -64,6 +64,10 @@ export default {
   'No products': 'No products',
   'Add product': 'Add product',
   'Edit product': 'Edit product',
-  'Delete product': 'Delete product'
+  'Delete product': 'Delete product',
+  'Actions': 'Actions',
+  'Product info': 'Product info',
+  'Save': 'Save',
+  'Edit': 'Edit'
 }
 

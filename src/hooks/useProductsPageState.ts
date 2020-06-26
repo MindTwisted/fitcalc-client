@@ -10,6 +10,7 @@ import {
   SET_OFFSET_DONE,
   SET_OFFSET_VALUE,
   SET_PRODUCT_UNDER_EDIT,
+  SET_PRODUCT_UNDER_VIEWING,
   SET_PRODUCTS,
   SET_SEARCH,
   UPDATE_PRODUCT
@@ -25,6 +26,7 @@ import {
   SetOffsetValueAction,
   SetProductsAction,
   SetProductUnderEditAction,
+  SetProductUnderViewingAction,
   SetSearchAction,
   UpdateProductAction
 } from '../types/actions'
@@ -32,6 +34,7 @@ import {
 type ProductsPageState = {
   products: Product[]
   productUnderEdit: Product | null
+  productUnderViewing: Product | null
   search: string
   offset: {
     value: number
@@ -44,6 +47,7 @@ type ProductsPageState = {
 
 type ProductsPageAction = SetProductsAction |
 SetProductUnderEditAction |
+SetProductUnderViewingAction |
 AppendProductsAction |
 PrependProductsAction |
 UpdateProductAction |
@@ -58,6 +62,7 @@ SetAddProductModalOpen
 const productsPageInitialState: ProductsPageState = {
   products: [],
   productUnderEdit: null,
+  productUnderViewing: null,
   search: '',
   offset: {
     value: 0,
@@ -79,6 +84,11 @@ const productsPageReducer = (state: ProductsPageState, action: ProductsPageActio
       return {
         ...state,
         productUnderEdit: action.product
+      }
+    case SET_PRODUCT_UNDER_VIEWING:
+      return {
+        ...state,
+        productUnderViewing: action.product
       }
     case APPEND_PRODUCTS:
       return {
@@ -159,6 +169,12 @@ const useProductsPageState = () => {
       product
     })
   }, [dispatch])
+  const setProductUnderViewing = useCallback((product: Product | null) => {
+    dispatch({
+      type: SET_PRODUCT_UNDER_VIEWING,
+      product
+    })
+  }, [dispatch])
   const appendProducts = useCallback((products: Product[] | Product) => {
     if (!Array.isArray(products)) {
       products = [products]
@@ -229,6 +245,7 @@ const useProductsPageState = () => {
   const actionCreators = {
     setProducts,
     setProductUnderEdit,
+    setProductUnderViewing,
     appendProducts,
     prependProducts,
     updateProduct,

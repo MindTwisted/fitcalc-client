@@ -95,7 +95,11 @@ const SessionsTable: React.FC<SessionsTableProps> = ({
           <Table.Row>
             <Table.HeaderCell>{i18n.t('Device')}</Table.HeaderCell>
             <Table.HeaderCell>{i18n.t('Expires At')}</Table.HeaderCell>
-            <Table.HeaderCell />
+            <Table.HeaderCell>
+              <span style={{ display: 'none' }}>
+                {i18n.t('Actions')}
+              </span>
+            </Table.HeaderCell>
           </Table.Row>
         </Table.Header>
         
@@ -105,7 +109,7 @@ const SessionsTable: React.FC<SessionsTableProps> = ({
             <Table.Row key={token.id}>
               <Table.Cell>
                 {(refreshToken.id === token.id) && (
-                  <Label color='blue'
+                  <Label color='black'
                     ribbon
                   >
                     {i18n.t('Current session')}
@@ -128,6 +132,9 @@ const SessionsTable: React.FC<SessionsTableProps> = ({
                       i18n.t('Delete session?'),
                     onConfirm: () => handleDeleteToken(token.id)
                   })}
+                  aria-label={refreshToken.id === token.id ?
+                    i18n.t('Delete current session? You will be logged-out.') :
+                    i18n.t('Delete session?')}
                 >
                   <Icon name='trash alternate' />
                 </Button>
@@ -139,8 +146,7 @@ const SessionsTable: React.FC<SessionsTableProps> = ({
   
         <Table.Footer>
           <Table.Row>
-            <Table.HeaderCell />
-            <Table.HeaderCell>
+            <Table.HeaderCell colSpan={2}>
               <strong>
                 {i18n.t('Total')}: {refreshTokens.length}
               </strong>
@@ -155,6 +161,7 @@ const SessionsTable: React.FC<SessionsTableProps> = ({
                   onConfirm: () => handleDeleteToken('all')
                 })}
               >
+                <span style={{ display: 'none' }}>{i18n.t('Delete all sessions? You will be logged-out.')}</span>
                 <Icon name='trash alternate' />
               </Button>
             </Table.HeaderCell>
