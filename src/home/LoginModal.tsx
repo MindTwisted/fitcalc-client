@@ -1,9 +1,11 @@
 import React, { ChangeEvent, useState } from 'react'
+import { useHistory } from 'react-router-dom'
 import { Button, Form, InputOnChangeData, Modal } from 'semantic-ui-react'
 import i18n from '../localization/i18n'
 import { boundLogin } from '../store/auth/actions'
 import PasswordRecoveryModal from './PasswordRecoveryModal'
 import PasswordInput from '../common/PasswordInput'
+import routes from '../routes'
 
 type LoginModalProps = {
   open: boolean
@@ -21,6 +23,7 @@ const LoginModal: React.FC<LoginModalProps> = ({
   const [loading, setLoading] = useState(false)
   const [formData, setFormData] = useState(initialFormData)
   const [passwordRecoveryModalOpen, setPasswordRecoveryModalOpen] = useState(false)
+  const history = useHistory()
 
   const handleClose = () => {
     setFormData(initialFormData)
@@ -44,6 +47,7 @@ const LoginModal: React.FC<LoginModalProps> = ({
       setLoading(false)
 
       handleClose()
+      history.push(routes.app.index)
     } catch(error) {
       setLoading(false)
     }
