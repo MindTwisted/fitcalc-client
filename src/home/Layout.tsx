@@ -51,6 +51,7 @@ const Layout: React.FC<LayoutProps> = ({
                 centered
                 size='large'
                 src='/images/diet.jpg'
+                alt='Balanced diet'
               />
             </Grid.Column>
           </Grid.Row>

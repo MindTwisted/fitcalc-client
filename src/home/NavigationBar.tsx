@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Container, Dropdown, Menu } from 'semantic-ui-react'
+import { Container, Divider, Dropdown, Icon, Menu } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 import routes from '../routes'
 import i18n from '../localization/i18n'
@@ -11,6 +11,7 @@ import { Languages } from '../types/models'
 type NavigationBarProps = {
   fixed: boolean
   lang: Languages
+  mobile: boolean
   isLoggedIn: boolean
   isAppUser: boolean
   setLang: typeof boundSetLang
@@ -22,6 +23,7 @@ type NavigationBarProps = {
 const NavigationBar: React.FC<NavigationBarProps> = ({ 
   fixed,
   lang,
+  mobile,
   isLoggedIn, 
   isAppUser,
   setLang,
@@ -40,7 +42,7 @@ const NavigationBar: React.FC<NavigationBarProps> = ({
       <Container>
         <Menu.Item>
           <img src={logo}
-            alt='Logo'
+            alt='FitCalc'
           />
         </Menu.Item>
         <Dropdown item
@@ -58,44 +60,73 @@ const NavigationBar: React.FC<NavigationBarProps> = ({
           onChange={(e, { value }) => setLang(value as Languages)}
         />
 
-        <Menu.Item position='right'>
+        {!mobile ? (
+          <Menu.Item position='right'>
 
-          {(isLoggedIn && isAppUser) && (
-            <Menu.Item>
-              <Link to={routes.app.index}>
-                {i18n.t('Application')}
-              </Link>
-            </Menu.Item>
-          )}
+            {(isLoggedIn && isAppUser) && (
+              <Menu.Item as={Link}
+                to={routes.app.index}
+                content={i18n.t('Application')}
+              />
+            )}
 
-          {isLoggedIn ? (
-            <Button as='a'
-              inverted={!fixed}
-              onClick={logout}
+            {isLoggedIn ? (
+              <Menu.Item onClick={logout}
+                content={i18n.t('Logout')}
+              />
+            ) : (
+              <React.Fragment>
+                <Menu.Item onClick={() => setLoginModalOpen(true)}
+                  content={i18n.t('Log In')}
+                />
+                <Menu.Item onClick={() => setRegisterModalOpen(true)}
+                  content={i18n.t('Sign Up')}
+                />
+              </React.Fragment>
+            )}
+
+          </Menu.Item>
+        ) : (
+          <Menu.Menu position='right'>
+
+            <Dropdown item
+              icon={<Icon name='bars' />}
             >
-              {i18n.t('Logout')}
-            </Button>
-          ) : (
-            <React.Fragment>
-              <Button as='a'
-                inverted={!fixed}
-                onClick={() => setLoginModalOpen(true)}
+              <Dropdown.Menu as={Menu}
+                vertical
+                style={{ width: '100vw' }}
               >
-                {i18n.t('Log In')}
-              </Button>
+                {(isLoggedIn && isAppUser) && (
+                  <Dropdown.Item as={Link}
+                    to={routes.app.index}
+                    text={i18n.t('Application')}
+                    icon={<Icon name='server' />}
+                  />
+                )}
 
-              <Button as='a'
-                inverted={!fixed}
-                primary={fixed}
-                style={{ marginLeft: '0.5em' }}
-                onClick={() => setRegisterModalOpen(true)}
-              >
-                {i18n.t('Sign Up')}
-              </Button>
-            </React.Fragment>
-          )}
+                {isLoggedIn ? (
+                  <React.Fragment>
+                    <Divider />
+                    <Dropdown.Item onClick={logout}
+                      text={i18n.t('Logout')}
+                      icon={<Icon name='sign-out' />}
+                    />
+                  </React.Fragment>
+                ) : (
+                  <React.Fragment>
+                    <Dropdown.Item onClick={() => setLoginModalOpen(true)}
+                      text={i18n.t('Log In')}
+                    />
+                    <Dropdown.Item onClick={() => setRegisterModalOpen(true)}
+                      text={i18n.t('Sign Up')}
+                    />
+                  </React.Fragment>
+                )}
+              </Dropdown.Menu>
+            </Dropdown>
 
-        </Menu.Item>
+          </Menu.Menu>
+        )}
       </Container>
     </Menu>
   )

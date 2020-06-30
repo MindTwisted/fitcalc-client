@@ -41,6 +41,7 @@ const Home: React.FC<HomeProps> = ({ mobile }: HomeProps) => {
           >
             <NavigationBar fixed={fixed}
               lang={lang}
+              mobile={mobile}
               isLoggedIn={isLoggedIn}
               isAppUser={isAppUser}
               setLang={setLang}
